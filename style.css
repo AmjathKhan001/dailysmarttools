@@ -871,3 +871,178 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+/* Add these styles to your existing style.css file */
+
+/* Category pages */
+.category-tools {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+    margin: 30px 0;
+}
+
+.tool-category-group {
+    background: white;
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+}
+
+.tool-category-group h3 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color: var(--primary);
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--light);
+}
+
+.featured-tool {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: white;
+    border-radius: var(--radius);
+    padding: 30px;
+    margin: 40px 0;
+    text-align: center;
+}
+
+.featured-tool h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.featured-tool p {
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
+.featured-tool .btn {
+    background: white;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.featured-tool .btn:hover {
+    background: var(--light);
+    transform: translateY(-2px);
+}
+
+/* Tool page breadcrumb fix */
+.breadcrumb {
+    background: var(--light);
+    padding: 12px 0;
+    font-size: 0.9rem;
+}
+
+/* Active state enhancement */
+nav a.active {
+    color: var(--primary);
+    font-weight: 600;
+    position: relative;
+}
+
+nav a.active::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 60%;
+    background: var(--primary);
+    border-radius: 2px;
+}
+
+/* Responsive fixes */
+@media (max-width: 768px) {
+    .category-tools {
+        grid-template-columns: 1fr;
+    }
+    
+    .tool-category-group {
+        margin-bottom: 15px;
+    }
+    
+    .featured-tool {
+        padding: 20px;
+    }
+    
+    .featured-tool h3 {
+        font-size: 1.2rem;
+    }
+}
+
+/* Dark mode support */
+body.dark-mode {
+    background-color: #1a202c;
+    color: #e2e8f0;
+}
+
+body.dark-mode header {
+    background-color: #2d3748;
+}
+
+body.dark-mode .category-card,
+body.dark-mode .tool-card,
+body.dark-mode .stat-card,
+body.dark-mode .tool-category-group,
+body.dark-mode .tool-page {
+    background-color: #2d3748;
+    color: #e2e8f0;
+}
+
+body.dark-mode .category-card h3,
+body.dark-mode .tool-card h3,
+body.dark-mode .tool-category-group h3 {
+    color: #e2e8f0;
+}
+
+body.dark-mode .category-card p,
+body.dark-mode .tool-card p {
+    color: #cbd5e0;
+}
+
+body.dark-mode .tool-sidebar {
+    background-color: #4a5568;
+}
+
+body.dark-mode .breadcrumb {
+    background-color: #2d3748;
+}
+
+body.dark-mode .page-header {
+    background-color: #2d3748;
+}
+
+body.dark-mode .input-group input,
+body.dark-mode .input-group textarea,
+body.dark-mode .input-group select {
+    background-color: #4a5568;
+    color: #e2e8f0;
+    border-color: #718096;
+}
+
+body.dark-mode .btn-secondary {
+    background-color: #4a5568;
+    color: #e2e8f0;
+}
+
+body.dark-mode .footer-links a {
+    color: #a0aec0;
+}
+
+body.dark-mode .footer-links a:hover {
+    color: #ffffff;
+}
+
+/* Category tools list dark mode */
+body.dark-mode .category-tools-list li a {
+    background-color: #4a5568;
+    color: #e2e8f0;
+    border-color: #718096;
+}
+
+body.dark-mode .category-tools-list li a:hover {
+    background-color: #5a6578;
+    border-color: var(--primary);
+}
