@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Smart Tools - Free Online Utilities & Calculators</title>
-    <meta name="description" content="Free online tools, calculators, converters, and utilities for everyday tasks. Text tools, image tools, unit converters, and more.">
+    <meta name="description" content="150+ free online tools, calculators, converters, and utilities for everyday tasks. Text tools, image tools, unit converters, and more.">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
@@ -17,17 +17,7 @@
             </a>
             <button class="mobile-menu-btn">☰</button>
             <button class="theme-toggle" title="Toggle dark mode">🌙</button>
-            <nav>
-                <ul>
-                    <li><a href="index.html" class="active">Home</a></li>
-                    <li><a href="all-tools.html">All Tools</a></li>
-                    <li><a href="text-case-converter.html">Text Tools</a></li>
-                    <li><a href="image-tools.html">Image Tools</a></li>
-                    <li><a href="loan-calculator.html">Calculators</a></li>
-                    <li><a href="converters.html">Converters</a></li>
-                    <li><a href="generators.html">Generators</a></li>
-                </ul>
-            </nav>
+            <!-- Navigation will be auto-loaded by navigation.js -->
         </div>
     </header>
 
@@ -35,8 +25,6 @@
         <div class="container">
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li class="separator">/</li>
-                <li>All Tools</li>
             </ul>
         </div>
     </section>
@@ -46,8 +34,8 @@
             <h1>Free Online Tools for Everyday Tasks</h1>
             <p>Simplify your work with our collection of 150+ free online tools, calculators, converters, and utilities</p>
             <div class="search-box">
-                <input type="text" placeholder="Search for tools...">
-                <button>Search</button>
+                <input type="text" placeholder="Search for tools..." id="search-input">
+                <button id="search-btn">Search</button>
             </div>
         </div>
     </section>
@@ -79,7 +67,7 @@
         <section class="categories-section">
             <h2 class="section-title">Tool Categories</h2>
             <div class="categories">
-                <a href="text-case-converter.html" class="category-card">
+                <a href="text-tools.html" class="category-card">
                     <div class="category-icon">📝</div>
                     <h3>Text Tools</h3>
                     <p>Manipulate and transform text with various utilities</p>
@@ -91,7 +79,7 @@
                     <p>Edit, convert and optimize images online</p>
                     <div class="tools-count">18 tools</div>
                 </a>
-                <a href="loan-calculator.html" class="category-card">
+                <a href="calculators.html" class="category-card">
                     <div class="category-icon">🧮</div>
                     <h3>Calculators</h3>
                     <p>Financial, math, and conversion calculators</p>
@@ -103,17 +91,17 @@
                     <p>Convert between units, formats, and systems</p>
                     <div class="tools-count">28 tools</div>
                 </a>
-                <a href="developer-tools.html" class="category-card">
+                <a href="generators.html" class="category-card">
                     <div class="category-icon">🔧</div>
+                    <h3>Generators</h3>
+                    <p>Generate passwords, codes, and more</p>
+                    <div class="tools-count">15 tools</div>
+                </a>
+                <a href="developer-tools.html" class="category-card">
+                    <div class="category-icon">💻</div>
                     <h3>Developer Tools</h3>
                     <p>Utilities for programmers and web developers</p>
                     <div class="tools-count">36 tools</div>
-                </a>
-                <a href="productivity.html" class="category-card">
-                    <div class="category-icon">📊</div>
-                    <h3>Productivity</h3>
-                    <p>Tools to boost your efficiency and workflow</p>
-                    <div class="tools-count">15 tools</div>
                 </a>
             </div>
         </section>
@@ -121,27 +109,27 @@
         <section class="featured-tools">
             <h2 class="section-title">Popular Tools</h2>
             <div class="tools-grid">
-                <a href="json-formatter.html" class="tool-card">
+                <a href="tools/developers/json-formatter.html" class="tool-card">
                     <h3>JSON Formatter <span class="tool-badge">Popular</span></h3>
                     <p>Format and validate JSON data with syntax highlighting</p>
                 </a>
-                <a href="pdf-to-word.html" class="tool-card">
+                <a href="tools/converters/pdf-to-word.html" class="tool-card">
                     <h3>PDF to Word Converter</h3>
                     <p>Convert PDF documents to editable Word files</p>
                 </a>
-                <a href="password-generator.html" class="tool-card">
+                <a href="tools/generators/password-generator.html" class="tool-card">
                     <h3>Password Generator</h3>
                     <p>Create strong, secure passwords for your accounts</p>
                 </a>
-                <a href="loan-calculator.html" class="tool-card">
+                <a href="tools/calculators/loan-calculator.html" class="tool-card">
                     <h3>Loan Calculator <span class="tool-badge">New</span></h3>
                     <p>Estimate monthly payments for loans and mortgages</p>
                 </a>
-                <a href="text-case-converter.html" class="tool-card">
+                <a href="tools/text/text-case-converter.html" class="tool-card">
                     <h3>Text Case Converter</h3>
                     <p>Convert text to UPPER, lower, Title Case, etc.</p>
                 </a>
-                <a href="md5-generator.html" class="tool-card">
+                <a href="tools/generators/hash-generator.html" class="tool-card">
                     <h3>MD5 Generator</h3>
                     <p>Generate MD5 hash from any text input</p>
                 </a>
@@ -174,9 +162,9 @@
                 <div class="footer-column">
                     <h3>Popular Categories</h3>
                     <ul class="footer-links">
-                        <li><a href="text-case-converter.html">Text Tools</a></li>
+                        <li><a href="text-tools.html">Text Tools</a></li>
                         <li><a href="image-tools.html">Image Tools</a></li>
-                        <li><a href="loan-calculator.html">Calculators</a></li>
+                        <li><a href="calculators.html">Calculators</a></li>
                         <li><a href="converters.html">Converters</a></li>
                         <li><a href="developer-tools.html">Developer Tools</a></li>
                     </ul>
@@ -184,8 +172,9 @@
                 <div class="footer-column">
                     <h3>Contact Us</h3>
                     <ul class="footer-links">
-                        <li>Email: contact@webtoolsdaily.com</li>
-                        <li>Feedback: feedback@webtoolsdaily.com</li>
+                        <li>Email: contact@dailysmarttool.com</li>
+                        <li>Feedback: feedback@dailysmarttool.com</li>
+                        <li>Support: support@dailysmarttool.com</li>
                     </ul>
                 </div>
             </div>
@@ -195,6 +184,7 @@
         </div>
     </footer>
 
+    <script src="navigation.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
