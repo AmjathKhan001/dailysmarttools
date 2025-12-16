@@ -230,3 +230,27 @@ if (typeof window.convertTextCase === 'undefined') {
         }
     };
 }
+// Add this function to your existing script.js
+function initializeNavigation() {
+    // Load navigation if not already loaded
+    if (!document.querySelector('nav')) {
+        // You can call loadNavigation() from navigation.js if needed
+    }
+    
+    // Mobile menu functionality
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const nav = document.querySelector('nav');
+    
+    if (mobileMenuBtn && nav) {
+        mobileMenuBtn.addEventListener('click', function() {
+            nav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = nav.classList.contains('active') ? '✕' : '☰';
+        });
+    }
+}
+
+// Call it in DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+    initializeNavigation();
+    // ... rest of your existing code
+});
