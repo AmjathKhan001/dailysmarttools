@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator - Daily Smart Tool</title>
+    <meta name="description" content="Calculate age from birth date. Free online age calculator.">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">⚙️</div>
+                <span>Daily Smart Tool</span>
+            </a>
+            <button class="mobile-menu-btn">☰</button>
+            <button class="theme-toggle" title="Toggle dark mode">🌙</button>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../all-tools.html">All Tools</a></li>
+                    <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                    <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                    <li><a href="bmi-calculator.html">Calculators</a></li>
+                    <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                    <li><a href="../tools/generators/password-generator.html">Generators</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li class="separator">/</li>
+                <li><a href="../all-tools.html">All Tools</a></li>
+                <li class="separator">/</li>
+                <li><a href="#">Calculators</a></li>
+                <li class="separator">/</li>
+                <li>Age Calculator</li>
+            </ul>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="tool-page">
+            <div class="tool-header">
+                <h1>Age Calculator</h1>
+                <p>Calculate age from birth date. This is a free, browser-based tool. No installation required.</p>
+            </div>
+            
+            <div class="tool-container">
+                <div class="tool-main">
+                    <div class="tool-input-area">
+                        <div class="input-group">
+                            <label for="birth-date">Birth Date:</label>
+                            <input type="date" id="birth-date" value="1990-01-01">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="age-at-date">Age at this Date (optional):</label>
+                            <input type="date" id="age-at-date">
+                            <p style="font-size: 0.9rem; color: #64748b; margin-top: 5px;">Leave empty to calculate age today</p>
+                        </div>
+                        
+                        <div class="tool-buttons">
+                            <button class="btn btn-primary" id="calculate-btn">Calculate Age</button>
+                            <button class="btn btn-secondary" id="clear-btn">Clear</button>
+                            <button class="btn btn-success" id="copy-btn">Copy Results</button>
+                        </div>
+                        
+                        <div class="result-box" id="age-result">
+                            <p>Your Age: <span id="age-value">-</span></p>
+                            <p>Next Birthday: <span id="next-birthday">-</span></p>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="output-result">Detailed Age Calculation:</label>
+                            <textarea id="output-result" readonly>Your age details will appear here.</textarea>
+                        </div>
+                        
+                        <div class="info-section">
+                            <h3>About This Tool</h3>
+                            <p>The Age Calculator allows you to calculate your exact age in years, months, and days. It's designed to be fast, accurate, and easy to use.</p>
+                            <p><strong>Features:</strong> Calculate age at any date, countdown to next birthday, and age in different units.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tool-sidebar">
+                    <div class="ad-banner vertical">Ad Space (300x250)</div>
+                    
+                    <h3>Related Calculators</h3>
+                    <ul class="related-tools">
+                        <li><a href="bmi-calculator.html">➤ BMI Calculator</a></li>
+                        <li><a href="loan-calculator.html">➤ Loan Calculator</a></li>
+                        <li><a href="percentage-calculator.html">➤ Percentage Calculator</a></li>
+                        <li><a href="date-calculator.html">➤ Date Calculator</a></li>
+                    </ul>
+                    
+                    <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <h4>Quick Presets</h4>
+                        <button class="btn btn-secondary" style="width: 100%; margin-bottom: 5px;" onclick="quickBirthday('18')">18th Birthday</button>
+                        <button class="btn btn-secondary" style="width: 100%; margin-bottom: 5px;" onclick="quickBirthday('21')">21st Birthday</button>
+                        <button class="btn btn-secondary" style="width: 100%;" onclick="quickBirthday('retirement')">Retirement (65)</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Daily Smart Tool</h3>
+                    <p>Your one-stop destination for free online utilities, calculators, converters, and productivity tools.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../all-tools.html">All Tools</a></li>
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Popular Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                        <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                        <li><a href="bmi-calculator.html">Calculators</a></li>
+                        <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                        <li><a href="../tools/developers/html-encoder.html">Developer Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li>Email: contact@dailysmarttool.com</li>
+                        <li>Feedback: feedback@dailysmarttool.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; <script>document.write(new Date().getFullYear())</script> Daily Smart Tool. All rights reserved. | Part of Safetyguide360 Network
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // Age Calculator functionality
+        function calculateAge() {
+            const birthDate = new Date(document.getElementById('birth-date').value);
+            const ageAtDateInput = document.getElementById('age-at-date').value;
+            const ageAtDate = ageAtDateInput ? new Date(ageAtDateInput) : new Date();
+            
+            // Validate dates
+            if (isNaN(birthDate.getTime())) {
+                return { error: 'Please enter a valid birth date.' };
+            }
+            
+            if (birthDate > ageAtDate) {
+                return { error: 'Birth date cannot be in the future.' };
+            }
+            
+            // Calculate age
+            let years = ageAtDate.getFullYear() - birthDate.getFullYear();
+            let months = ageAtDate.getMonth() - birthDate.getMonth();
+            let days = ageAtDate.getDate() - birthDate.getDate();
+            
+            // Adjust for negative days/months
+            if (days < 0) {
+                months--;
+                // Get days in previous month
+                const prevMonth = new Date(ageAtDate.getFullYear(), ageAtDate.getMonth(), 0);
+                days += prevMonth.getDate();
+            }
+            
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+            
+            // Calculate total days
+            const timeDiff = ageAtDate.getTime() - birthDate.getTime();
+            const totalDays = Math.floor(timeDiff / (1000 * 3600 * 24));
+            const totalMonths = Math.floor(totalDays / 30.436875); // Average month length
+            const totalWeeks = Math.floor(totalDays / 7);
+            
+            // Calculate next birthday
+            const nextBirthday = new Date(ageAtDate.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+            if (nextBirthday < ageAtDate) {
+                nextBirthday.setFullYear(nextBirthday.getFullYear() + 1);
+            }
+            const daysToBirthday = Math.ceil((nextBirthday.getTime() - ageAtDate.getTime()) / (1000 * 3600 * 24));
+            
+            // Calculate exact age in decimal
+            const exactYears = totalDays / 365.2425;
+            
+            return {
+                years, months, days, totalDays, totalMonths, totalWeeks,
+                nextBirthday, daysToBirthday, exactYears,
+                birthDate, ageAtDate
+            };
+        }
+        
+        function formatDate(date) {
+            return date.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+        }
+
+        function calculateAndDisplay() {
+            const result = calculateAge();
+            
+            if (result.error) {
+                document.getElementById('age-value').textContent = 'Error';
+                document.getElementById('next-birthday').textContent = 'Error';
+                document.getElementById('output-result').value = result.error;
+                document.getElementById('age-result').style.borderLeftColor = '#ef4444';
+                return;
+            }
+            
+            // Update age result box
+            document.getElementById('age-value').textContent = 
+                `${result.years} years, ${result.months} months, ${result.days} days`;
+            
+            document.getElementById('next-birthday').textContent = 
+                `${formatDate(result.nextBirthday)} (in ${result.daysToBirthday} days)`;
+            
+            document.getElementById('age-result').style.borderLeftColor = '#10b981';
+            
+            // Update detailed output
+            const output = `🎂 AGE CALCULATION RESULTS:
+
+Basic Age: ${result.years} years, ${result.months} months, ${result.days} days
+
+📅 DATE INFORMATION:
+• Birth Date: ${formatDate(result.birthDate)}
+• Calculated On: ${formatDate(result.ageAtDate)}
+• Next Birthday: ${formatDate(result.nextBirthday)}
+
+📊 AGE IN DIFFERENT UNITS:
+• Total Days: ${result.totalDays.toLocaleString()}
+• Total Weeks: ${result.totalWeeks.toLocaleString()}
+• Total Months: ${Math.round(result.totalMonths).toLocaleString()}
+• Exact Age: ${result.exactYears.toFixed(6)} years
+
+⏳ TIME UNTIL NEXT BIRTHDAY:
+• Days: ${result.daysToBirthday}
+• Weeks: ${Math.floor(result.daysToBirthday / 7)} weeks, ${result.daysToBirthday % 7} days
+• Months: ${(result.daysToBirthday / 30.436875).toFixed(1)}
+
+🎯 MILESTONES:
+• Half birthday: ${(result.exactYears + 0.5).toFixed(1)} years
+• Next decade: ${Math.ceil(result.exactYears / 10) * 10} years old`;
+            
+            document.getElementById('output-result').value = output;
+        }
+
+        document.getElementById('calculate-btn').addEventListener('click', calculateAndDisplay);
+        
+        document.getElementById('clear-btn').addEventListener('click', function() {
+            // Set birth date to 30 years ago
+            const today = new Date();
+            const thirtyYearsAgo = new Date(today.getFullYear() - 30, today.getMonth(), today.getDate());
+            document.getElementById('birth-date').value = thirtyYearsAgo.toISOString().split('T')[0];
+            document.getElementById('age-at-date').value = '';
+            document.getElementById('output-result').value = 'Your age details will appear here.';
+            calculateAndDisplay();
+        });
+
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const resultText = document.getElementById('output-result').value;
+            if (resultText && !resultText.includes('Your age details')) {
+                navigator.clipboard.writeText(resultText).then(() => {
+                    alert('Age results copied to clipboard!');
+                });
+            } else {
+                alert('Please calculate age first.');
+            }
+        });
+
+        // Quick birthday function
+        window.quickBirthday = function(type) {
+            const today = new Date();
+            let birthDate;
+            
+            switch(type) {
+                case '18':
+                    birthDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+                    break;
+                case '21':
+                    birthDate = new Date(today.getFullYear() - 21, today.getMonth(), today.getDate());
+                    break;
+                case 'retirement':
+                    birthDate = new Date(today.getFullYear() - 65, today.getMonth(), today.getDate());
+                    break;
+            }
+            
+            document.getElementById('birth-date').value = birthDate.toISOString().split('T')[0];
+            calculateAndDisplay();
+        };
+
+        // Set default age-at-date to today if empty
+        document.getElementById('age-at-date').addEventListener('focus', function() {
+            if (!this.value) {
+                const today = new Date().toISOString().split('T')[0];
+                this.value = today;
+            }
+        });
+
+        // Calculate on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            calculateAndDisplay();
+        });
+    </script>
+</body>
+</html>

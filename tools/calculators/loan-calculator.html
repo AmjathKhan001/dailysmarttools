@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Calculator - Daily Smart Tools</title>
+    <meta name="description" content="Calculate your estimated monthly loan payments quickly and easily. Covers personal loans, mortgages, and auto loans.">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #64748b;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --accent: #0ea5e9;
+            --success: #10b981;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background-color: var(--primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--secondary);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        nav a.active {
+            color: var(--primary);
+        }
+
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        /* Tool Page Styles */
+        .tool-page {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin: 40px auto;
+        }
+
+        .tool-header {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tool-header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .tool-header p {
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+
+        .tool-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+        }
+
+        .tool-input-area {
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .input-group input, 
+        .input-group textarea, 
+        .input-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+
+        .input-group input:focus, 
+        .input-group textarea:focus, 
+        .input-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .tool-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--dark);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        .result-box {
+            background: var(--light);
+            padding: 20px;
+            border-radius: var(--radius);
+            border-left: 5px solid var(--success);
+            margin-top: 20px;
+        }
+
+        .result-box p {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .result-box span {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--success);
+            display: block;
+            margin-top: 5px;
+        }
+
+        .tool-sidebar {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 20px;
+        }
+
+        .tool-sidebar h3 {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .related-tools {
+            list-style: none;
+        }
+
+        .related-tools li {
+            margin-bottom: 10px;
+        }
+
+        .related-tools a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .related-tools a:hover {
+            color: var(--primary);
+        }
+
+        .info-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .info-section h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .info-section p {
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        /* Ad Placeholders */
+        .ad-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .ad-banner {
+            background: #e2e8f0;
+            border-radius: var(--radius);
+            padding: 20px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        .ad-banner.vertical {
+            height: 250px;
+            width: 300px;
+            margin: 0 auto;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .tool-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .tool-sidebar {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-wrap: wrap;
+            }
+            
+            nav {
+                width: 100%;
+                margin-top: 15px;
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-icon">⚙️</div>
+                <span>Daily Smart Tools</span>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="all-tools.html">All Tools</a></li>
+                    <li><a href="text-case-converter.html">Text Tools</a></li>
+                    <li><a href="#">Image Tools</a></li>
+                    <li><a href="loan-calculator.html" class="active">Calculators</a></li>
+                    <li><a href="#">Converters</a></li>
+                    <li><a href="#">Generators</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <section class="tool-page">
+            <div class="tool-header">
+                <h1>Loan Payment Calculator</h1>
+                <p>Estimate your monthly payment, total interest, and total cost for any loan.</p>
+            </div>
+            
+            <div class="tool-container">
+                <div class="tool-main">
+                    <div class="tool-input-area">
+                        <div class="input-group">
+                            <label for="loan-amount">Loan Amount ($):</label>
+                            <input type="number" id="loan-amount" value="25000" min="100" placeholder="e.g., 25000">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="interest-rate">Annual Interest Rate (%):</label>
+                            <input type="number" id="interest-rate" value="6.5" min="0.1" step="0.1" placeholder="e.g., 6.5">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="loan-term">Loan Term (Years):</label>
+                            <input type="number" id="loan-term" value="5" min="1" max="50" placeholder="e.g., 5">
+                        </div>
+                        
+                        <div class="tool-buttons">
+                            <button class="btn btn-primary" id="calculate-btn">Calculate Payment</button>
+                            <button class="btn btn-secondary" id="clear-btn">Clear Inputs</button>
+                        </div>
+
+                        <div class="result-box" id="result-box">
+                            <p>Estimated Monthly Payment:</p>
+                            <span id="monthly-payment">$489.15</span>
+                        </div>
+                    </div>
+                    
+                    <div class="info-section">
+                        <h3>How the Loan Calculator Works</h3>
+                        <p>This tool uses the standard amortization formula to calculate the fixed monthly payment (M) required to pay off a loan principal (P) over a term of (n) months at a fixed monthly interest rate (r).</p>
+                        <h4>Formula:</h4>
+                        <p style="font-family: monospace; color: var(--dark);">M = P * [ r(1 + r)^n ] / [ (1 + r)^n – 1 ]</p>
+                    </div>
+                </div>
+                
+                <div class="tool-sidebar">
+                    <div class="ad-banner vertical">Advertisement Space (300x250)</div>
+                    
+                    <h3>Related Calculators</h3>
+                    <ul class="related-tools">
+                        <li><a href="#">➤ Mortgage Calculator</a></li>
+                        <li><a href="#">➤ Compound Interest</a></li>
+                        <li><a href="#">➤ VAT/Sales Tax Calculator</a></li>
+                        <li><a href="#">➤ Retirement Planner</a></li>
+                        <li><a href="#">➤ Percentage Calculator</a></li>
+                    </ul>
+                    
+                    <div class="amazon-products">
+                        <h3>Recommended Reading</h3>
+                        <div class="product-item">
+                            <p>The Total Money Makeover</p>
+                            <small>Financial Planning Book</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Daily Smart Tools</h3>
+                    <p>Your one-stop destination for free online utilities, calculators, converters, and productivity tools.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="all-tools.html">All Tools</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Popular Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="text-case-converter.html">Text Tools</a></li>
+                        <li><a href="#">Image Tools</a></li>
+                        <li><a href="loan-calculator.html">Calculators</a></li>
+                        <li><a href="#">Converters</a></li>
+                        <li><a href="#">Developer Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li>Email: contact@dailysmarttools.com</li>
+                        <li>Feedback: feedback@dailysmarttools.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 Daily Smart Tools. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('active');
+        });
+
+        // Loan Calculator Logic
+        function calculateLoanPayment() {
+            const principal = parseFloat(document.getElementById('loan-amount').value);
+            const annualRate = parseFloat(document.getElementById('interest-rate').value);
+            const years = parseFloat(document.getElementById('loan-term').value);
+            const paymentDisplay = document.getElementById('monthly-payment');
+            const resultBox = document.getElementById('result-box');
+
+            if (isNaN(principal) || isNaN(annualRate) || isNaN(years) || principal <= 0 || annualRate < 0 || years <= 0) {
+                paymentDisplay.textContent = 'Invalid Input';
+                resultBox.style.borderLeftColor = 'red';
+                return;
+            }
+            
+            resultBox.style.borderLeftColor = 'var(--success)';
+
+            // Convert annual rate to monthly rate (r) and percentage to decimal
+            const monthlyRate = (annualRate / 100) / 12;
+
+            // Calculate total number of payments (n)
+            const numberOfPayments = years * 12;
+
+            let monthlyPayment;
+
+            if (monthlyRate === 0) {
+                // Simple case for 0% interest
+                monthlyPayment = principal / numberOfPayments;
+            } else {
+                // Standard Amortization Formula: M = P [ i(1 + i)^n ] / [ (1 + i)^n – 1]
+                const numerator = monthlyRate * Math.pow((1 + monthlyRate), numberOfPayments);
+                const denominator = Math.pow((1 + monthlyRate), numberOfPayments) - 1;
+                monthlyPayment = principal * (numerator / denominator);
+            }
+
+            // Display results, formatted to 2 decimal places
+            paymentDisplay.textContent = '$' + monthlyPayment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        document.getElementById('calculate-btn').addEventListener('click', calculateLoanPayment);
+
+        document.getElementById('clear-btn').addEventListener('click', function() {
+            document.getElementById('loan-amount').value = '';
+            document.getElementById('interest-rate').value = '';
+            document.getElementById('loan-term').value = '';
+            document.getElementById('monthly-payment').textContent = '—';
+            document.getElementById('result-box').style.borderLeftColor = 'var(--border)';
+        });
+
+        // Initialize calculator on load
+        calculateLoanPayment();
+    </script>
+</body>
+</html>

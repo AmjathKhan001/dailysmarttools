@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator - Daily Smart Tool</title>
+    <meta name="description" content="Generate QR codes from text or URLs. Free online QR code generator.">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">⚙️</div>
+                <span>Daily Smart Tool</span>
+            </a>
+            <button class="mobile-menu-btn">☰</button>
+            <button class="theme-toggle" title="Toggle dark mode">🌙</button>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../all-tools.html">All Tools</a></li>
+                    <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                    <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                    <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                    <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                    <li><a href="password-generator.html">Generators</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li class="separator">/</li>
+                <li><a href="../all-tools.html">All Tools</a></li>
+                <li class="separator">/</li>
+                <li><a href="#">Generators</a></li>
+                <li class="separator">/</li>
+                <li>QR Code Generator</li>
+            </ul>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="tool-page">
+            <div class="tool-header">
+                <h1>QR Code Generator</h1>
+                <p>Generate QR codes from text or URLs. This is a free, browser-based tool. No installation required.</p>
+            </div>
+            
+            <div class="tool-container">
+                <div class="tool-main">
+                    <div class="tool-input-area">
+                        <div class="input-group">
+                            <label for="qr-content">Enter text or URL:</label>
+                            <textarea id="qr-content" placeholder="Enter text, URL, email, phone number, or any content..." style="min-height: 100px;">https://www.dailysmarttool.com</textarea>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div class="input-group">
+                                <label for="qr-size">QR Code Size:</label>
+                                <select id="qr-size">
+                                    <option value="128">Small (128×128)</option>
+                                    <option value="256" selected>Medium (256×256)</option>
+                                    <option value="512">Large (512×512)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="qr-color">QR Code Color:</label>
+                                <input type="color" id="qr-color" value="#000000">
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div class="input-group">
+                                <label for="bg-color">Background Color:</label>
+                                <input type="color" id="bg-color" value="#ffffff">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="qr-error">Error Correction:</label>
+                                <select id="qr-error">
+                                    <option value="L">Low (7%)</option>
+                                    <option value="M" selected>Medium (15%)</option>
+                                    <option value="Q">Quartile (25%)</option>
+                                    <option value="H">High (30%)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="tool-buttons">
+                            <button class="btn btn-primary" id="generate-btn">Generate QR Code</button>
+                            <button class="btn btn-secondary" id="clear-btn">Clear</button>
+                            <button class="btn btn-success" id="download-btn">Download QR Code</button>
+                        </div>
+                        
+                        <div style="text-align: center; margin: 25px 0; padding: 20px; background: #f8fafc; border-radius: 8px;">
+                            <div id="qr-code-container">
+                                <p>QR Code will appear here</p>
+                            </div>
+                            <p id="qr-info" style="margin-top: 15px; font-size: 0.9rem; color: #64748b;"></p>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="output-result">QR Code Information:</label>
+                            <textarea id="output-result" readonly>QR code information will appear here.</textarea>
+                        </div>
+                        
+                        <div class="info-section">
+                            <h3>About This Tool</h3>
+                            <p>The QR Code Generator allows you to create custom QR codes for websites, contact information, WiFi passwords, and more. It's designed to be fast, secure, and easy to use.</p>
+                            <p><strong>Common uses:</strong> Website links, contact cards, WiFi access, payment information, event tickets.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tool-sidebar">
+                    <div class="ad-banner vertical">Ad Space (300x250)</div>
+                    
+                    <h3>Related Generators</h3>
+                    <ul class="related-tools">
+                        <li><a href="password-generator.html">➤ Password Generator</a></li>
+                        <li><a href="random-number.html">➤ Random Number Generator</a></li>
+                        <li><a href="barcode-generator.html">➤ Barcode Generator</a></li>
+                        <li><a href="hash-generator.html">➤ Hash Generator</a></li>
+                    </ul>
+                    
+                    <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <h4>Quick Templates</h4>
+                        <button class="btn btn-secondary" style="width: 100%; margin-bottom: 5px;" onclick="loadTemplate('website')">Website URL</button>
+                        <button class="btn btn-secondary" style="width: 100%; margin-bottom: 5px;" onclick="loadTemplate('email')">Email Address</button>
+                        <button class="btn btn-secondary" style="width: 100%;" onclick="loadTemplate('wifi')">WiFi Network</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Daily Smart Tool</h3>
+                    <p>Your one-stop destination for free online utilities, calculators, converters, and productivity tools.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../all-tools.html">All Tools</a></li>
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Popular Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                        <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                        <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                        <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                        <li><a href="../tools/developers/html-encoder.html">Developer Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li>Email: contact@dailysmarttool.com</li>
+                        <li>Feedback: feedback@dailysmarttool.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; <script>document.write(new Date().getFullYear())</script> Daily Smart Tool. All rights reserved. | Part of Safetyguide360 Network
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script>
+        // QR Code Generator functionality
+        function generateQRCode() {
+            const content = document.getElementById('qr-content').value.trim();
+            const size = parseInt(document.getElementById('qr-size').value);
+            const color = document.getElementById('qr-color').value.replace('#', '');
+            const bgColor = document.getElementById('bg-color').value.replace('#', '');
+            const errorCorrection = document.getElementById('qr-error').value;
+            
+            if (!content) {
+                document.getElementById('qr-code-container').innerHTML = '<p style="color: #ef4444;">Please enter some content</p>';
+                document.getElementById('output-result').value = 'Error: Please enter text or URL to generate QR code.';
+                return;
+            }
+            
+            const container = document.getElementById('qr-code-container');
+            
+            // Clear previous QR code
+            container.innerHTML = '';
+            
+            // Generate QR code
+            try {
+                QRCode.toCanvas(container, content, {
+                    width: size,
+                    margin: 1,
+                    color: {
+                        dark: '#' + color,
+                        light: '#' + bgColor
+                    },
+                    errorCorrectionLevel: errorCorrection
+                }, function(error) {
+                    if (error) {
+                        container.innerHTML = '<p style="color: #ef4444;">Error generating QR code</p>';
+                        document.getElementById('output-result').value = 'Error: ' + error.message;
+                    } else {
+                        // Add download button to canvas
+                        const canvas = container.querySelector('canvas');
+                        if (canvas) {
+                            canvas.style.borderRadius = '8px';
+                            canvas.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+                        }
+                        
+                        // Update info
+                        updateQRInfo(content, size, color, bgColor, errorCorrection);
+                    }
+                });
+            } catch (error) {
+                container.innerHTML = '<p style="color: #ef4444;">Error: ' + error.message + '</p>';
+                document.getElementById('output-result').value = 'Error generating QR code: ' + error.message;
+            }
+        }
+        
+        function updateQRInfo(content, size, color, bgColor, errorCorrection) {
+            const errorLevels = {
+                'L': 'Low (7% recovery)',
+                'M': 'Medium (15% recovery)',
+                'Q': 'Quartile (25% recovery)',
+                'H': 'High (30% recovery)'
+            };
+            
+            const contentType = detectContentType(content);
+            const charCount = content.length;
+            
+            // Update small info
+            document.getElementById('qr-info').textContent = 
+                `${size}×${size} pixels | ${charCount} characters | ${errorLevels[errorCorrection]}`;
+            
+            // Update detailed output
+            const output = `📱 QR CODE GENERATED SUCCESSFULLY
+
+CONTENT INFORMATION:
+• Type: ${contentType}
+• Characters: ${charCount}
+• Preview: "${content.substring(0, 50)}${charCount > 50 ? '...' : ''}"
+
+QR CODE SETTINGS:
+• Size: ${size}×${size} pixels
+• Color: #${color}
+• Background: #${bgColor}
+• Error Correction: ${errorLevels[errorCorrection]}
+• Margin: 1 module
+
+📊 TECHNICAL DETAILS:
+• Data capacity: ${estimateDataCapacity(charCount, errorCorrection)}%
+• Modules: ${Math.floor(size / 4)}×${Math.floor(size / 4)}
+• Version: QR Code ${estimateQRVersion(charCount, errorCorrection)}
+
+📥 DOWNLOAD OPTIONS:
+1. Click "Download QR Code" button
+2. Or right-click the QR code → "Save image as..."
+3. File will be saved as: QR_${Date.now()}.png
+
+💡 USAGE TIPS:
+• Test QR code with your phone camera
+• Larger size = better scanning from distance
+• Higher error correction = more durable but larger
+• Dark on light background works best
+
+🛠️ INTEGRATION:
+• Use in websites, posters, business cards
+• Print minimum size: 2×2 cm (0.8×0.8 in)
+• Ensure good contrast for reliable scanning`;
+            
+            document.getElementById('output-result').value = output;
+        }
+        
+        function detectContentType(content) {
+            if (content.startsWith('http://') || content.startsWith('https://')) {
+                return 'Website URL';
+            } else if (content.includes('@') && content.includes('.')) {
+                return 'Email Address';
+            } else if (content.startsWith('tel:')) {
+                return 'Phone Number';
+            } else if (content.startsWith('WIFI:')) {
+                return 'WiFi Network';
+            } else if (content.startsWith('BEGIN:VCARD')) {
+                return 'Contact Card';
+            } else {
+                return 'Plain Text';
+            }
+        }
+        
+        function estimateDataCapacity(charCount, errorCorrection) {
+            const capacities = { 'L': 4296, 'M': 3391, 'Q': 2420, 'H': 1852 };
+            return Math.min(100, Math.round((charCount / capacities[errorCorrection]) * 100));
+        }
+        
+        function estimateQRVersion(charCount, errorCorrection) {
+            // Simplified version estimation
+            if (charCount < 50) return '1-2';
+            if (charCount < 100) return '3-4';
+            if (charCount < 200) return '5-6';
+            return '7+';
+        }
+        
+        function downloadQRCode() {
+            const canvas = document.getElementById('qr-code-container').querySelector('canvas');
+            if (!canvas) {
+                alert('Please generate a QR code first.');
+                return;
+            }
+            
+            // Create download link
+            const link = document.createElement('a');
+            link.download = `QR_Code_${Date.now()}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            
+            // Update output with download info
+            const currentOutput = document.getElementById('output-result').value;
+            document.getElementById('output-result').value = currentOutput + '\n\n✅ QR Code downloaded successfully!';
+        }
+
+        document.getElementById('generate-btn').addEventListener('click', generateQRCode);
+        
+        document.getElementById('clear-btn').addEventListener('click', function() {
+            document.getElementById('qr-content').value = 'https://www.dailysmarttool.com';
+            document.getElementById('qr-size').value = '256';
+            document.getElementById('qr-color').value = '#000000';
+            document.getElementById('bg-color').value = '#ffffff';
+            document.getElementById('qr-error').value = 'M';
+            document.getElementById('qr-code-container').innerHTML = '<p>QR Code will appear here</p>';
+            document.getElementById('qr-info').textContent = '';
+            document.getElementById('output-result').value = 'QR code information will appear here.';
+            generateQRCode();
+        });
+
+        document.getElementById('download-btn').addEventListener('click', downloadQRCode);
+
+        // Auto-generate when settings change
+        document.getElementById('qr-size').addEventListener('change', generateQRCode);
+        document.getElementById('qr-color').addEventListener('change', generateQRCode);
+        document.getElementById('bg-color').addEventListener('change', generateQRCode);
+        document.getElementById('qr-error').addEventListener('change', generateQRCode);
+
+        // Template function
+        window.loadTemplate = function(type) {
+            let content = '';
+            switch(type) {
+                case 'website':
+                    content = 'https://www.dailysmarttool.com';
+                    break;
+                case 'email':
+                    content = 'mailto:contact@dailysmarttool.com?subject=Hello&body=I found your tool useful!';
+                    break;
+                case 'wifi':
+                    content = 'WIFI:S:MyNetwork;T:WPA;P:MyPassword;;';
+                    break;
+            }
+            document.getElementById('qr-content').value = content;
+            generateQRCode();
+        };
+
+        // Generate on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            generateQRCode();
+        });
+    </script>
+</body>
+</html>

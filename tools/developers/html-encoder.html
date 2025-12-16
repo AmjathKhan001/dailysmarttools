@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Encoder/Decoder - Daily Smart Tool</title>
+    <meta name="description" content="Encode and decode HTML entities. Free online HTML encoder/decoder tool.">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">⚙️</div>
+                <span>Daily Smart Tool</span>
+            </a>
+            <button class="mobile-menu-btn">☰</button>
+            <button class="theme-toggle" title="Toggle dark mode">🌙</button>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../all-tools.html">All Tools</a></li>
+                    <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                    <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                    <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                    <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                    <li><a href="../tools/generators/password-generator.html">Generators</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li class="separator">/</li>
+                <li><a href="../all-tools.html">All Tools</a></li>
+                <li class="separator">/</li>
+                <li><a href="#">Developer Tools</a></li>
+                <li class="separator">/</li>
+                <li>HTML Encoder/Decoder</li>
+            </ul>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="tool-page">
+            <div class="tool-header">
+                <h1>HTML Encoder/Decoder</h1>
+                <p>Encode and decode HTML entities. This is a free, browser-based tool. No installation required.</p>
+            </div>
+            
+            <div class="tool-container">
+                <div class="tool-main">
+                    <div class="tool-input-area">
+                        <div class="input-group">
+                            <label for="html-input">Enter HTML/text:</label>
+                            <textarea id="html-input" placeholder="Enter HTML or text to encode/decode..." style="font-family: 'Courier New', monospace; min-height: 150px;"><div class="container">
+    <h1>Hello & Welcome!</h1>
+    <p>This is a "test" with special chars: < > & ' "</p>
+</div></textarea>
+                        </div>
+                        
+                        <div class="tool-buttons">
+                            <button class="btn btn-primary" id="encode-btn">Encode HTML</button>
+                            <button class="btn btn-primary" id="decode-btn">Decode HTML</button>
+                            <button class="btn btn-secondary" id="clear-btn">Clear</button>
+                            <button class="btn btn-success" id="copy-btn">Copy Result</button>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="output-result">Result:</label>
+                            <textarea id="output-result" readonly style="font-family: 'Courier New', monospace; min-height: 150px;">Encoded/decoded result will appear here.</textarea>
+                        </div>
+                        
+                        <div class="info-section">
+                            <h3>Common HTML Entities</h3>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-top: 15px;">
+                                <div style="font-family: monospace; background: #f8fafc; padding: 8px; border-radius: 4px;">&amp;lt; = &lt;</div>
+                                <div style="font-family: monospace; background: #f8fafc; padding: 8px; border-radius: 4px;">&amp;gt; = &gt;</div>
+                                <div style="font-family: monospace; background: #f8fafc; padding: 8px; border-radius: 4px;">&amp;amp; = &amp;</div>
+                                <div style="font-family: monospace; background: #f8fafc; padding: 8px; border-radius: 4px;">&amp;quot; = "</div>
+                                <div style="font-family: monospace; background: #f8fafc; padding: 8px; border-radius: 4px;">&amp;apos; = '</div>
+                                <div style="font-family: monospace; background: #f8fafc; padding: 8px; border-radius: 4px;">&amp;nbsp; = non-breaking space</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tool-sidebar">
+                    <div class="ad-banner vertical">Ad Space (300x250)</div>
+                    
+                    <h3>Related Developer Tools</h3>
+                    <ul class="related-tools">
+                        <li><a href="json-formatter.html">➤ JSON Formatter</a></li>
+                        <li><a href="css-minifier.html">➤ CSS Minifier</a></li>
+                        <li><a href="regex-tester.html">➤ Regex Tester</a></li>
+                        <li><a href="timestamp-converter.html">➤ Timestamp Converter</a></li>
+                    </ul>
+                    
+                    <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <h4>Quick Actions</h4>
+                        <button class="btn btn-secondary" style="width: 100%; margin-bottom: 5px;" onclick="loadExample('basic')">Basic HTML Example</button>
+                        <button class="btn btn-secondary" style="width: 100%; margin-bottom: 5px;" onclick="loadExample('special')">Special Characters</button>
+                        <button class="btn btn-secondary" style="width: 100%;" onclick="loadExample('url')">URL Encoding Example</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Daily Smart Tool</h3>
+                    <p>Your one-stop destination for free online utilities, calculators, converters, and productivity tools.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../all-tools.html">All Tools</a></li>
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Popular Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                        <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                        <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                        <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                        <li><a href="json-formatter.html">Developer Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li>Email: contact@dailysmarttool.com</li>
+                        <li>Feedback: feedback@dailysmarttool.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; <script>document.write(new Date().getFullYear())</script> Daily Smart Tool. All rights reserved. | Part of Safetyguide360 Network
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // HTML Encoder/Decoder functionality
+        function encodeHTML(text) {
+            return text.replace(/[&<>"']/g, function(match) {
+                switch(match) {
+                    case '&': return '&amp;';
+                    case '<': return '&lt;';
+                    case '>': return '&gt;';
+                    case '"': return '&quot;';
+                    case "'": return '&apos;';
+                    default: return match;
+                }
+            });
+        }
+        
+        function decodeHTML(text) {
+            return text.replace(/&amp;|&lt;|&gt;|&quot;|&apos;/g, function(match) {
+                switch(match) {
+                    case '&amp;': return '&';
+                    case '&lt;': return '<';
+                    case '&gt;': return '>';
+                    case '&quot;': return '"';
+                    case '&apos;': return "'";
+                    default: return match;
+                }
+            });
+        }
+        
+        function encodeAllHTML(text) {
+            // Encode all characters
+            return text.split('').map(function(char) {
+                return '&#' + char.charCodeAt(0) + ';';
+            }).join('');
+        }
+        
+        function decodeAllHTML(text) {
+            // Decode numeric entities
+            return text.replace(/&#(\d+);/g, function(match, dec) {
+                return String.fromCharCode(dec);
+            }).replace(/&#x([0-9A-F]+);/gi, function(match, hex) {
+                return String.fromCharCode(parseInt(hex, 16));
+            });
+        }
+
+        document.getElementById('encode-btn').addEventListener('click', function() {
+            const input = document.getElementById('html-input').value;
+            const encoded = encodeHTML(input);
+            document.getElementById('output-result').value = encoded;
+            
+            // Show stats
+            const originalChars = input.length;
+            const encodedChars = encoded.length;
+            const diff = encodedChars - originalChars;
+            const diffText = diff > 0 ? `(+${diff} characters)` : diff < 0 ? `(${diff} characters)` : '(same length)';
+            
+            document.getElementById('output-result').value += `\n\n📊 ENCODING STATS:
+Original: ${originalChars} characters
+Encoded: ${encodedChars} characters ${diffText}
+Special characters encoded: ${(encoded.match(/&[a-z]+;/g) || []).length}`;
+        });
+
+        document.getElementById('decode-btn').addEventListener('click', function() {
+            const input = document.getElementById('html-input').value;
+            const decoded = decodeHTML(input);
+            document.getElementById('output-result').value = decoded;
+            
+            // Show stats
+            const entities = (input.match(/&[a-z]+;/g) || []).length;
+            const numericEntities = (input.match(/&#\d+;/g) || []).length;
+            
+            document.getElementById('output-result').value += `\n\n📊 DECODING STATS:
+HTML entities found: ${entities}
+Numeric entities: ${numericEntities}
+Total entities decoded: ${entities + numericEntities}`;
+        });
+
+        document.getElementById('clear-btn').addEventListener('click', function() {
+            document.getElementById('html-input').value = '';
+            document.getElementById('output-result').value = 'Encoded/decoded result will appear here.';
+        });
+
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const resultText = document.getElementById('output-result').value;
+            if (resultText && !resultText.includes('Encoded/decoded result')) {
+                navigator.clipboard.writeText(resultText).then(() => {
+                    alert('Result copied to clipboard!');
+                });
+            } else {
+                alert('Please encode or decode some HTML first.');
+            }
+        });
+
+        // Load example function
+        window.loadExample = function(type) {
+            let example = '';
+            switch(type) {
+                case 'basic':
+                    example = '<div class="example">Hello & World</div>';
+                    break;
+                case 'special':
+                    example = 'Special chars: < > & " \'';
+                    break;
+                case 'url':
+                    example = 'https://example.com/page?name=test&id=123';
+                    break;
+            }
+            document.getElementById('html-input').value = example;
+        };
+
+        // Encode on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('encode-btn').click();
+        });
+    </script>
+</body>
+</html>

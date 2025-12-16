@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Percentage Calculator - Daily Smart Tool</title>
+    <meta name="description" content="Calculate percentages easily. Find percentage of a number, percentage increase/decrease, and more.">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .calculator-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .calc-tabs {
+            display: flex;
+            gap: 10px;
+            margin: 25px 0;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        .calc-tab {
+            padding: 12px 24px;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .calc-tab:hover {
+            background: #f1f5f9;
+        }
+        .calc-tab.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #1d4ed8;
+        }
+        .calc-content {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            margin-bottom: 25px;
+        }
+        .calc-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .calc-input-group {
+            margin: 20px 0;
+        }
+        .calc-input-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .calc-input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        .calc-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        .calc-label {
+            min-width: 200px;
+            font-weight: 600;
+        }
+        .calc-symbol {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #3b82f6;
+            min-width: 40px;
+            text-align: center;
+        }
+        .calc-result {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        .result-value {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #1d4ed8;
+            margin: 15px 0;
+        }
+        .result-formula {
+            font-family: 'Courier New', monospace;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 1.1rem;
+        }
+        .calc-actions {
+            display: flex;
+            gap: 15px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+        .calc-examples {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 25px 0;
+        }
+        .example-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .example-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .example-item:hover {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+        .percentage-visual {
+            display: flex;
+            height: 40px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 20px 0;
+            border: 2px solid #e2e8f0;
+        }
+        .percentage-part {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: width 0.5s ease;
+        }
+        .percentage-part.base {
+            background: #3b82f6;
+        }
+        .percentage-part.percentage {
+            background: #10b981;
+        }
+        .percentage-part.result {
+            background: #8b5cf6;
+        }
+        .history-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #fefce8;
+            border-radius: 10px;
+            border: 1px solid #fde047;
+        }
+        .history-list {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+        .history-item {
+            background: white;
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        @media (max-width: 768px) {
+            .calc-input-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .calc-label {
+                min-width: auto;
+                margin-bottom: 5px;
+            }
+            .calc-symbol {
+                display: none;
+            }
+            .calc-tabs {
+                flex-wrap: wrap;
+            }
+            .calc-tab {
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">⚙️</div>
+                <span>Daily Smart Tool</span>
+            </a>
+            <button class="mobile-menu-btn">☰</button>
+            <button class="theme-toggle" title="Toggle dark mode">🌙</button>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../all-tools.html">All Tools</a></li>
+                    <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                    <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                    <li><a href="loan-calculator.html">Calculators</a></li>
+                    <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                    <li><a href="../tools/generators/password-generator.html">Generators</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li class="separator">/</li>
+                <li><a href="../all-tools.html">All Tools</a></li>
+                <li class="separator">/</li>
+                <li><a href="loan-calculator.html">Calculators</a></li>
+                <li class="separator">/</li>
+                <li>Percentage Calculator</li>
+            </ul>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="tool-page">
+            <div class="tool-header">
+                <h1>Percentage Calculator</h1>
+                <p>Calculate percentages easily. Multiple calculation modes for different percentage problems.</p>
+            </div>
+            
+            <div class="tool-container">
+                <div class="tool-main">
+                    <div class="calculator-container">
+                        <!-- Tabs -->
+                        <div class="calc-tabs">
+                            <div class="calc-tab active" data-tab="basic">Basic Percentage</div>
+                            <div class="calc-tab" data-tab="increase">Percentage Increase</div>
+                            <div class="calc-tab" data-tab="decrease">Percentage Decrease</div>
+                            <div class="calc-tab" data-tab="find-percent">Find Percentage</div>
+                            <div class="calc-tab" data-tab="reverse">Reverse Percentage</div>
+                        </div>
+                        
+                        <!-- Tab 1: Basic Percentage -->
+                        <div class="calc-content active" id="basic-tab">
+                            <h3>Calculate Percentage of a Number</h3>
+                            <p>What is <strong>X%</strong> of <strong>Y</strong>?</p>
+                            
+                            <div class="calc-input-group">
+                                <div class="calc-input-row">
+                                    <div class="calc-label">What is</div>
+                                    <input type="number" id="basic-percent" class="calc-input" placeholder="Percentage" value="20">
+                                    <div class="calc-symbol">%</div>
+                                    <div class="calc-label">of</div>
+                                    <input type="number" id="basic-number" class="calc-input" placeholder="Number" value="100">
+                                    <div class="calc-symbol">?</div>
+                                </div>
+                            </div>
+                            
+                            <div class="calc-result">
+                                <div>Result:</div>
+                                <div class="result-value" id="basic-result">20</div>
+                                <div class="result-formula" id="basic-formula">20% of 100 = 20</div>
+                            </div>
+                            
+                            <div class="percentage-visual" id="basic-visual">
+                                <div class="percentage-part base" style="width: 80%;">Base (100)</div>
+                                <div class="percentage-part percentage" style="width: 20%;">20% = 20</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Tab 2: Percentage Increase -->
+                        <div class="calc-content" id="increase-tab">
+                            <h3>Percentage Increase Calculator</h3>
+                            <p>Increase <strong>Y</strong> by <strong>X%</strong></p>
+                            
+                            <div class="calc-input-group">
+                                <div class="calc-input-row">
+                                    <div class="calc-label">Increase</div>
+                                    <input type="number" id="increase-number" class="calc-input" placeholder="Number" value="100">
+                                    <div class="calc-label">by</div>
+                                    <input type="number" id="increase-percent" class="calc-input" placeholder="Percentage" value="10">
+                                    <div class="calc-symbol">%</div>
+                                </div>
+                            </div>
+                            
+                            <div class="calc-result">
+                                <div>Result:</div>
+                                <div class="result-value" id="increase-result">110</div>
+                                <div class="result-formula" id="increase-formula">100 + (10% of 100) = 110</div>
+                                <div>Increase Amount: <strong id="increase-amount">10</strong></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Tab 3: Percentage Decrease -->
+                        <div class="calc-content" id="decrease-tab">
+                            <h3>Percentage Decrease Calculator</h3>
+                            <p>Decrease <strong>Y</strong> by <strong>X%</strong></p>
+                            
+                            <div class="calc-input-group">
+                                <div class="calc-input-row">
+                                    <div class="calc-label">Decrease</div>
+                                    <input type="number" id="decrease-number" class="calc-input" placeholder="Number" value="100">
+                                    <div class="calc-label">by</div>
+                                    <input type="number" id="decrease-percent" class="calc-input" placeholder="Percentage" value="10">
+                                    <div class="calc-symbol">%</div>
+                                </div>
+                            </div>
+                            
+                            <div class="calc-result">
+                                <div>Result:</div>
+                                <div class="result-value" id="decrease-result">90</div>
+                                <div class="result-formula" id="decrease-formula">100 - (10% of 100) = 90</div>
+                                <div>Decrease Amount: <strong id="decrease-amount">10</strong></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Tab 4: Find Percentage -->
+                        <div class="calc-content" id="find-percent-tab">
+                            <h3>Find What Percentage X is of Y</h3>
+                            <p><strong>X</strong> is what percent of <strong>Y</strong>?</p>
+                            
+                            <div class="calc-input-group">
+                                <div class="calc-input-row">
+                                    <div class="calc-label">What percentage is</div>
+                                    <input type="number" id="find-part" class="calc-input" placeholder="Part" value="25">
+                                    <div class="calc-label">of</div>
+                                    <input type="number" id="find-whole" class="calc-input" placeholder="Whole" value="100">
+                                    <div class="calc-symbol">?</div>
+                                </div>
+                            </div>
+                            
+                            <div class="calc-result">
+                                <div>Result:</div>
+                                <div class="result-value" id="find-result">25%</div>
+                                <div class="result-formula" id="find-formula">25 ÷ 100 × 100 = 25%</div>
+                            </div>
+                            
+                            <div class="percentage-visual" id="find-visual">
+                                <div class="percentage-part base" style="width: 75%;">Whole (100)</div>
+                                <div class="percentage-part result" style="width: 25%;">25 (25%)</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Tab 5: Reverse Percentage -->
+                        <div class="calc-content" id="reverse-tab">
+                            <h3>Reverse Percentage Calculator</h3>
+                            <p>If <strong>X</strong> is <strong>Y%</strong> of a number, what is that number?</p>
+                            
+                            <div class="calc-input-group">
+                                <div class="calc-input-row">
+                                    <div class="calc-label">If</div>
+                                    <input type="number" id="reverse-part" class="calc-input" placeholder="Part" value="20">
+                                    <div class="calc-label">is</div>
+                                    <input type="number" id="reverse-percent" class="calc-input" placeholder="Percentage" value="25">
+                                    <div class="calc-symbol">%</div>
+                                    <div class="calc-label">of a number</div>
+                                </div>
+                            </div>
+                            
+                            <div class="calc-result">
+                                <div>The number is:</div>
+                                <div class="result-value" id="reverse-result">80</div>
+                                <div class="result-formula" id="reverse-formula">20 ÷ 25 × 100 = 80</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="calc-actions">
+                            <button class="btn btn-primary" id="calculate-btn">Calculate</button>
+                            <button class="btn btn-secondary" id="clear-btn">Clear All</button>
+                            <button class="btn btn-success" id="copy-btn">Copy Result</button>
+                            <button class="btn btn-secondary" id="swap-btn">Swap Values</button>
+                        </div>
+                        
+                        <!-- Examples -->
+                        <div class="calc-examples">
+                            <h4>Common Examples</h4>
+                            <div class="example-list">
+                                <div class="example-item" data-type="basic" data-values="20,100">
+                                    What is 20% of 100?
+                                </div>
+                                <div class="example-item" data-type="increase" data-values="50,20">
+                                    Increase 50 by 20%
+                                </div>
+                                <div class="example-item" data-type="decrease" data-values="80,15">
+                                    Decrease 80 by 15%
+                                </div>
+                                <div class="example-item" data-type="find-percent" data-values="30,150">
+                                    30 is what % of 150?
+                                </div>
+                                <div class="example-item" data-type="reverse" data-values="40,80">
+                                    40 is 80% of what?
+                                </div>
+                                <div class="example-item" data-type="basic" data-values="15,200">
+                                    What is 15% of 200?
+                                </div>
+                                <div class="example-item" data-type="increase" data-values="1000,7">
+                                    Increase 1000 by 7%
+                                </div>
+                                <div class="example-item" data-type="decrease" data-values="500,30">
+                                    Decrease 500 by 30%
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- History -->
+                        <div class="history-section">
+                            <h4>Calculation History</h4>
+                            <div class="history-list" id="history-list">
+                                <!-- History items will be added here -->
+                            </div>
+                            <button class="btn btn-secondary" id="clear-history" style="margin-top: 15px;">Clear History</button>
+                        </div>
+                        
+                        <div class="info-section">
+                            <h3>About This Tool</h3>
+                            <p>The Percentage Calculator helps you solve various percentage problems quickly and accurately. It supports five different calculation modes:</p>
+                            
+                            <h4>Calculation Modes:</h4>
+                            <ol>
+                                <li><strong>Basic Percentage:</strong> Calculate X% of Y (What is 20% of 100?)</li>
+                                <li><strong>Percentage Increase:</strong> Increase Y by X% (Increase 100 by 10%)</li>
+                                <li><strong>Percentage Decrease:</strong> Decrease Y by X% (Decrease 100 by 10%)</li>
+                                <li><strong>Find Percentage:</strong> Find what percentage X is of Y (25 is what % of 100?)</li>
+                                <li><strong>Reverse Percentage:</strong> Find the original number when X is Y% of it (20 is 25% of what?)</li>
+                            </ol>
+                            
+                            <h4>Common Uses:</h4>
+                            <ul>
+                                <li><strong>Discounts:</strong> Calculate sale prices and savings</li>
+                                <li><strong>Tips:</strong> Calculate restaurant tips (15%, 18%, 20%)</li>
+                                <li><strong>Tax:</strong> Calculate sales tax or VAT</li>
+                                <li><strong>Grades:</strong> Calculate test scores and final grades</li>
+                                <li><strong>Finance:</strong> Calculate interest rates and returns</li>
+                                <li><strong>Statistics:</strong> Calculate growth rates and changes</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tool-sidebar">
+                    <div class="ad-banner vertical">Ad Space (300x250)</div>
+                    
+                    <h3>Related Calculators</h3>
+                    <ul class="related-tools">
+                        <li><a href="compound-interest-calculator.html">➤ Compound Interest Calculator</a></li>
+                        <li><a href="mortgage-calculator.html">➤ Mortgage Calculator</a></li>
+                        <li><a href="tax-calculator.html">➤ Tax Calculator</a></li>
+                        <li><a href="loan-calculator.html">➤ Loan Calculator</a></li>
+                    </ul>
+                    
+                    <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <h4>Common Percentages</h4>
+                        <table style="width: 100%; font-size: 0.85rem;">
+                            <tr><td>1/2</td><td style="text-align: right;">50%</td></tr>
+                            <tr><td>1/4</td><td style="text-align: right;">25%</td></tr>
+                            <tr><td>1/3</td><td style="text-align: right;">33.33%</td></tr>
+                            <tr><td>3/4</td><td style="text-align: right;">75%</td></tr>
+                            <tr><td>1/10</td><td style="text-align: right;">10%</td></tr>
+                            <tr><td>1/5</td><td style="text-align: right;">20%</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Daily Smart Tool</h3>
+                    <p>Your one-stop destination for free online utilities, calculators, converters, and productivity tools.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../all-tools.html">All Tools</a></li>
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Popular Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                        <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                        <li><a href="loan-calculator.html">Calculators</a></li>
+                        <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                        <li><a href="../tools/generators/password-generator.html">Generators</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li>Email: contact@dailysmarttool.com</li>
+                        <li>Feedback: feedback@dailysmarttool.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; <script>document.write(new Date().getFullYear())</script> Daily Smart Tool. All rights reserved. | Part of Safetyguide360 Network
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // Variables
+        let calculationHistory = [];
+        const MAX_HISTORY_ITEMS = 10;
+        
+        // Get active tab
+        function getActiveTab() {
+            return document.querySelector('.calc-tab.active').getAttribute('data-tab');
+        }
+        
+        // Calculate based on active tab
+        function calculate() {
+            const tab = getActiveTab();
+            let result, formula, extraInfo;
+            
+            switch(tab) {
+                case 'basic':
+                    result = calculateBasic();
+                    break;
+                case 'increase':
+                    result = calculateIncrease();
+                    break;
+                case 'decrease':
+                    result = calculateDecrease();
+                    break;
+                case 'find-percent':
+                    result = calculateFindPercent();
+                    break;
+                case 'reverse':
+                    result = calculateReverse();
+                    break;
+            }
+            
+            // Update visualizations
+            updateVisualizations();
+            
+            // Add to history
+            addToHistory(tab, result, formula);
+        }
+        
+        // Basic percentage calculation
+        function calculateBasic() {
+            const percent = parseFloat(document.getElementById('basic-percent').value) || 0;
+            const number = parseFloat(document.getElementById('basic-number').value) || 0;
+            const result = (percent / 100) * number;
+            
+            const formula = `${percent}% of ${number} = ${result.toFixed(2)}`;
+            document.getElementById('basic-result').textContent = result.toFixed(2);
+            document.getElementById('basic-formula').textContent = formula;
+            
+            // Update visual width
+            const visual = document.getElementById('basic-visual');
+            const percentPart = visual.querySelector('.percentage-part.percentage');
+            const percentWidth = Math.min(percent, 100);
+            percentPart.style.width = percentWidth + '%';
+            percentPart.textContent = `${percent}% = ${result.toFixed(2)}`;
+            
+            const basePart = visual.querySelector('.percentage-part.base');
+            basePart.style.width = (100 - percentWidth) + '%';
+            basePart.textContent = `Base (${number})`;
+            
+            return { type: 'basic', percent, number, result, formula };
+        }
+        
+        // Percentage increase calculation
+        function calculateIncrease() {
+            const number = parseFloat(document.getElementById('increase-number').value) || 0;
+            const percent = parseFloat(document.getElementById('increase-percent').value) || 0;
+            const increaseAmount = (percent / 100) * number;
+            const result = number + increaseAmount;
+            
+            const formula = `${number} + (${percent}% of ${number}) = ${result.toFixed(2)}`;
+            document.getElementById('increase-result').textContent = result.toFixed(2);
+            document.getElementById('increase-formula').textContent = formula;
+            document.getElementById('increase-amount').textContent = increaseAmount.toFixed(2);
+            
+            return { type: 'increase', number, percent, result, increaseAmount, formula };
+        }
+        
+        // Percentage decrease calculation
+        function calculateDecrease() {
+            const number = parseFloat(document.getElementById('decrease-number').value) || 0;
+            const percent = parseFloat(document.getElementById('decrease-percent').value) || 0;
+            const decreaseAmount = (percent / 100) * number;
+            const result = number - decreaseAmount;
+            
+            const formula = `${number} - (${percent}% of ${number}) = ${result.toFixed(2)}`;
+            document.getElementById('decrease-result').textContent = result.toFixed(2);
+            document.getElementById('decrease-formula').textContent = formula;
+            document.getElementById('decrease-amount').textContent = decreaseAmount.toFixed(2);
+            
+            return { type: 'decrease', number, percent, result, decreaseAmount, formula };
+        }
+        
+        // Find percentage calculation
+        function calculateFindPercent() {
+            const part = parseFloat(document.getElementById('find-part').value) || 0;
+            const whole = parseFloat(document.getElementById('find-whole').value) || 0;
+            const result = whole === 0 ? 0 : (part / whole) * 100;
+            
+            const formula = `${part} ÷ ${whole} × 100 = ${result.toFixed(2)}%`;
+            document.getElementById('find-result').textContent = result.toFixed(2) + '%';
+            document.getElementById('find-formula').textContent = formula;
+            
+            // Update visual width
+            const visual = document.getElementById('find-visual');
+            const resultPart = visual.querySelector('.percentage-part.result');
+            const resultWidth = Math.min(result, 100);
+            resultPart.style.width = resultWidth + '%';
+            resultPart.textContent = `${part} (${result.toFixed(2)}%)`;
+            
+            const basePart = visual.querySelector('.percentage-part.base');
+            basePart.style.width = (100 - resultWidth) + '%';
+            basePart.textContent = `Whole (${whole})`;
+            
+            return { type: 'find-percent', part, whole, result, formula };
+        }
+        
+        // Reverse percentage calculation
+        function calculateReverse() {
+            const part = parseFloat(document.getElementById('reverse-part').value) || 0;
+            const percent = parseFloat(document.getElementById('reverse-percent').value) || 0;
+            const result = percent === 0 ? 0 : (part / percent) * 100;
+            
+            const formula = `${part} ÷ ${percent} × 100 = ${result.toFixed(2)}`;
+            document.getElementById('reverse-result').textContent = result.toFixed(2);
+            document.getElementById('reverse-formula').textContent = formula;
+            
+            return { type: 'reverse', part, percent, result, formula };
+        }
+        
+        // Update visualizations
+        function updateVisualizations() {
+            // Update basic percentage visualization
+            const basicPercent = parseFloat(document.getElementById('basic-percent').value) || 0;
+            const basicNumber = parseFloat(document.getElementById('basic-number').value) || 0;
+            const basicResult = (basicPercent / 100) * basicNumber;
+            
+            const basicVisual = document.getElementById('basic-visual');
+            if (basicVisual) {
+                const percentPart = basicVisual.querySelector('.percentage-part.percentage');
+                const percentWidth = Math.min(basicPercent, 100);
+                percentPart.style.width = percentWidth + '%';
+                percentPart.textContent = `${basicPercent}% = ${basicResult.toFixed(2)}`;
+                
+                const basePart = basicVisual.querySelector('.percentage-part.base');
+                basePart.style.width = (100 - percentWidth) + '%';
+                basePart.textContent = `Base (${basicNumber})`;
+            }
+            
+            // Update find percentage visualization
+            const findPart = parseFloat(document.getElementById('find-part').value) || 0;
+            const findWhole = parseFloat(document.getElementById('find-whole').value) || 0;
+            const findResult = findWhole === 0 ? 0 : (findPart / findWhole) * 100;
+            
+            const findVisual = document.getElementById('find-visual');
+            if (findVisual) {
+                const resultPart = findVisual.querySelector('.percentage-part.result');
+                const resultWidth = Math.min(findResult, 100);
+                resultPart.style.width = resultWidth + '%';
+                resultPart.textContent = `${findPart} (${findResult.toFixed(2)}%)`;
+                
+                const basePart = findVisual.querySelector('.percentage-part.base');
+                basePart.style.width = (100 - resultWidth) + '%';
+                basePart.textContent = `Whole (${findWhole})`;
+            }
+        }
+        
+        // Add calculation to history
+        function addToHistory(tab, data) {
+            const historyItem = {
+                id: Date.now(),
+                timestamp: new Date().toLocaleTimeString(),
+                type: data.type,
+                data: data,
+                display: getHistoryDisplay(data)
+            };
+            
+            calculationHistory.unshift(historyItem);
+            if (calculationHistory.length > MAX_HISTORY_ITEMS) {
+                calculationHistory.pop();
+            }
+            
+            updateHistoryDisplay();
+        }
+        
+        // Get history item display text
+        function getHistoryDisplay(data) {
+            switch(data.type) {
+                case 'basic':
+                    return `${data.percent}% of ${data.number} = ${data.result.toFixed(2)}`;
+                case 'increase':
+                    return `${data.number} + ${data.percent}% = ${data.result.toFixed(2)}`;
+                case 'decrease':
+                    return `${data.number} - ${data.percent}% = ${data.result.toFixed(2)}`;
+                case 'find-percent':
+                    return `${data.part} is ${data.result.toFixed(2)}% of ${data.whole}`;
+                case 'reverse':
+                    return `${data.part} is ${data.percent}% of ${data.result.toFixed(2)}`;
+                default:
+                    return '';
+            }
+        }
+        
+        // Update history display
+        function updateHistoryDisplay() {
+            const historyList = document.getElementById('history-list');
+            historyList.innerHTML = '';
+            
+            if (calculationHistory.length === 0) {
+                historyList.innerHTML = '<div style="text-align: center; color: #64748b; padding: 20px;">No calculations yet</div>';
+                return;
+            }
+            
+            calculationHistory.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'history-item';
+                div.innerHTML = `
+                    <div>
+                        <strong>${item.display}</strong><br>
+                        <small style="color: #64748b;">${item.timestamp}</small>
+                    </div>
+                    <button class="btn btn-secondary" onclick="useHistoryItem(${item.id})" style="padding: 5px 10px; font-size: 0.9rem;">
+                        Use
+                    </button>
+                `;
+                historyList.appendChild(div);
+            });
+        }
+        
+        // Use history item
+        function useHistoryItem(id) {
+            const item = calculationHistory.find(i => i.id === id);
+            if (!item) return;
+            
+            // Switch to appropriate tab
+            document.querySelectorAll('.calc-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.calc-content').forEach(content => content.classList.remove('active'));
+            
+            const tab = document.querySelector(`.calc-tab[data-tab="${item.type}"]`);
+            const content = document.getElementById(`${item.type}-tab`);
+            
+            if (tab && content) {
+                tab.classList.add('active');
+                content.classList.add('active');
+                
+                // Fill in values
+                switch(item.type) {
+                    case 'basic':
+                        document.getElementById('basic-percent').value = item.data.percent;
+                        document.getElementById('basic-number').value = item.data.number;
+                        break;
+                    case 'increase':
+                        document.getElementById('increase-number').value = item.data.number;
+                        document.getElementById('increase-percent').value = item.data.percent;
+                        break;
+                    case 'decrease':
+                        document.getElementById('decrease-number').value = item.data.number;
+                        document.getElementById('decrease-percent').value = item.data.percent;
+                        break;
+                    case 'find-percent':
+                        document.getElementById('find-part').value = item.data.part;
+                        document.getElementById('find-whole').value = item.data.whole;
+                        break;
+                    case 'reverse':
+                        document.getElementById('reverse-part').value = item.data.part;
+                        document.getElementById('reverse-percent').value = item.data.percent;
+                        break;
+                }
+                
+                // Recalculate
+                calculate();
+            }
+        }
+        
+        // Clear all inputs
+        function clearAll() {
+            // Clear all input fields
+            document.querySelectorAll('.calc-input').forEach(input => {
+                input.value = '';
+            });
+            
+            // Reset to default values
+            document.getElementById('basic-percent').value = '20';
+            document.getElementById('basic-number').value = '100';
+            document.getElementById('increase-number').value = '100';
+            document.getElementById('increase-percent').value = '10';
+            document.getElementById('decrease-number').value = '100';
+            document.getElementById('decrease-percent').value = '10';
+            document.getElementById('find-part').value = '25';
+            document.getElementById('find-whole').value = '100';
+            document.getElementById('reverse-part').value = '20';
+            document.getElementById('reverse-percent').value = '25';
+            
+            // Clear results
+            document.querySelectorAll('.result-value').forEach(el => {
+                el.textContent = '0';
+            });
+            document.querySelectorAll('.result-formula').forEach(el => {
+                el.textContent = '';
+            });
+            
+            // Update visualizations
+            updateVisualizations();
+        }
+        
+        // Copy result to clipboard
+        function copyResult() {
+            const tab = getActiveTab();
+            let resultText = '';
+            
+            switch(tab) {
+                case 'basic':
+                    resultText = document.getElementById('basic-result').textContent;
+                    break;
+                case 'increase':
+                    resultText = document.getElementById('increase-result').textContent;
+                    break;
+                case 'decrease':
+                    resultText = document.getElementById('decrease-result').textContent;
+                    break;
+                case 'find-percent':
+                    resultText = document.getElementById('find-result').textContent;
+                    break;
+                case 'reverse':
+                    resultText = document.getElementById('reverse-result').textContent;
+                    break;
+            }
+            
+            if (resultText && resultText !== '0') {
+                navigator.clipboard.writeText(resultText).then(() => {
+                    alert('Result copied to clipboard!');
+                });
+            } else {
+                alert('Please calculate something first.');
+            }
+        }
+        
+        // Swap values for find-percentage and reverse
+        function swapValues() {
+            const tab = getActiveTab();
+            
+            if (tab === 'find-percent') {
+                const part = document.getElementById('find-part').value;
+                const whole = document.getElementById('find-whole').value;
+                document.getElementById('find-part').value = whole;
+                document.getElementById('find-whole').value = part;
+            } else if (tab === 'basic') {
+                const percent = document.getElementById('basic-percent').value;
+                const number = document.getElementById('basic-number').value;
+                document.getElementById('basic-percent').value = number;
+                document.getElementById('basic-number').value = percent;
+            }
+            
+            calculate();
+        }
+        
+        // Event Listeners
+        // Tab switching
+        document.querySelectorAll('.calc-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Update active tab
+                document.querySelectorAll('.calc-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Update active content
+                const tabId = tab.getAttribute('data-tab');
+                document.querySelectorAll('.calc-content').forEach(content => content.classList.remove('active'));
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+                
+                // Calculate for new tab
+                calculate();
+            });
+        });
+        
+        // Calculate button
+        document.getElementById('calculate-btn').addEventListener('click', calculate);
+        
+        // Clear button
+        document.getElementById('clear-btn').addEventListener('click', clearAll);
+        
+        // Copy button
+        document.getElementById('copy-btn').addEventListener('click', copyResult);
+        
+        // Swap button
+        document.getElementById('swap-btn').addEventListener('click', swapValues);
+        
+        // Clear history
+        document.getElementById('clear-history').addEventListener('click', () => {
+            calculationHistory = [];
+            updateHistoryDisplay();
+        });
+        
+        // Example items
+        document.querySelectorAll('.example-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const type = item.getAttribute('data-type');
+                const values = item.getAttribute('data-values').split(',').map(v => parseFloat(v));
+                
+                // Switch to appropriate tab
+                document.querySelectorAll('.calc-tab').forEach(tab => tab.classList.remove('active'));
+                document.querySelectorAll('.calc-content').forEach(content => content.classList.remove('active'));
+                
+                const tab = document.querySelector(`.calc-tab[data-tab="${type}"]`);
+                const content = document.getElementById(`${type}-tab`);
+                
+                if (tab && content) {
+                    tab.classList.add('active');
+                    content.classList.add('active');
+                    
+                    // Fill in values
+                    switch(type) {
+                        case 'basic':
+                            document.getElementById('basic-percent').value = values[0];
+                            document.getElementById('basic-number').value = values[1];
+                            break;
+                        case 'increase':
+                            document.getElementById('increase-number').value = values[0];
+                            document.getElementById('increase-percent').value = values[1];
+                            break;
+                        case 'decrease':
+                            document.getElementById('decrease-number').value = values[0];
+                            document.getElementById('decrease-percent').value = values[1];
+                            break;
+                        case 'find-percent':
+                            document.getElementById('find-part').value = values[0];
+                            document.getElementById('find-whole').value = values[1];
+                            break;
+                        case 'reverse':
+                            document.getElementById('reverse-part').value = values[0];
+                            document.getElementById('reverse-percent').value = values[1];
+                            break;
+                    }
+                    
+                    // Calculate
+                    calculate();
+                }
+            });
+        });
+        
+        // Auto-calculate on input change
+        document.querySelectorAll('.calc-input').forEach(input => {
+            input.addEventListener('input', () => {
+                calculate();
+            });
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            calculate();
+            updateHistoryDisplay();
+        });
+    </script>
+</body>
+</html>

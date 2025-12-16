@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PNG to JPG Converter - Daily Smart Tool</title>
+    <meta name="description" content="Convert PNG images to JPG format. Free online image converter with background color options.">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .converter-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .upload-zone {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 3px dashed #f59e0b;
+            border-radius: 15px;
+            padding: 60px 20px;
+            text-align: center;
+            margin: 30px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .upload-zone.dragover {
+            background: linear-gradient(135deg, #fde68a 0%, #fbbf24 100%);
+            border-color: #d97706;
+        }
+        .upload-icon {
+            font-size: 72px;
+            margin-bottom: 20px;
+        }
+        .file-counter {
+            background: #10b981;
+            color: white;
+            border-radius: 50px;
+            padding: 5px 15px;
+            display: inline-block;
+            margin: 10px;
+            font-weight: bold;
+        }
+        .file-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+            display: none;
+        }
+        .preview-thumb {
+            position: relative;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+            cursor: pointer;
+        }
+        .preview-thumb.selected {
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 2px #0ea5e9;
+        }
+        .thumb-image {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+        }
+        .thumb-info {
+            padding: 8px;
+            font-size: 0.8rem;
+            background: #f8fafc;
+        }
+        .thumb-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .remove-thumb {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+        .conversion-options {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border-left: 4px solid #f59e0b;
+        }
+        .option-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 1px solid #e2e8f0;
+        }
+        .color-picker-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .color-preview {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            border: 2px solid #cbd5e1;
+        }
+        .color-presets {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        .color-preset {
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .color-preset:hover {
+            border-color: #64748b;
+        }
+        .color-preset.active {
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 2px #0ea5e9;
+        }
+        .comparison-view {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 30px 0;
+            display: none;
+        }
+        .comparison-box {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+        .comparison-image {
+            max-width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            margin: 15px 0;
+        }
+        .size-comparison {
+            background: #f0f9ff;
+            border: 2px solid #0ea5e9;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            display: none;
+        }
+        .size-chart {
+            display: flex;
+            align-items: center;
+            height: 40px;
+            margin: 20px 0;
+            background: #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .size-bar {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: width 0.5s;
+        }
+        .size-bar.png {
+            background: #0ea5e9;
+        }
+        .size-bar.jpg {
+            background: #10b981;
+        }
+        .quality-presets {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .quality-preset {
+            padding: 8px 15px;
+            background: #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .quality-preset:hover {
+            background: #cbd5e1;
+        }
+        .quality-preset.active {
+            background: #0ea5e9;
+            color: white;
+            border-color: #0284c7;
+        }
+        @media (max-width: 768px) {
+            .comparison-view {
+                grid-template-columns: 1fr;
+            }
+            .color-picker-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">⚙️</div>
+                <span>Daily Smart Tool</span>
+            </a>
+            <button class="mobile-menu-btn">☰</button>
+            <button class="theme-toggle" title="Toggle dark mode">🌙</button>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../all-tools.html">All Tools</a></li>
+                    <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                    <li><a href="image-resizer.html">Image Tools</a></li>
+                    <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                    <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                    <li><a href="../tools/generators/password-generator.html">Generators</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li class="separator">/</li>
+                <li><a href="../all-tools.html">All Tools</a></li>
+                <li class="separator">/</li>
+                <li><a href="image-resizer.html">Image Tools</a></li>
+                <li class="separator">/</li>
+                <li>PNG to JPG Converter</li>
+            </ul>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="tool-page">
+            <div class="tool-header">
+                <h1>PNG to JPG Converter</h1>
+                <p>Convert PNG images to JPG format. Handle transparency by adding a background color.</p>
+            </div>
+            
+            <div class="tool-container">
+                <div class="tool-main">
+                    <div class="converter-wrapper">
+                        <!-- Upload Zone -->
+                        <div class="upload-zone" id="upload-zone">
+                            <div class="upload-icon">🔄</div>
+                            <h2>Convert PNG to JPG</h2>
+                            <p>Drag & drop PNG files or click to select</p>
+                            <div class="file-counter" id="file-count" style="display: none;">0 files</div>
+                            <p style="color: #64748b; margin-top: 15px;">
+                                Supports .png files • Max 15MB per file • Transparency will be filled with background color
+                            </p>
+                            <input type="file" id="file-input" accept="image/png" multiple style="display: none;">
+                        </div>
+                        
+                        <!-- File Previews -->
+                        <div class="file-preview-grid" id="preview-grid"></div>
+                        
+                        <!-- Conversion Options -->
+                        <div class="conversion-options">
+                            <h3>Conversion Settings</h3>
+                            
+                            <div class="option-card">
+                                <h4>Background Color</h4>
+                                <p>PNG files may have transparency. Choose a background color for transparent areas:</p>
+                                
+                                <div class="color-picker-group">
+                                    <input type="color" id="bg-color" value="#ffffff">
+                                    <input type="text" id="bg-color-hex" value="#ffffff" placeholder="#FFFFFF" style="flex: 1; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1;">
+                                    <div class="color-preview" id="color-preview" style="background: #ffffff;"></div>
+                                </div>
+                                
+                                <div class="color-presets">
+                                    <div class="color-preset active" style="background: #ffffff;" data-color="#ffffff"></div>
+                                    <div class="color-preset" style="background: #f8fafc;" data-color="#f8fafc"></div>
+                                    <div class="color-preset" style="background: #000000;" data-color="#000000"></div>
+                                    <div class="color-preset" style="background: #f0f9ff;" data-color="#f0f9ff"></div>
+                                    <div class="color-preset" style="background: #fef2f2;" data-color="#fef2f2"></div>
+                                    <div class="color-preset" style="background: #f0fdf4;" data-color="#f0fdf4"></div>
+                                    <div class="color-preset" style="background: #fefce8;" data-color="#fefce8"></div>
+                                    <div class="color-preset" style="background: #fffbeb;" data-color="#fffbeb"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="option-card">
+                                <h4>JPG Quality</h4>
+                                <p>Adjust the compression level for JPG output:</p>
+                                
+                                <input type="range" id="quality-slider" min="10" max="100" value="85" style="width: 100%;">
+                                <div style="display: flex; justify-content: space-between; margin-top: 5px; color: #64748b;">
+                                    <span>Small File</span>
+                                    <span id="quality-value">85%</span>
+                                    <span>High Quality</span>
+                                </div>
+                                
+                                <div class="quality-presets">
+                                    <div class="quality-preset" data-quality="60">Low (60%)</div>
+                                    <div class="quality-preset active" data-quality="85">Medium (85%)</div>
+                                    <div class="quality-preset" data-quality="95">High (95%)</div>
+                                    <div class="quality-preset" data-quality="100">Maximum (100%)</div>
+                                </div>
+                            </div>
+                            
+                            <div class="option-card">
+                                <h4>Output Settings</h4>
+                                <div style="margin: 15px 0;">
+                                    <label for="output-size">Resize Output:</label>
+                                    <select id="output-size" style="width: 100%; padding: 10px; margin-top: 10px; border-radius: 6px; border: 1px solid #cbd5e1;">
+                                        <option value="original">Keep original size</option>
+                                        <option value="1920">HD (1920px width)</option>
+                                        <option value="1280">Medium (1280px width)</option>
+                                        <option value="800">Small (800px width)</option>
+                                        <option value="custom">Custom size</option>
+                                    </select>
+                                    <div id="custom-size-inputs" style="margin-top: 15px; display: none;">
+                                        <div style="display: flex; gap: 10px;">
+                                            <div style="flex: 1;">
+                                                <label>Width (px):</label>
+                                                <input type="number" id="custom-width" min="50" max="5000" value="800" style="width: 100%; padding: 8px;">
+                                            </div>
+                                            <div style="flex: 1;">
+                                                <label>Height (px):</label>
+                                                <input type="number" id="custom-height" min="50" max="5000" value="600" style="width: 100%; padding: 8px;">
+                                            </div>
+                                        </div>
+                                        <label style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+                                            <input type="checkbox" id="preserve-aspect" checked>
+                                            Preserve aspect ratio
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="tool-buttons" style="text-align: center;">
+                            <button class="btn btn-primary" id="convert-btn" style="padding: 15px 40px; font-size: 1.1rem;" disabled>
+                                Convert to JPG
+                            </button>
+                            <button class="btn btn-secondary" id="clear-all">Clear All Files</button>
+                            <button class="btn btn-success" id="download-all" style="display: none;">Download All JPGs</button>
+                        </div>
+                        
+                        <!-- Comparison View -->
+                        <div class="comparison-view" id="comparison-view">
+                            <div class="comparison-box">
+                                <h4>Original PNG</h4>
+                                <img id="original-png" class="comparison-image" src="" alt="Original PNG">
+                                <div id="png-info"></div>
+                            </div>
+                            <div class="comparison-box">
+                                <h4>Converted JPG</h4>
+                                <img id="converted-jpg" class="comparison-image" src="" alt="Converted JPG">
+                                <div id="jpg-info"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Size Comparison -->
+                        <div class="size-comparison" id="size-comparison">
+                            <h4>File Size Comparison</h4>
+                            <div class="size-chart">
+                                <div class="size-bar png" id="png-size-bar" style="width: 50%;">PNG</div>
+                                <div class="size-bar jpg" id="jpg-size-bar" style="width: 50%;">JPG</div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+                                <div>
+                                    <strong>PNG:</strong> <span id="png-size">0 KB</span><br>
+                                    <span id="png-dimensions">0×0px</span>
+                                </div>
+                                <div style="text-align: right;">
+                                    <strong>JPG:</strong> <span id="jpg-size">0 KB</span><br>
+                                    <span id="jpg-dimensions">0×0px</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center; margin-top: 15px; font-size: 1.1rem;">
+                                <strong>Size Reduction:</strong> <span id="reduction-percent" style="color: #10b981;">0%</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Individual Results -->
+                        <div id="individual-results" style="display: none; margin-top: 30px;">
+                            <h3>Conversion Results</h3>
+                            <div id="results-list"></div>
+                        </div>
+                        
+                        <div class="info-section">
+                            <h3>About This Tool</h3>
+                            <p>The PNG to JPG Converter helps you convert PNG images to the more widely compatible JPG format. Since JPG doesn't support transparency, this tool allows you to choose a background color for transparent areas.</p>
+                            
+                            <h4>Key Features:</h4>
+                            <ul>
+                                <li><strong>Background Color Selection:</strong> Choose any color for transparent areas</li>
+                                <li><strong>Quality Control:</strong> Adjust JPG compression level</li>
+                                <li><strong>Resize Options:</strong> Convert and resize in one step</li>
+                                <li><strong>Batch Processing:</strong> Convert multiple files at once</li>
+                                <li><strong>Size Comparison:</strong> See how much space you save</li>
+                            </ul>
+                            
+                            <p><strong>Common Uses:</strong> Preparing images for websites, reducing file size for storage, converting graphics for printing, and making images compatible with applications that don't support PNG.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tool-sidebar">
+                    <div class="ad-banner vertical">Ad Space (300x250)</div>
+                    
+                    <h3>Related Image Tools</h3>
+                    <ul class="related-tools">
+                        <li><a href="jpg-to-png.html">➤ JPG to PNG Converter</a></li>
+                        <li><a href="image-compressor.html">➤ Image Compressor</a></li>
+                        <li><a href="image-resizer.html">➤ Image Resizer</a></li>
+                        <li><a href="image-cropper.html">➤ Image Cropper</a></li>
+                    </ul>
+                    
+                    <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <h4>When to Use JPG vs PNG</h4>
+                        <table style="width: 100%; font-size: 0.85rem;">
+                            <tr>
+                                <td><strong>Use JPG for:</strong></td>
+                                <td>Photos, complex images, web graphics where transparency isn't needed</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Use PNG for:</strong></td>
+                                <td>Logos, icons, images with transparency, images requiring lossless quality</td>
+                            </tr>
+                            <tr>
+                                <td><strong>JPG Advantage:</strong></td>
+                                <td>Smaller file size, wider compatibility</td>
+                            </tr>
+                            <tr>
+                                <td><strong>PNG Advantage:</strong></td>
+                                <td>Transparency support, lossless compression</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Daily Smart Tool</h3>
+                    <p>Your one-stop destination for free online utilities, calculators, converters, and productivity tools.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../all-tools.html">All Tools</a></li>
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Popular Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                        <li><a href="image-resizer.html">Image Tools</a></li>
+                        <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                        <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                        <li><a href="../tools/generators/password-generator.html">Generators</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li>Email: contact@dailysmarttool.com</li>
+                        <li>Feedback: feedback@dailysmarttool.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; <script>document.write(new Date().getFullYear())</script> Daily Smart Tool. All rights reserved. | Part of Safetyguide360 Network
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // Variables
+        let selectedFiles = [];
+        let convertedFiles = [];
+        let currentSelectedIndex = 0;
+        
+        // Format bytes
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+        }
+        
+        // Update file preview grid
+        function updatePreviewGrid() {
+            const grid = document.getElementById('preview-grid');
+            grid.innerHTML = '';
+            
+            if (selectedFiles.length === 0) {
+                grid.style.display = 'none';
+                document.getElementById('file-count').style.display = 'none';
+                document.getElementById('convert-btn').disabled = true;
+                return;
+            }
+            
+            grid.style.display = 'grid';
+            document.getElementById('file-count').style.display = 'inline-block';
+            document.getElementById('file-count').textContent = `${selectedFiles.length} file${selectedFiles.length > 1 ? 's' : ''}`;
+            document.getElementById('convert-btn').disabled = false;
+            
+            selectedFiles.forEach((file, index) => {
+                const thumb = document.createElement('div');
+                thumb.className = `preview-thumb ${index === currentSelectedIndex ? 'selected' : ''}`;
+                thumb.onclick = () => selectFile(index);
+                
+                const img = new Image();
+                img.className = 'thumb-image';
+                img.src = URL.createObjectURL(file);
+                
+                thumb.innerHTML = `
+                    <button class="remove-thumb" data-index="${index}">×</button>
+                    <div class="thumb-info">
+                        <div class="thumb-name">${file.name}</div>
+                        <div>${formatBytes(file.size)}</div>
+                    </div>
+                `;
+                thumb.insertBefore(img, thumb.firstChild);
+                grid.appendChild(thumb);
+            });
+        }
+        
+        // Select file
+        function selectFile(index) {
+            currentSelectedIndex = index;
+            updatePreviewGrid();
+            
+            // Show preview for single file
+            if (selectedFiles.length === 1) {
+                showFilePreview(selectedFiles[0]);
+            }
+        }
+        
+        // Show file preview
+        function showFilePreview(file) {
+            const img = new Image();
+            img.onload = function() {
+                document.getElementById('original-png').src = this.src;
+                document.getElementById('png-info').innerHTML = `
+                    ${file.name}<br>
+                    ${formatBytes(file.size)} • ${this.width}×${this.height}px
+                `;
+            };
+            img.src = URL.createObjectURL(file);
+        }
+        
+        // Convert PNG to JPG
+        async function convertPNGtoJPG(pngFile, bgColor, quality, maxWidth, maxHeight) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        // Calculate new dimensions
+                        let width = img.width;
+                        let height = img.height;
+                        
+                        if (maxWidth && maxHeight) {
+                            if (width > maxWidth || height > maxHeight) {
+                                const aspectRatio = width / height;
+                                
+                                if (width > maxWidth) {
+                                    width = maxWidth;
+                                    height = width / aspectRatio;
+                                }
+                                
+                                if (height > maxHeight) {
+                                    height = maxHeight;
+                                    width = height * aspectRatio;
+                                }
+                            }
+                        }
+                        
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+                        
+                        const ctx = canvas.getContext('2d');
+                        
+                        // Fill with background color
+                        ctx.fillStyle = bgColor;
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                        
+                        // Draw PNG image
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        
+                        // Convert to JPG
+                        canvas.toBlob(function(blob) {
+                            const jpgUrl = URL.createObjectURL(blob);
+                            const jpgFile = new File([blob], 
+                                pngFile.name.replace(/\.png$/i, '.jpg'), 
+                                { type: 'image/jpeg' }
+                            );
+                            
+                            resolve({
+                                original: pngFile,
+                                converted: jpgFile,
+                                url: jpgUrl,
+                                originalSize: pngFile.size,
+                                convertedSize: blob.size,
+                                width: width,
+                                height: height,
+                                bgColor: bgColor,
+                                quality: quality
+                            });
+                        }, 'image/jpeg', quality / 100);
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(pngFile);
+            });
+        }
+        
+        // Update size comparison chart
+        function updateSizeComparison(pngSize, jpgSize, pngDimensions, jpgDimensions) {
+            const totalSize = pngSize + jpgSize;
+            const pngPercent = (pngSize / totalSize) * 100;
+            const jpgPercent = (jpgSize / totalSize) * 100;
+            const reduction = ((pngSize - jpgSize) / pngSize * 100).toFixed(1);
+            
+            document.getElementById('png-size-bar').style.width = pngPercent + '%';
+            document.getElementById('jpg-size-bar').style.width = jpgPercent + '%';
+            document.getElementById('png-size').textContent = formatBytes(pngSize);
+            document.getElementById('jpg-size').textContent = formatBytes(jpgSize);
+            document.getElementById('png-dimensions').textContent = pngDimensions;
+            document.getElementById('jpg-dimensions').textContent = jpgDimensions;
+            document.getElementById('reduction-percent').textContent = reduction + '%';
+            
+            if (parseFloat(reduction) > 0) {
+                document.getElementById('reduction-percent').style.color = '#10b981';
+            } else {
+                document.getElementById('reduction-percent').style.color = '#ef4444';
+            }
+            
+            document.getElementById('size-comparison').style.display = 'block';
+        }
+        
+        // Event Listeners
+        document.getElementById('upload-zone').addEventListener('click', () => {
+            document.getElementById('file-input').click();
+        });
+        
+        document.getElementById('file-input').addEventListener('change', (e) => {
+            const files = Array.from(e.target.files).filter(file => 
+                file.type === 'image/png' || file.name.toLowerCase().endsWith('.png')
+            );
+            
+            if (files.length > 0) {
+                selectedFiles = files;
+                currentSelectedIndex = 0;
+                updatePreviewGrid();
+                if (selectedFiles.length === 1) {
+                    showFilePreview(selectedFiles[0]);
+                }
+            }
+        });
+        
+        // Remove file
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('remove-thumb')) {
+                const index = parseInt(e.target.getAttribute('data-index'));
+                selectedFiles.splice(index, 1);
+                if (currentSelectedIndex >= selectedFiles.length) {
+                    currentSelectedIndex = Math.max(0, selectedFiles.length - 1);
+                }
+                updatePreviewGrid();
+                if (selectedFiles.length === 1) {
+                    showFilePreview(selectedFiles[0]);
+                }
+            }
+        });
+        
+        // Clear all files
+        document.getElementById('clear-all').addEventListener('click', () => {
+            selectedFiles = [];
+            convertedFiles = [];
+            updatePreviewGrid();
+            document.getElementById('comparison-view').style.display = 'none';
+            document.getElementById('size-comparison').style.display = 'none';
+            document.getElementById('individual-results').style.display = 'none';
+            document.getElementById('download-all').style.display = 'none';
+        });
+        
+        // Color picker
+        const bgColorInput = document.getElementById('bg-color');
+        const bgColorHex = document.getElementById('bg-color-hex');
+        const colorPreview = document.getElementById('color-preview');
+        
+        function updateColorPreview(color) {
+            colorPreview.style.background = color;
+        }
+        
+        bgColorInput.addEventListener('input', (e) => {
+            bgColorHex.value = e.target.value;
+            updateColorPreview(e.target.value);
+        });
+        
+        bgColorHex.addEventListener('input', (e) => {
+            const color = e.target.value;
+            if (color.match(/^#[0-9A-F]{6}$/i)) {
+                bgColorInput.value = color;
+                updateColorPreview(color);
+            }
+        });
+        
+        // Color presets
+        document.querySelectorAll('.color-preset').forEach(preset => {
+            preset.addEventListener('click', () => {
+                document.querySelectorAll('.color-preset').forEach(p => p.classList.remove('active'));
+                preset.classList.add('active');
+                const color = preset.getAttribute('data-color');
+                bgColorInput.value = color;
+                bgColorHex.value = color;
+                updateColorPreview(color);
+            });
+        });
+        
+        // Quality slider
+        const qualitySlider = document.getElementById('quality-slider');
+        const qualityValue = document.getElementById('quality-value');
+        
+        qualitySlider.addEventListener('input', () => {
+            qualityValue.textContent = qualitySlider.value + '%';
+        });
+        
+        // Quality presets
+        document.querySelectorAll('.quality-preset').forEach(preset => {
+            preset.addEventListener('click', () => {
+                document.querySelectorAll('.quality-preset').forEach(p => p.classList.remove('active'));
+                preset.classList.add('active');
+                const quality = preset.getAttribute('data-quality');
+                qualitySlider.value = quality;
+                qualityValue.textContent = quality + '%';
+            });
+        });
+        
+        // Output size options
+        const outputSizeSelect = document.getElementById('output-size');
+        const customSizeInputs = document.getElementById('custom-size-inputs');
+        
+        outputSizeSelect.addEventListener('change', () => {
+            customSizeInputs.style.display = outputSizeSelect.value === 'custom' ? 'block' : 'none';
+        });
+        
+        // Convert button
+        document.getElementById('convert-btn').addEventListener('click', async () => {
+            if (selectedFiles.length === 0) return;
+            
+            convertedFiles = [];
+            const bgColor = bgColorInput.value;
+            const quality = parseInt(qualitySlider.value) / 100;
+            
+            // Get resize dimensions
+            let maxWidth = null, maxHeight = null;
+            const outputSize = outputSizeSelect.value;
+            
+            if (outputSize !== 'original') {
+                if (outputSize === 'custom') {
+                    maxWidth = parseInt(document.getElementById('custom-width').value);
+                    maxHeight = parseInt(document.getElementById('custom-height').value);
+                } else {
+                    maxWidth = parseInt(outputSize);
+                    maxHeight = null;
+                }
+            }
+            
+            // Convert each file
+            for (let i = 0; i < selectedFiles.length; i++) {
+                const pngFile = selectedFiles[i];
+                try {
+                    const result = await convertPNGtoJPG(pngFile, bgColor, quality * 100, maxWidth, maxHeight);
+                    convertedFiles.push(result);
+                } catch (error) {
+                    console.error('Conversion error:', error);
+                }
+            }
+            
+            // Show results
+            if (convertedFiles.length > 0) {
+                // Show comparison for single file
+                if (convertedFiles.length === 1) {
+                    const result = convertedFiles[0];
+                    document.getElementById('converted-jpg').src = result.url;
+                    document.getElementById('jpg-info').innerHTML = `
+                        ${result.converted.name}<br>
+                        ${formatBytes(result.convertedSize)} • ${result.width}×${result.height}px
+                    `;
+                    
+                    updateSizeComparison(
+                        result.originalSize,
+                        result.convertedSize,
+                        result.width + '×' + result.height + 'px',
+                        result.width + '×' + result.height + 'px'
+                    );
+                    
+                    document.getElementById('comparison-view').style.display = 'grid';
+                    document.getElementById('individual-results').style.display = 'none';
+                } else {
+                    // Show list for multiple files
+                    const resultsList = document.getElementById('results-list');
+                    resultsList.innerHTML = '';
+                    
+                    convertedFiles.forEach((result, index) => {
+                        const div = document.createElement('div');
+                        div.className = 'file-item';
+                        div.innerHTML = `
+                            <div class="file-info">
+                                <div class="file-icon">🖼️</div>
+                                <div class="file-details">
+                                    <h4>${result.converted.name}</h4>
+                                    <p>${formatBytes(result.convertedSize)} • ${result.width}×${result.height}px</p>
+                                    <small>Reduction: ${((result.originalSize - result.convertedSize) / result.originalSize * 100).toFixed(1)}%</small>
+                                </div>
+                            </div>
+                            <button class="btn btn-secondary" onclick="downloadSingle(${index})">
+                                Download
+                            </button>
+                        `;
+                        resultsList.appendChild(div);
+                    });
+                    
+                    document.getElementById('individual-results').style.display = 'block';
+                    document.getElementById('comparison-view').style.display = 'none';
+                    document.getElementById('size-comparison').style.display = 'none';
+                }
+                
+                document.getElementById('download-all').style.display = 'inline-block';
+            }
+        });
+        
+        // Download single file (for batch results)
+        window.downloadSingle = function(index) {
+            if (convertedFiles[index]) {
+                const link = document.createElement('a');
+                link.href = convertedFiles[index].url;
+                link.download = convertedFiles[index].converted.name;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        };
+        
+        // Download all files
+        document.getElementById('download-all').addEventListener('click', () => {
+            if (convertedFiles.length === 1) {
+                // Single file download
+                const link = document.createElement('a');
+                link.href = convertedFiles[0].url;
+                link.download = convertedFiles[0].converted.name;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } else {
+                // Multiple files - download one by one
+                convertedFiles.forEach((result, index) => {
+                    setTimeout(() => {
+                        const link = document.createElement('a');
+                        link.href = result.url;
+                        link.download = result.converted.name;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    }, index * 100);
+                });
+            }
+        });
+        
+        // Drag and drop
+        const uploadZone = document.getElementById('upload-zone');
+        
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, () => {
+                uploadZone.classList.add('dragover');
+            });
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, () => {
+                uploadZone.classList.remove('dragover');
+            });
+        });
+        
+        uploadZone.addEventListener('drop', (e) => {
+            const files = Array.from(e.dataTransfer.files).filter(file => 
+                file.type === 'image/png' || file.name.toLowerCase().endsWith('.png')
+            );
+            
+            if (files.length > 0) {
+                selectedFiles = files;
+                currentSelectedIndex = 0;
+                updatePreviewGrid();
+                if (selectedFiles.length === 1) {
+                    showFilePreview(selectedFiles[0]);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

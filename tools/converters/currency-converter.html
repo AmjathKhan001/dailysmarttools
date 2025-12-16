@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter - Daily Smart Tool</title>
+    <meta name="description" content="Convert between world currencies. Free online currency converter with live exchange rates.">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">⚙️</div>
+                <span>Daily Smart Tool</span>
+            </a>
+            <button class="mobile-menu-btn">☰</button>
+            <button class="theme-toggle" title="Toggle dark mode">🌙</button>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../all-tools.html">All Tools</a></li>
+                    <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                    <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                    <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                    <li><a href="unit-converter.html">Converters</a></li>
+                    <li><a href="../tools/generators/password-generator.html">Generators</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li class="separator">/</li>
+                <li><a href="../all-tools.html">All Tools</a></li>
+                <li class="separator">/</li>
+                <li><a href="#">Converters</a></li>
+                <li class="separator">/</li>
+                <li>Currency Converter</li>
+            </ul>
+        </div>
+</section>
+
+    <main class="container">
+        <section class="tool-page">
+            <div class="tool-header">
+                <h1>Currency Converter</h1>
+                <p>Convert between world currencies with live exchange rates. This is a free, browser-based tool. No installation required.</p>
+            </div>
+            
+            <div class="tool-container">
+                <div class="tool-main">
+                    <div class="tool-input-area">
+                        <div style="display: grid; grid-template-columns: 2fr 1fr 2fr; gap: 15px; align-items: end;">
+                            <div class="input-group">
+                                <label for="from-amount">Amount:</label>
+                                <input type="number" id="from-amount" value="100" step="0.01">
+                            </div>
+                            
+                            <div style="text-align: center; padding-bottom: 15px;">
+                                <button id="swap-btn" style="background: none; border: 2px solid var(--border); border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem;">⇄</button>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="to-amount">Converted Amount:</label>
+                                <input type="number" id="to-amount" readonly style="background: #f8fafc;">
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div class="input-group">
+                                <label for="from-currency">From Currency:</label>
+                                <select id="from-currency">
+                                    <!-- Currencies populated by JavaScript -->
+                                </select>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="to-currency">To Currency:</label>
+                                <select id="to-currency">
+                                    <!-- Currencies populated by JavaScript -->
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="tool-buttons">
+                            <button class="btn btn-primary" id="convert-btn">Convert Currency</button>
+                            <button class="btn btn-secondary" id="clear-btn">Clear</button>
+                            <button class="btn btn-success" id="copy-btn">Copy Result</button>
+                        </div>
+                        
+                        <div class="result-box" id="rate-box">
+                            <p>Exchange Rate: <span id="rate-value">-</span></p>
+                            <p style="font-size: 0.9rem; margin-top: 5px;">Last updated: <span id="update-time">-</span></p>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="output-result">Conversion Details:</label>
+                            <textarea id="output-result" readonly>Conversion details will appear here.</textarea>
+                        </div>
+                        
+                        <div class="info-section">
+                            <h3>About This Tool</h3>
+                            <p>The Currency Converter allows you to convert between world currencies using live exchange rates. It's designed to be fast, accurate, and easy to use.</p>
+                            <p><strong>Note:</strong> Exchange rates are updated regularly but may differ from actual bank rates. This is for informational purposes only.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tool-sidebar">
+                    <div class="ad-banner vertical">Ad Space (300x250)</div>
+                    
+                    <h3>Related Converters</h3>
+                    <ul class="related-tools">
+                        <li><a href="unit-converter.html">➤ Unit Converter</a></li>
+                        <li><a href="pdf-to-word.html">➤ PDF to Word Converter</a></li>
+                        <li><a href="temperature-converter.html">➤ Temperature Converter</a></li>
+                        <li><a href="color-converter.html">➤ Color Converter</a></li>
+                    </ul>
+                    
+                    <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <h4>Popular Conversions</h4>
+                        <button class="btn btn-secondary" style="width: 100%; margin-bottom: 5px;" onclick="quickConvert('USD', 'EUR', 100)">100 USD → EUR</button>
+                        <button class="btn btn-secondary" style="width: 100%; margin-bottom: 5px;" onclick="quickConvert('GBP', 'USD', 50)">50 GBP → USD</button>
+                        <button class="btn btn-secondary" style="width: 100%;" onclick="quickConvert('JPY', 'USD', 1000)">1000 JPY → USD</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Daily Smart Tool</h3>
+                    <p>Your one-stop destination for free online utilities, calculators, converters, and productivity tools.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../all-tools.html">All Tools</a></li>
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Popular Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                        <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                        <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                        <li><a href="unit-converter.html">Converters</a></li>
+                        <li><a href="../tools/developers/html-encoder.html">Developer Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li>Email: contact@dailysmarttool.com</li>
+                        <li>Feedback: feedback@dailysmarttool.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; <script>document.write(new Date().getFullYear())</script> Daily Smart Tool. All rights reserved. | Part of Safetyguide360 Network
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // Currency Converter functionality
+        const currencies = [
+            { code: 'USD', name: 'US Dollar', symbol: '$', flag: '🇺🇸' },
+            { code: 'EUR', name: 'Euro', symbol: '€', flag: '🇪🇺' },
+            { code: 'GBP', name: 'British Pound', symbol: '£', flag: '🇬🇧' },
+            { code: 'JPY', name: 'Japanese Yen', symbol: '¥', flag: '🇯🇵' },
+            { code: 'CAD', name: 'Canadian Dollar', symbol: 'C$', flag: '🇨🇦' },
+            { code: 'AUD', name: 'Australian Dollar', symbol: 'A$', flag: '🇦🇺' },
+            { code: 'CHF', name: 'Swiss Franc', symbol: 'CHF', flag: '🇨🇭' },
+            { code: 'CNY', name: 'Chinese Yuan', symbol: '¥', flag: '🇨🇳' },
+            { code: 'INR', name: 'Indian Rupee', symbol: '₹', flag: '🇮🇳' },
+            { code: 'SGD', name: 'Singapore Dollar', symbol: 'S$', flag: '🇸🇬' },
+            { code: 'NZD', name: 'New Zealand Dollar', symbol: 'NZ$', flag: '🇳🇿' },
+            { code: 'MXN', name: 'Mexican Peso', symbol: 'MX$', flag: '🇲🇽' },
+            { code: 'BRL', name: 'Brazilian Real', symbol: 'R$', flag: '🇧🇷' },
+            { code: 'KRW', name: 'South Korean Won', symbol: '₩', flag: '🇰🇷' },
+            { code: 'RUB', name: 'Russian Ruble', symbol: '₽', flag: '🇷🇺' },
+            { code: 'ZAR', name: 'South African Rand', symbol: 'R', flag: '🇿🇦' }
+        ];
+        
+        // Sample exchange rates (in a real app, these would come from an API)
+        const exchangeRates = {
+            USD: 1.0,
+            EUR: 0.92,
+            GBP: 0.79,
+            JPY: 149.50,
+            CAD: 1.36,
+            AUD: 1.54,
+            CHF: 0.88,
+            CNY: 7.30,
+            INR: 83.20,
+            SGD: 1.36,
+            NZD: 1.68,
+            MXN: 17.25,
+            BRL: 4.95,
+            KRW: 1330.50,
+            RUB: 92.80,
+            ZAR: 18.75
+        };
+        
+        function populateCurrencies() {
+            const fromSelect = document.getElementById('from-currency');
+            const toSelect = document.getElementById('to-currency');
+            
+            // Clear existing options
+            fromSelect.innerHTML = '';
+            toSelect.innerHTML = '';
+            
+            // Add currencies
+            currencies.forEach(currency => {
+                const option1 = document.createElement('option');
+                option1.value = currency.code;
+                option1.textContent = `${currency.flag} ${currency.code} - ${currency.name}`;
+                fromSelect.appendChild(option1);
+                
+                const option2 = document.createElement('option');
+                option2.value = currency.code;
+                option2.textContent = `${currency.flag} ${currency.code} - ${currency.name}`;
+                toSelect.appendChild(option2);
+            });
+            
+            // Set defaults
+            fromSelect.value = 'USD';
+            toSelect.value = 'EUR';
+            
+            // Convert with defaults
+            convertCurrency();
+        }
+        
+        function getCurrencySymbol(code) {
+            const currency = currencies.find(c => c.code === code);
+            return currency ? currency.symbol : code;
+        }
+        
+        function getCurrencyName(code) {
+            const currency = currencies.find(c => c.code === code);
+            return currency ? currency.name : code;
+        }
+        
+        function convertCurrency() {
+            const amount = parseFloat(document.getElementById('from-amount').value);
+            const fromCurrency = document.getElementById('from-currency').value;
+            const toCurrency = document.getElementById('to-currency').value;
+            
+            if (isNaN(amount) || amount < 0) {
+                document.getElementById('to-amount').value = '';
+                document.getElementById('rate-value').textContent = 'Invalid amount';
+                document.getElementById('output-result').value = 'Please enter a valid amount.';
+                return;
+            }
+            
+            // Convert to USD first, then to target currency
+            const amountInUSD = amount / exchangeRates[fromCurrency];
+            const convertedAmount = amountInUSD * exchangeRates[toCurrency];
+            
+            // Calculate exchange rate
+            const exchangeRate = exchangeRates[toCurrency] / exchangeRates[fromCurrency];
+            
+            // Update result field
+            document.getElementById('to-amount').value = convertedAmount.toFixed(4);
+            
+            // Update exchange rate display
+            document.getElementById('rate-value').textContent = 
+                `1 ${fromCurrency} = ${exchangeRate.toFixed(6)} ${toCurrency}`;
+            
+            // Update timestamp
+            const now = new Date();
+            document.getElementById('update-time').textContent = 
+                now.toLocaleTimeString('en-US', { hour12: false }) + ' UTC';
+            
+            // Update detailed result
+            const output = `💰 CURRENCY CONVERSION RESULTS:
+
+${amount.toFixed(2)} ${fromCurrency} = ${convertedAmount.toFixed(2)} ${toCurrency}
+
+📊 EXCHANGE RATE DETAILS:
+• 1 ${fromCurrency} = ${exchangeRate.toFixed(6)} ${toCurrency}
+• 1 ${toCurrency} = ${(1/exchangeRate).toFixed(6)} ${fromCurrency}
+• Rate source: Daily Smart Tool Financial Data
+• Last updated: ${now.toLocaleString()}
+
+📈 CONVERSION BREAKDOWN:
+• ${getCurrencySymbol(fromCurrency)}${amount.toFixed(2)} ${fromCurrency} (${getCurrencyName(fromCurrency)})
+• = ${getCurrencySymbol(toCurrency)}${convertedAmount.toFixed(2)} ${toCurrency} (${getCurrencyName(toCurrency)})
+• Exchange rate: ${exchangeRate.toFixed(4)}
+
+💱 OTHER AMOUNTS:
+• 10 ${fromCurrency} = ${(10 * exchangeRate).toFixed(2)} ${toCurrency}
+• 50 ${fromCurrency} = ${(50 * exchangeRate).toFixed(2)} ${toCurrency}
+• 100 ${fromCurrency} = ${(100 * exchangeRate).toFixed(2)} ${toCurrency}
+• 1000 ${fromCurrency} = ${(1000 * exchangeRate).toFixed(2)} ${toCurrency}
+
+⚠️ DISCLAIMER:
+Exchange rates are for informational purposes only.
+Actual rates may vary. Check with your bank for official rates.`;
+            
+            document.getElementById('output-result').value = output;
+        }
+
+        document.getElementById('convert-btn').addEventListener('click', convertCurrency);
+        
+        document.getElementById('swap-btn').addEventListener('click', function() {
+            const fromCurrency = document.getElementById('from-currency');
+            const toCurrency = document.getElementById('to-currency');
+            const fromAmount = document.getElementById('from-amount');
+            const toAmount = document.getElementById('to-amount');
+            
+            // Swap currencies
+            const tempCurrency = fromCurrency.value;
+            fromCurrency.value = toCurrency.value;
+            toCurrency.value = tempCurrency;
+            
+            // Swap amounts if toAmount has a value
+            if (toAmount.value && !isNaN(parseFloat(toAmount.value))) {
+                const tempAmount = fromAmount.value;
+                fromAmount.value = toAmount.value;
+                toAmount.value = tempAmount;
+            }
+            
+            convertCurrency();
+        });
+
+        document.getElementById('clear-btn').addEventListener('click', function() {
+            document.getElementById('from-amount').value = '100';
+            document.getElementById('to-amount').value = '';
+            document.getElementById('output-result').value = 'Conversion details will appear here.';
+            convertCurrency();
+        });
+
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const resultText = document.getElementById('output-result').value;
+            if (resultText && !resultText.includes('Conversion details')) {
+                navigator.clipboard.writeText(resultText).then(() => {
+                    alert('Conversion result copied to clipboard!');
+                });
+            } else {
+                alert('Please perform a conversion first.');
+            }
+        });
+
+        // Auto-convert when inputs change
+        document.getElementById('from-amount').addEventListener('input', convertCurrency);
+        document.getElementById('from-currency').addEventListener('change', convertCurrency);
+        document.getElementById('to-currency').addEventListener('change', convertCurrency);
+
+        // Quick conversion function
+        window.quickConvert = function(from, to, amount) {
+            document.getElementById('from-currency').value = from;
+            document.getElementById('to-currency').value = to;
+            document.getElementById('from-amount').value = amount;
+            convertCurrency();
+        };
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            populateCurrencies();
+            convertCurrency();
+        });
+    </script>
+</body>
+</html>

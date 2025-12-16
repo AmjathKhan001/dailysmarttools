@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List - Daily Smart Tool</title>
+    <meta name="description" content="Simple browser-based todo list. Free online task manager and todo list.">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">⚙️</div>
+                <span>Daily Smart Tool</span>
+            </a>
+            <button class="mobile-menu-btn">☰</button>
+            <button class="theme-toggle" title="Toggle dark mode">🌙</button>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../all-tools.html">All Tools</a></li>
+                    <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                    <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                    <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                    <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                    <li><a href="../tools/generators/password-generator.html">Generators</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li class="separator">/</li>
+                <li><a href="../all-tools.html">All Tools</a></li>
+                <li class="separator">/</li>
+                <li><a href="#">Productivity Tools</a></li>
+                <li class="separator">/</li>
+                <li>Todo List</li>
+            </ul>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="tool-page">
+            <div class="tool-header">
+                <h1>Todo List</h1>
+                <p>Simple browser-based todo list and task manager. This is a free, browser-based tool. No installation required.</p>
+            </div>
+            
+            <div class="tool-container">
+                <div class="tool-main">
+                    <div class="tool-input-area">
+                        <div class="input-group">
+                            <label for="new-task">Add New Task:</label>
+                            <div style="display: flex; gap: 10px;">
+                                <input type="text" id="new-task" placeholder="What needs to be done?">
+                                <button class="btn btn-primary" id="add-btn" style="white-space: nowrap;"><i class="fas fa-plus"></i> Add Task</button>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Task Filters:</label>
+                            <div style="display: flex; gap: 15px; margin-top: 10px; flex-wrap: wrap;">
+                                <button class="btn btn-secondary" id="filter-all">All Tasks</button>
+                                <button class="btn btn-secondary" id="filter-active">Active</button>
+                                <button class="btn btn-secondary" id="filter-completed">Completed</button>
+                                <button class="btn btn-secondary" id="clear-completed">Clear Completed</button>
+                            </div>
+                        </div>
+                        
+                        <div id="todo-stats" style="background: #f8fafc; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <strong>Total:</strong> <span id="total-count">0</span> tasks
+                                </div>
+                                <div>
+                                    <strong>Active:</strong> <span id="active-count">0</span> tasks
+                                </div>
+                                <div>
+                                    <strong>Completed:</strong> <span id="completed-count">0</span> tasks
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="todo-list-container" style="min-height: 200px;">
+                            <div id="empty-state" style="text-align: center; padding: 40px; color: #64748b;">
+                                <i class="fas fa-clipboard-list" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                                <h3>No tasks yet</h3>
+                                <p>Add your first task using the input above</p>
+                            </div>
+                            <ul id="todo-list" style="list-style: none; padding: 0; display: none;">
+                                <!-- Tasks will be added here -->
+                            </ul>
+                        </div>
+                        
+                        <div class="tool-buttons">
+                            <button class="btn btn-primary" id="save-btn"><i class="fas fa-save"></i> Save Todos</button>
+                            <button class="btn btn-secondary" id="load-btn"><i class="fas fa-download"></i> Load Saved</button>
+                            <button class="btn btn-success" id="export-btn"><i class="fas fa-file-export"></i> Export List</button>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="output-result">Task Summary:</label>
+                            <textarea id="output-result" readonly>Task summary will appear here.</textarea>
+                        </div>
+                        
+                        <div class="info-section">
+                            <h3>About This Tool</h3>
+                            <p>The Todo List allows you to manage your tasks efficiently. It's designed to be simple, fast, and easy to use.</p>
+                            <p><strong>Features:</strong> Add, edit, delete tasks, mark as complete, filter tasks, save to browser storage, and export task list.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tool-sidebar">
+                    <div class="ad-banner vertical">Ad Space (300x250)</div>
+                    
+                    <h3>Related Productivity Tools</h3>
+                    <ul class="related-tools">
+                        <li><a href="markdown-editor.html">➤ Markdown Editor</a></li>
+                        <li><a href="note-taker.html">➤ Note Taker</a></li>
+                        <li><a href="pomodoro-timer.html">➤ Pomodoro Timer</a></li>
+                        <li><a href="expense-tracker.html">➤ Expense Tracker</a></li>
+                    </ul>
+                    
+                    <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <h4>Productivity Tips</h4>
+                        <ul style="font-size: 0.9rem; color: #64748b;">
+                            <li>Break large tasks into smaller ones</li>
+                            <li>Prioritize important tasks</li>
+                            <li>Set deadlines for each task</li>
+                            <li>Review and update daily</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Daily Smart Tool</h3>
+                    <p>Your one-stop destination for free online utilities, calculators, converters, and productivity tools.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../all-tools.html">All Tasks</a></li>
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Popular Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                        <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                        <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                        <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                        <li><a href="../tools/developers/html-encoder.html">Developer Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li>Email: contact@dailysmarttool.com</li>
+                        <li>Feedback: feedback@dailysmarttool.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; <script>document.write(new Date().getFullYear())</script> Daily Smart Tool. All rights reserved. | Part of Safetyguide360 Network
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // Todo List functionality
+        class TodoList {
+            constructor() {
+                this.tasks = JSON.parse(localStorage.getItem('dailysmarttool_todos')) || [];
+                this.currentFilter = 'all';
+                this.init();
+            }
+            
+            init() {
+                this.render();
+                this.setupEventListeners();
+                this.updateStats();
+                this.updateSummary();
+            }
+            
+            addTask(text) {
+                if (!text.trim()) return;
+                
+                const task = {
+                    id: Date.now(),
+                    text: text.trim(),
+                    completed: false,
+                    createdAt: new Date().toISOString(),
+                    priority: 'medium'
+                };
+                
+                this.tasks.unshift(task);
+                this.save();
+                this.render();
+                this.updateStats();
+                this.updateSummary();
+            }
+            
+            toggleTask(id) {
+                const task = this.tasks.find(t => t.id === id);
+                if (task) {
+                    task.completed = !task.completed;
+                    task.completedAt = task.completed ? new Date().toISOString() : undefined;
+                    this.save();
+                    this.render();
+                    this.updateStats();
+                    this.updateSummary();
+                }
+            }
+            
+            deleteTask(id) {
+                this.tasks = this.tasks.filter(t => t.id !== id);
+                this.save();
+                this.render();
+                this.updateStats();
+                this.updateSummary();
+            }
+            
+            editTask(id, newText) {
+                const task = this.tasks.find(t => t.id === id);
+                if (task && newText.trim()) {
+                    task.text = newText.trim();
+                    task.updatedAt = new Date().toISOString();
+                    this.save();
+                    this.render();
+                    this.updateSummary();
+                }
+            }
+            
+            clearCompleted() {
+                this.tasks = this.tasks.filter(t => !t.completed);
+                this.save();
+                this.render();
+                this.updateStats();
+                this.updateSummary();
+            }
+            
+            setFilter(filter) {
+                this.currentFilter = filter;
+                this.render();
+            }
+            
+            getFilteredTasks() {
+                switch(this.currentFilter) {
+                    case 'active':
+                        return this.tasks.filter(t => !t.completed);
+                    case 'completed':
+                        return this.tasks.filter(t => t.completed);
+                    default:
+                        return this.tasks;
+                }
+            }
+            
+            save() {
+                localStorage.setItem('dailysmarttool_todos', JSON.stringify(this.tasks));
+            }
+            
+            load() {
+                this.tasks = JSON.parse(localStorage.getItem('dailysmarttool_todos')) || [];
+                this.render();
+                this.updateStats();
+                this.updateSummary();
+            }
+            
+            exportTasks() {
+                const exportData = {
+                    exportedAt: new Date().toISOString(),
+                    totalTasks: this.tasks.length,
+                    completedTasks: this.tasks.filter(t => t.completed).length,
+                    tasks: this.tasks
+                };
+                
+                return JSON.stringify(exportData, null, 2);
+            }
+            
+            updateStats() {
+                const total = this.tasks.length;
+                const completed = this.tasks.filter(t => t.completed).length;
+                const active = total - completed;
+                
+                document.getElementById('total-count').textContent = total;
+                document.getElementById('active-count').textContent = active;
+                document.getElementById('completed-count').textContent = completed;
+            }
+            
+            updateSummary() {
+                const total = this.tasks.length;
+                const completed = this.tasks.filter(t => t.completed).length;
+                const active = total - completed;
+                const completionRate = total > 0 ? Math.round((completed / total) * 100) : 0;
+                
+                const today = new Date().toISOString().split('T')[0];
+                const todayTasks = this.tasks.filter(t => 
+                    t.createdAt.startsWith(today) || 
+                    (t.completed && t.completedAt && t.completedAt.startsWith(today))
+                ).length;
+                
+                const output = `📋 TODO LIST SUMMARY:
+
+📊 STATISTICS:
+• Total tasks: ${total}
+• Active tasks: ${active}
+• Completed tasks: ${completed}
+• Completion rate: ${completionRate}%
+
+🎯 TODAY'S PROGRESS:
+• Tasks created today: ${this.tasks.filter(t => t.createdAt.startsWith(today)).length}
+• Tasks completed today: ${this.tasks.filter(t => t.completed && t.completedAt && t.completedAt.startsWith(today)).length}
+• Total activity today: ${todayTasks}
+
+📅 RECENT ACTIVITY:
+${this.getRecentActivity()}
+
+🏆 PRODUCTIVITY INSIGHTS:
+${this.getProductivityInsights()}
+
+💾 DATA MANAGEMENT:
+• Tasks saved in browser storage
+• Auto-saves after every change
+• Export as JSON for backup
+• Filter by: ${this.currentFilter}`;
+                
+                document.getElementById('output-result').value = output;
+            }
+            
+            getRecentActivity() {
+                const recent = [...this.tasks]
+                    .sort((a, b) => new Date(b.updatedAt || b.createdAt) - new Date(a.updatedAt || a.createdAt))
+                    .slice(0, 3);
+                
+                if (recent.length === 0) return 'No recent activity';
+                
+                return recent.map(task => {
+                    const status = task.completed ? '✅' : '⏳';
+                    const date = new Date(task.updatedAt || task.createdAt).toLocaleTimeString();
+                    return `• ${status} "${task.text.substring(0, 30)}${task.text.length > 30 ? '...' : ''}" (${date})`;
+                }).join('\n');
+            }
+            
+            getProductivityInsights() {
+                if (this.tasks.length === 0) return 'Add some tasks to see insights';
+                
+                const completedTasks = this.tasks.filter(t => t.completed);
+                const avgCompletionTime = completedTasks.length > 0 ? 
+                    completedTasks.reduce((sum, task) => {
+                        const created = new Date(task.createdAt);
+                        const completed = new Date(task.completedAt);
+                        return sum + (completed - created);
+                    }, 0) / completedTasks.length : 0;
+                
+                const avgHours = avgCompletionTime > 0 ? Math.round(avgCompletionTime / (1000 * 60 * 60)) : 0;
+                
+                return `• Average completion time: ${avgHours > 24 ? Math.round(avgHours/24) + ' days' : avgHours + ' hours'}
+• Most productive day: ${this.getMostProductiveDay()}
+• Current streak: ${this.getCurrentStreak()} days`;
+            }
+            
+            getMostProductiveDay() {
+                if (this.tasks.length === 0) return 'No data';
+                
+                const dayCounts = {};
+                this.tasks.forEach(task => {
+                    if (task.completedAt) {
+                        const day = new Date(task.completedAt).toLocaleDateString('en-US', { weekday: 'long' });
+                        dayCounts[day] = (dayCounts[day] || 0) + 1;
+                    }
+                });
+                
+                const mostProductive = Object.entries(dayCounts).sort((a, b) => b[1] - a[1])[0];
+                return mostProductive ? `${mostProductive[0]} (${mostProductive[1]} tasks)` : 'No completed tasks';
+            }
+            
+            getCurrentStreak() {
+                // Simplified streak calculation
+                const today = new Date().toISOString().split('T')[0];
+                const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+                
+                const todayCompleted = this.tasks.filter(t => t.completed && t.completedAt && t.completedAt.startsWith(today)).length;
+                const yesterdayCompleted = this.tasks.filter(t => t.completed && t.completedAt && t.completedAt.startsWith(yesterday)).length;
+                
+                if (todayCompleted > 0) return 2;
+                if (yesterdayCompleted > 0) return 1;
+                return 0;
+            }
+            
+            render() {
+                const filteredTasks = this.getFilteredTasks();
+                const listElement = document.getElementById('todo-list');
+                const emptyState = document.getElementById('empty-state');
+                
+                if (filteredTasks.length === 0) {
+                    listElement.style.display = 'none';
+                    emptyState.style.display = 'block';
+                    return;
+                }
+                
+                emptyState.style.display = 'none';
+                listElement.style.display = 'block';
+                listElement.innerHTML = '';
+                
+                filteredTasks.forEach(task => {
+                    const li = document.createElement('li');
+                    li.className = 'todo-item';
+                    li.style.padding = '12px 15px';
+                    li.style.marginBottom = '8px';
+                    li.style.background = 'white';
+                    li.style.borderRadius = '8px';
+                    li.style.boxShadow = '0 2px 4px rgba(0,0,0,0.05)';
+                    li.style.display = 'flex';
+                    li.style.alignItems = 'center';
+                    li.style.gap = '12px';
+                    
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.checked = task.completed;
+                    checkbox.style.cursor = 'pointer';
+                    checkbox.addEventListener('change', () => this.toggleTask(task.id));
+                    
+                    const textSpan = document.createElement('span');
+                    textSpan.textContent = task.text;
+                    textSpan.style.flex = '1';
+                    textSpan.style.textDecoration = task.completed ? 'line-through' : 'none';
+                    textSpan.style.color = task.completed ? '#94a3b8' : '#1e293b';
+                    textSpan.style.cursor = 'pointer';
+                    
+                    // Make task text editable
+                    textSpan.addEventListener('dblclick', () => {
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = task.text;
+                        input.style.flex = '1';
+                        input.style.padding = '5px 10px';
+                        input.style.border = '1px solid var(--border)';
+                        input.style.borderRadius = '4px';
+                        
+                        const saveEdit = () => {
+                            this.editTask(task.id, input.value);
+                            input.removeEventListener('blur', saveEdit);
+                            input.removeEventListener('keypress', handleKeyPress);
+                        };
+                        
+                        const handleKeyPress = (e) => {
+                            if (e.key === 'Enter') saveEdit();
+                        };
+                        
+                        input.addEventListener('blur', saveEdit);
+                        input.addEventListener('keypress', handleKeyPress);
+                        
+                        li.replaceChild(input, textSpan);
+                        input.focus();
+                        input.select();
+                    });
+                    
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+                    deleteBtn.style.background = 'none';
+                    deleteBtn.style.border = 'none';
+                    deleteBtn.style.color = '#ef4444';
+                    deleteBtn.style.cursor = 'pointer';
+                    deleteBtn.style.padding = '5px';
+                    deleteBtn.style.borderRadius = '4px';
+                    deleteBtn.addEventListener('click', () => this.deleteTask(task.id));
+                    
+                    li.appendChild(checkbox);
+                    li.appendChild(textSpan);
+                    li.appendChild(deleteBtn);
+                    listElement.appendChild(li);
+                });
+            }
+            
+            setupEventListeners() {
+                document.getElementById('add-btn').addEventListener('click', () => {
+                    const input = document.getElementById('new-task');
+                    this.addTask(input.value);
+                    input.value = '';
+                    input.focus();
+                });
+                
+                document.getElementById('new-task').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        const input = document.getElementById('new-task');
+                        this.addTask(input.value);
+                        input.value = '';
+                    }
+                });
+                
+                document.getElementById('filter-all').addEventListener('click', () => this.setFilter('all'));
+                document.getElementById('filter-active').addEventListener('click', () => this.setFilter('active'));
+                document.getElementById('filter-completed').addEventListener('click', () => this.setFilter('completed'));
+                document.getElementById('clear-completed').addEventListener('click', () => this.clearCompleted());
+                
+                document.getElementById('save-btn').addEventListener('click', () => {
+                    this.save();
+                    alert('Todos saved to browser storage!');
+                });
+                
+                document.getElementById('load-btn').addEventListener('click', () => {
+                    this.load();
+                    alert('Todos loaded from browser storage!');
+                });
+                
+                document.getElementById('export-btn').addEventListener('click', () => {
+                    const exportData = this.exportTasks();
+                    navigator.clipboard.writeText(exportData).then(() => {
+                        alert('Todo list exported to clipboard as JSON!');
+                    });
+                });
+            }
+        }
+
+        // Initialize todo list
+        let todoList;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            todoList = new TodoList();
+            
+            // Add sample tasks if empty
+            if (todoList.tasks.length === 0) {
+                todoList.addTask('Explore Daily Smart Tool features');
+                todoList.addTask('Try the Markdown Editor');
+                todoList.addTask('Check out other productivity tools');
+                todoList.addTask('Save your important tasks here');
+            }
+        });
+    </script>
+</body>
+</html>

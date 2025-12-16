@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Encoder/Decoder - Daily Smart Tool</title>
+    <meta name="description" content="Encode and decode URL strings. Free online URL encoder/decoder tool.">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">⚙️</div>
+                <span>Daily Smart Tool</span>
+            </a>
+            <button class="mobile-menu-btn">☰</button>
+            <button class="theme-toggle" title="Toggle dark mode">🌙</button>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../all-tools.html">All Tools</a></li>
+                    <li><a href="text-case-converter.html">Text Tools</a></li>
+                    <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                    <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                    <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                    <li><a href="../tools/generators/password-generator.html">Generators</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li class="separator">/</li>
+                <li><a href="../all-tools.html">All Tools</a></li>
+                <li class="separator">/</li>
+                <li><a href="#">Text Tools</a></li>
+                <li class="separator">/</li>
+                <li>URL Encoder/Decoder</li>
+            </ul>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="tool-page">
+            <div class="tool-header">
+                <h1>URL Encoder/Decoder</h1>
+                <p>Encode and decode URL strings. This is a free, browser-based tool. No installation required.</p>
+            </div>
+            
+            <div class="tool-container">
+                <div class="tool-main">
+                    <div class="tool-input-area">
+                        <div class="input-group">
+                            <label for="input-text">Enter URL or text to encode/decode:</label>
+                            <textarea id="input-text" placeholder="Enter URL or text..." style="font-family: 'Courier New', monospace; min-height: 150px;">https://www.example.com/search?q=hello world&page=1</textarea>
+                        </div>
+                        
+                        <div class="tool-buttons">
+                            <button class="btn btn-primary" id="encode-btn">Encode URL</button>
+                            <button class="btn btn-primary" id="decode-btn">Decode URL</button>
+                            <button class="btn btn-secondary" id="clear-btn">Clear</button>
+                            <button class="btn btn-success" id="copy-btn">Copy Result</button>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="output-result">Result:</label>
+                            <textarea id="output-result" readonly style="font-family: 'Courier New', monospace; min-height: 150px;">URL encoded/decoded result will appear here.</textarea>
+                        </div>
+                        
+                        <div class="result-box" id="url-info">
+                            <p>URL Analysis: <span id="url-analysis">-</span></p>
+                        </div>
+                        
+                        <div class="info-section">
+                            <h3>About This Tool</h3>
+                            <p>The URL Encoder/Decoder allows you to convert special characters in URLs to their encoded format and vice versa. It's designed to be fast, secure, and easy to use.</p>
+                            <p><strong>Common uses:</strong> Preparing URLs for web requests, handling special characters in query parameters, and debugging URL issues.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tool-sidebar">
+                    <div class="ad-banner vertical">Ad Space (300x250)</div>
+                    
+                    <h3>Related Text Tools</h3>
+                    <ul class="related-tools">
+                        <li><a href="base64-encoder.html">➤ Base64 Encoder/Decoder</a></li>
+                        <li><a href="html-encoder.html">➤ HTML Encoder</a></li>
+                        <li><a href="text-diff-checker.html">➤ Text Diff Checker</a></li>
+                        <li><a href="remove-line-breaks.html">➤ Remove Line Breaks</a></li>
+                    </ul>
+                    
+                    <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <h4>Common URL Encodings</h4>
+                        <table style="width: 100%; font-size: 0.85rem;">
+                            <tr><td>Space</td><td style="text-align: right;">%20</td></tr>
+                            <tr><td>Ampersand (&)</td><td style="text-align: right;">%26</td></tr>
+                            <tr><td>Question (?)</td><td style="text-align: right;">%3F</td></tr>
+                            <tr><td>Equals (=)</td><td style="text-align: right;">%3D</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Daily Smart Tool</h3>
+                    <p>Your one-stop destination for free online utilities, calculators, converters, and productivity tools.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../all-tools.html">All Tools</a></li>
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Popular Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="text-case-converter.html">Text Tools</a></li>
+                        <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                        <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                        <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                        <li><a href="../tools/developers/html-encoder.html">Developer Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li>Email: contact@dailysmarttool.com</li>
+                        <li>Feedback: feedback@dailysmarttool.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; <script>document.write(new Date().getFullYear())</script> Daily Smart Tool. All rights reserved. | Part of Safetyguide360 Network
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // URL Encoder/Decoder functionality
+        function encodeURL(text) {
+            try {
+                return encodeURIComponent(text);
+            } catch (error) {
+                return `Error: ${error.message}`;
+            }
+        }
+        
+        function decodeURL(encoded) {
+            try {
+                return decodeURIComponent(encoded);
+            } catch (error) {
+                // Try decodeURI for full URLs
+                try {
+                    return decodeURI(encoded);
+                } catch (error2) {
+                    return `Error: ${error2.message}`;
+                }
+            }
+        }
+        
+        function analyzeURL(url) {
+            try {
+                const urlObj = new URL(url.includes('://') ? url : 'http://' + url);
+                return {
+                    protocol: urlObj.protocol,
+                    hostname: urlObj.hostname,
+                    pathname: urlObj.pathname,
+                    search: urlObj.search,
+                    hash: urlObj.hash,
+                    isValid: true
+                };
+            } catch (error) {
+                return { isValid: false, error: error.message };
+            }
+        }
+
+        document.getElementById('encode-btn').addEventListener('click', function() {
+            const input = document.getElementById('input-text').value;
+            const encoded = encodeURL(input);
+            document.getElementById('output-result').value = encoded;
+            
+            // Update analysis
+            const analysis = analyzeURL(input);
+            const urlInfo = document.getElementById('url-info');
+            const urlAnalysis = document.getElementById('url-analysis');
+            
+            if (encoded.startsWith('Error:')) {
+                urlAnalysis.textContent = '❌ Encoding failed';
+                urlAnalysis.style.color = '#ef4444';
+                urlInfo.style.borderLeftColor = '#ef4444';
+            } else {
+                urlAnalysis.textContent = '✅ URL encoded successfully';
+                urlAnalysis.style.color = '#10b981';
+                urlInfo.style.borderLeftColor = '#10b981';
+                
+                // Show encoding stats
+                const originalLength = input.length;
+                const encodedLength = encoded.length;
+                const increase = ((encodedLength - originalLength) / originalLength * 100).toFixed(1);
+                
+                document.getElementById('output-result').value += `\n\n📊 ENCODING STATS:
+Original length: ${originalLength} chars
+Encoded length: ${encodedLength} chars
+Size increase: ${increase}%
+Encoded characters: ${(encoded.match(/%[0-9A-F]{2}/g) || []).length}`;
+                
+                // Show what was encoded
+                const specialChars = input.match(/[^A-Za-z0-9\-._~]/g) || [];
+                if (specialChars.length > 0) {
+                    const uniqueChars = [...new Set(specialChars)];
+                    document.getElementById('output-result').value += `\n\n🔤 ENCODED CHARACTERS:
+${uniqueChars.slice(0, 10).map(char => `• "${char}" → ${encodeURIComponent(char)}`).join('\n')}
+${uniqueChars.length > 10 ? `\n... and ${uniqueChars.length - 10} more` : ''}`;
+                }
+            }
+        });
+
+        document.getElementById('decode-btn').addEventListener('click', function() {
+            const input = document.getElementById('input-text').value;
+            const decoded = decodeURL(input);
+            document.getElementById('output-result').value = decoded;
+            
+            // Update analysis
+            const analysis = analyzeURL(decoded);
+            const urlInfo = document.getElementById('url-info');
+            const urlAnalysis = document.getElementById('url-analysis');
+            
+            if (decoded.startsWith('Error:')) {
+                urlAnalysis.textContent = '❌ Decoding failed';
+                urlAnalysis.style.color = '#ef4444';
+                urlInfo.style.borderLeftColor = '#ef4444';
+            } else {
+                urlAnalysis.textContent = '✅ URL decoded successfully';
+                urlAnalysis.style.color = '#10b981';
+                urlInfo.style.borderLeftColor = '#10b981';
+                
+                // Show URL analysis if it's a valid URL
+                if (analysis.isValid) {
+                    document.getElementById('output-result').value += `\n\n🔗 URL ANALYSIS:
+• Protocol: ${analysis.protocol}
+• Hostname: ${analysis.hostname}
+• Path: ${analysis.pathname}
+• Query: ${analysis.search || '(none)'}
+• Fragment: ${analysis.hash || '(none)'}`;
+                }
+                
+                // Show decoding stats
+                const encodedCount = (input.match(/%[0-9A-F]{2}/g) || []).length;
+                document.getElementById('output-result').value += `\n\n📊 DECODING STATS:
+Encoded sequences found: ${encodedCount}
+Original length: ${input.length} chars
+Decoded length: ${decoded.length} chars`;
+            }
+        });
+
+        document.getElementById('clear-btn').addEventListener('click', function() {
+            document.getElementById('input-text').value = '';
+            document.getElementById('output-result').value = 'URL encoded/decoded result will appear here.';
+            document.getElementById('url-analysis').textContent = '-';
+            document.getElementById('url-info').style.borderLeftColor = '#e2e8f0';
+        });
+
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const resultText = document.getElementById('output-result').value;
+            if (resultText && !resultText.includes('URL encoded/decoded result')) {
+                navigator.clipboard.writeText(resultText).then(() => {
+                    alert('Result copied to clipboard!');
+                });
+            } else {
+                alert('Please encode or decode some text first.');
+            }
+        });
+
+        // Auto-detect URL type
+        document.getElementById('input-text').addEventListener('input', function() {
+            const input = this.value;
+            const urlAnalysis = document.getElementById('url-analysis');
+            const urlInfo = document.getElementById('url-info');
+            
+            if (!input) {
+                urlAnalysis.textContent = '-';
+                urlInfo.style.borderLeftColor = '#e2e8f0';
+                return;
+            }
+            
+            // Check if it looks like encoded URL
+            const isEncoded = /%[0-9A-F]{2}/i.test(input) && input.includes('%');
+            const analysis = analyzeURL(input);
+            
+            if (isEncoded) {
+                urlAnalysis.textContent = '🔍 Detected: Encoded URL';
+                urlAnalysis.style.color = '#0ea5e9';
+                urlInfo.style.borderLeftColor = '#0ea5e9';
+            } else if (analysis.isValid) {
+                urlAnalysis.textContent = '🔗 Detected: Valid URL';
+                urlAnalysis.style.color = '#10b981';
+                urlInfo.style.borderLeftColor = '#10b981';
+            } else if (input.includes('://')) {
+                urlAnalysis.textContent = '⚠️ Detected: Possible URL';
+                urlAnalysis.style.color = '#f59e0b';
+                urlInfo.style.borderLeftColor = '#f59e0b';
+            } else {
+                urlAnalysis.textContent = '📝 Detected: Plain text';
+                urlAnalysis.style.color = '#64748b';
+                urlInfo.style.borderLeftColor = '#64748b';
+            }
+        });
+
+        // Encode on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('encode-btn').click();
+        });
+    </script>
+</body>
+</html>

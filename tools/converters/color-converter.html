@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Converter - Daily Smart Tool</title>
+    <meta name="description" content="Convert between HEX, RGB, HSL, CMYK color formats. Color picker, palette generator, and color harmony tools.">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .color-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .color-display {
+            height: 200px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border: 3px solid #e2e8f0;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .color-preview {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .color-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .converter-tabs {
+            display: flex;
+            gap: 10px;
+            margin: 30px 0;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        .converter-tab {
+            padding: 12px 24px;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .converter-tab:hover {
+            background: #f1f5f9;
+        }
+        .converter-tab.active {
+            background: #8b5cf6;
+            color: white;
+            border-color: #7c3aed;
+        }
+        .converter-content {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            margin-bottom: 30px;
+        }
+        .converter-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .color-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .input-label {
+            font-weight: 600;
+            color: #374151;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .input-value {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #8b5cf6;
+        }
+        .color-input {
+            padding: 12px;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Courier New', monospace;
+        }
+        .color-input:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+        .color-slider {
+            width: 100%;
+            height: 10px;
+            border-radius: 5px;
+            background: linear-gradient(to right, #000, #fff);
+            outline: none;
+            -webkit-appearance: none;
+        }
+        .color-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid #8b5cf6;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .color-picker-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+        .color-picker {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            margin: 0 auto;
+        }
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin: 30px 0;
+        }
+        .palette-color {
+            height: 80px;
+            border-radius: 8px;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.2s;
+        }
+        .palette-color:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .palette-label {
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: white;
+            font-size: 0.8rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        .harmony-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .harmony-btn {
+            padding: 12px;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .harmony-btn:hover {
+            border-color: #8b5cf6;
+            background: #faf5ff;
+        }
+        .harmony-btn.active {
+            background: #8b5cf6;
+            color: white;
+            border-color: #7c3aed;
+        }
+        .color-history {
+            display: flex;
+            gap: 10px;
+            margin: 30px 0;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+        .history-color {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid #e2e8f0;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+        .history-color:hover {
+            border-color: #8b5cf6;
+            transform: scale(1.1);
+        }
+        .contrast-checker {
+            background: #f8fafc;
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #e2e8f0;
+            margin: 30px 0;
+        }
+        .contrast-preview {
+            display: flex;
+            height: 100px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .contrast-text {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .color-blindness {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .blindness-preview {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+        .blindness-color {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 10px auto;
+        }
+        .gradient-generator {
+            background: linear-gradient(135deg, #faf5ff 0%, #ede9fe 100%);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #8b5cf6;
+            margin: 30px 0;
+        }
+        .gradient-preview {
+            height: 100px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #e2e8f0;
+        }
+        .gradient-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .color-names {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        .color-name-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .color-name-item:hover {
+            border-color: #8b5cf6;
+            transform: translateY(-2px);
+        }
+        .name-color {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+        }
+        .color-contrast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        .contrast-item {
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        @media (max-width: 768px) {
+            .color-palette {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .color-inputs {
+                grid-template-columns: 1fr;
+            }
+            .converter-tabs {
+                flex-wrap: wrap;
+            }
+            .converter-tab {
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">⚙️</div>
+                <span>Daily Smart Tool</span>
+            </a>
+            <button class="mobile-menu-btn">☰</button>
+            <button class="theme-toggle" title="Toggle dark mode">🌙</button>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../all-tools.html">All Tools</a></li>
+                    <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                    <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                    <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                    <li><a href="unit-converter.html">Converters</a></li>
+                    <li><a href="../tools/generators/password-generator.html">Generators</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li class="separator">/</li>
+                <li><a href="../all-tools.html">All Tools</a></li>
+                <li class="separator">/</li>
+                <li><a href="unit-converter.html">Converters</a></li>
+                <li class="separator">/</li>
+                <li>Color Converter</li>
+            </ul>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="tool-page">
+            <div class="tool-header">
+                <h1>Color Converter & Picker</h1>
+                <p>Convert between HEX, RGB, HSL, CMYK color formats. Generate color palettes and check contrast ratios.</p>
+            </div>
+            
+            <div class="tool-container">
+                <div class="tool-main">
+                    <div class="color-container">
+                        <!-- Main Color Display -->
+                        <div class="color-display" id="color-display">
+                            <div class="color-preview" id="color-preview">
+                                Selected Color
+                            </div>
+                            <div class="color-info">
+                                <div>
+                                    <div id="color-name">Royal Blue</div>
+                                    <div id="color-values">HEX: #4169E1 | RGB: 65, 105, 225</div>
+                                </div>
+                                <button class="btn btn-secondary" id="copy-color">Copy Color</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Converter Tabs -->
+                        <div class="converter-tabs">
+                            <div class="converter-tab active" data-tab="hex">HEX</div>
+                            <div class="converter-tab" data-tab="rgb">RGB</div>
+                            <div class="converter-tab" data-tab="hsl">HSL</div>
+                            <div class="converter-tab" data-tab="cmyk">CMYK</div>
+                            <div class="converter-tab" data-tab="picker">Color Picker</div>
+                            <div class="converter-tab" data-tab="palette">Palette Generator</div>
+                            <div class="converter-tab" data-tab="harmony">Color Harmony</div>
+                        </div>
+                        
+                        <!-- HEX Tab -->
+                        <div class="converter-content active" id="hex-tab">
+                            <h3>HEX Color Code</h3>
+                            <div class="color-inputs">
+                                <div class="input-group">
+                                    <div class="input-label">
+                                        HEX Color
+                                        <span class="input-value" id="hex-value">#4169E1</span>
+                                    </div>
+                                    <input type="text" id="hex-input" class="color-input" value="#4169E1" maxlength="7">
+                                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                                        <input type="color" id="hex-color-picker" value="#4169E1" style="width: 50px; height: 50px;">
+                                        <div style="flex: 1;">
+                                            <input type="range" id="hex-brightness" class="color-slider" min="0" max="100" value="70">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- RGB Tab -->
+                        <div class="converter-content" id="rgb-tab">
+                            <h3>RGB Color Values</h3>
+                            <div class="color-inputs">
+                                <div class="input-group">
+                                    <div class="input-label">
+                                        Red (R)
+                                        <span class="input-value" id="red-value">65</span>
+                                    </div>
+                                    <input type="range" id="red-slider" class="color-slider" min="0" max="255" value="65">
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-label">
+                                        Green (G)
+                                        <span class="input-value" id="green-value">105</span>
+                                    </div>
+                                    <input type="range" id="green-slider" class="color-slider" min="0" max="255" value="105">
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-label">
+                                        Blue (B)
+                                        <span class="input-value" id="blue-value">225</span>
+                                    </div>
+                                    <input type="range" id="blue-slider" class="color-slider" min="0" max="255" value="225">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- HSL Tab -->
+                        <div class="converter-content" id="hsl-tab">
+                            <h3>HSL Color Values</h3>
+                            <div class="color-inputs">
+                                <div class="input-group">
+                                    <div class="input-label">
+                                        Hue (H)
+                                        <span class="input-value" id="hue-value">225°</span>
+                                    </div>
+                                    <input type="range" id="hue-slider" class="color-slider" min="0" max="360" value="225">
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-label">
+                                        Saturation (S)
+                                        <span class="input-value" id="saturation-value">73%</span>
+                                    </div>
+                                    <input type="range" id="saturation-slider" class="color-slider" min="0" max="100" value="73">
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-label">
+                                        Lightness (L)
+                                        <span class="input-value" id="lightness-value">57%</span>
+                                    </div>
+                                    <input type="range" id="lightness-slider" class="color-slider" min="0" max="100" value="57">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- CMYK Tab -->
+                        <div class="converter-content" id="cmyk-tab">
+                            <h3>CMYK Color Values</h3>
+                            <div class="color-inputs">
+                                <div class="input-group">
+                                    <div class="input-label">
+                                        Cyan (C)
+                                        <span class="input-value" id="cyan-value">71%</span>
+                                    </div>
+                                    <input type="range" id="cyan-slider" class="color-slider" min="0" max="100" value="71">
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-label">
+                                        Magenta (M)
+                                        <span class="input-value" id="magenta-value">53%</span>
+                                    </div>
+                                    <input type="range" id="magenta-slider" class="color-slider" min="0" max="100" value="53">
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-label">
+                                        Yellow (Y)
+                                        <span class="input-value" id="yellow-value">0%</span>
+                                    </div>
+                                    <input type="range" id="yellow-slider" class="color-slider" min="0" max="100" value="0">
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-label">
+                                        Black (K)
+                                        <span class="input-value" id="black-value">12%</span>
+                                    </div>
+                                    <input type="range" id="black-slider" class="color-slider" min="0" max="100" value="12">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Color Picker Tab -->
+                        <div class="converter-content" id="picker-tab">
+                            <h3>Color Picker</h3>
+                            <div class="color-picker-container">
+                                <input type="color" id="color-picker" class="color-picker" value="#4169E1">
+                                <div style="margin-top: 20px;">
+                                    <input type="range" id="picker-brightness" class="color-slider" min="0" max="100" value="70" style="width: 80%;">
+                                </div>
+                                <div style="margin-top: 20px;">
+                                    <button class="btn btn-secondary" id="pick-screen">Pick from Screen</button>
+                                    <button class="btn btn-secondary" id="random-color">Random Color</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="tool-buttons" style="text-align: center; margin: 30px 0;">
+                            <button class="btn btn-primary" id="convert-color">Convert Color</button>
+                            <button class="btn btn-secondary" id="reset-color">Reset to Default</button>
+                            <button class="btn btn-success" id="save-color">Save to Palette</button>
+                            <button class="btn btn-secondary" id="export-palette">Export Palette</button>
+                        </div>
+                        
+                        <!-- Color History -->
+                        <div class="color-history" id="color-history">
+                            <!-- History colors will be inserted here -->
+                        </div>
+                        
+                        <!-- Color Palette Generator -->
+                        <div class="converter-content" id="palette-tab">
+                            <h3>Color Palette Generator</h3>
+                            <div class="color-palette" id="color-palette">
+                                <!-- Palette colors will be inserted here -->
+                            </div>
+                            <div style="text-align: center; margin-top: 20px;">
+                                <button class="btn btn-primary" id="generate-palette">Generate New Palette</button>
+                                <button class="btn btn-secondary" id="save-palette">Save This Palette</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Color Harmony -->
+                        <div class="converter-content" id="harmony-tab">
+                            <h3>Color Harmony Rules</h3>
+                            <div class="harmony-types">
+                                <div class="harmony-btn active" data-harmony="analogous">Analogous</div>
+                                <div class="harmony-btn" data-harmony="complementary">Complementary</div>
+                                <div class="harmony-btn" data-harmony="triadic">Triadic</div>
+                                <div class="harmony-btn" data-harmony="tetradic">Tetradic</div>
+                                <div class="harmony-btn" data-harmony="monochromatic">Monochromatic</div>
+                                <div class="harmony-btn" data-harmony="split-complementary">Split Complementary</div>
+                            </div>
+                            <div class="color-palette" id="harmony-palette">
+                                <!-- Harmony colors will be inserted here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Contrast Checker -->
+                        <div class="contrast-checker">
+                            <h3>Contrast Checker</h3>
+                            <p>Check WCAG compliance for text readability:</p>
+                            
+                            <div class="contrast-preview" id="contrast-preview">
+                                <div class="contrast-text" id="contrast-text" style="background: #4169E1; color: white;">
+                                    Sample Text
+                                </div>
+                                <div class="contrast-text" id="contrast-bg" style="background: white; color: #4169E1;">
+                                    Sample Text
+                                </div>
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                                <div>
+                                    <label>Text Color:</label>
+                                    <input type="color" id="text-color" value="#4169E1" style="width: 100%; height: 40px; margin-top: 10px;">
+                                </div>
+                                <div>
+                                    <label>Background Color:</label>
+                                    <input type="color" id="bg-color" value="#FFFFFF" style="width: 100%; height: 40px; margin-top: 10px;">
+                                </div>
+                            </div>
+                            
+                            <div style="margin-top: 20px; padding: 20px; background: white; border-radius: 10px;">
+                                <h4>WCAG Compliance</h4>
+                                <div id="wcag-results">
+                                    <!-- WCAG results will be inserted here -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Color Blindness Simulator -->
+                        <div>
+                            <h3>Color Blindness Simulator</h3>
+                            <p>See how your color appears to people with different types of color vision:</p>
+                            <div class="color-blindness" id="color-blindness">
+                                <!-- Color blindness previews will be inserted here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Gradient Generator -->
+                        <div class="gradient-generator">
+                            <h3>Gradient Generator</h3>
+                            <div class="gradient-preview" id="gradient-preview"></div>
+                            
+                            <div class="gradient-controls">
+                                <div>
+                                    <label>Color 1:</label>
+                                    <input type="color" id="gradient-color1" value="#4169E1" style="width: 100%; height: 40px; margin-top: 10px;">
+                                </div>
+                                <div>
+                                    <label>Color 2:</label>
+                                    <input type="color" id="gradient-color2" value="#FF6B6B" style="width: 100%; height: 40px; margin-top: 10px;">
+                                </div>
+                                <div>
+                                    <label>Angle:</label>
+                                    <input type="range" id="gradient-angle" min="0" max="360" value="90" style="width: 100%; margin-top: 10px;">
+                                    <div style="text-align: center; margin-top: 5px;" id="angle-display">90°</div>
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: center; margin-top: 20px;">
+                                <button class="btn btn-primary" id="generate-gradient">Generate Gradient</button>
+                                <button class="btn btn-secondary" id="copy-gradient">Copy CSS</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Color Names -->
+                        <div>
+                            <h3>Common Color Names</h3>
+                            <div class="color-names" id="color-names">
+                                <!-- Color names will be inserted here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Contrast Grid -->
+                        <div>
+                            <h3>Color Contrast Grid</h3>
+                            <div class="color-contrast-grid" id="contrast-grid">
+                                <!-- Contrast grid will be inserted here -->
+                            </div>
+                        </div>
+                        
+                        <div class="info-section">
+                            <h3>About Color Conversion</h3>
+                            <p>This comprehensive color converter tool allows you to work with colors in various formats and generate beautiful color schemes.</p>
+                            
+                            <h4>Color Formats:</h4>
+                            <ul>
+                                <li><strong>HEX:</strong> #RRGGBB format used in web design (e.g., #4169E1)</li>
+                                <li><strong>RGB:</strong> Red, Green, Blue values (0-255 each)</li>
+                                <li><strong>HSL:</strong> Hue, Saturation, Lightness - more intuitive for color adjustments</li>
+                                <li><strong>CMYK:</strong> Cyan, Magenta, Yellow, Black - used in printing</li>
+                            </ul>
+                            
+                            <h4>Color Harmony Rules:</h4>
+                            <ul>
+                                <li><strong>Analogous:</strong> Colors next to each other on the color wheel</li>
+                                <li><strong>Complementary:</strong> Colors opposite each other on the color wheel</li>
+                                <li><strong>Triadic:</strong> Three colors equally spaced around the color wheel</li>
+                                <li><strong>Tetradic:</strong> Four colors arranged into two complementary pairs</li>
+                                <li><strong>Monochromatic:</strong> Different shades, tints, and tones of a single color</li>
+                                <li><strong>Split Complementary:</strong> A color plus the two colors adjacent to its complement</li>
+                            </ul>
+                            
+                            <h4>WCAG Accessibility Guidelines:</h4>
+                            <ul>
+                                <li><strong>AA (Minimum):</strong> Contrast ratio of 4.5:1 for normal text</li>
+                                <li><strong>AAA (Enhanced):</strong> Contrast ratio of 7:1 for normal text</li>
+                                <li><strong>Large Text:</strong> 3:1 for AA, 4.5:1 for AAA</li>
+                                <li><strong>Non-text:</strong> 3:1 for user interface components</li>
+                            </ul>
+                            
+                            <h4>Color Theory Tips:</h4>
+                            <ul>
+                                <li>Use complementary colors for maximum contrast and visual impact</li>
+                                <li>Analogous colors create harmonious and pleasing designs</li>
+                                <li>Monochromatic schemes are elegant and easy on the eyes</li>
+                                <li>Always check contrast ratios for accessibility</li>
+                                <li>Consider color blindness when choosing color combinations</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tool-sidebar">
+                    <div class="ad-banner vertical">Ad Space (300x250)</div>
+                    
+                    <h3>Related Converters</h3>
+                    <ul class="related-tools">
+                        <li><a href="temperature-converter.html">➤ Temperature Converter</a></li>
+                        <li><a href="unit-converter.html">➤ Unit Converter</a></li>
+                        <li><a href="pdf-to-image.html">➤ PDF to Image</a></li>
+                        <li><a href="image-to-pdf.html">➤ Image to PDF</a></li>
+                    </ul>
+                    
+                    <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <h4>Web Safe Colors</h4>
+                        <div style="display: flex; gap: 5px; margin-top: 10px;">
+                            <div style="width: 20px; height: 20px; background: #FF0000; border-radius: 3px;"></div>
+                            <div style="width: 20px; height: 20px; background: #00FF00; border-radius: 3px;"></div>
+                            <div style="width: 20px; height: 20px; background: #0000FF; border-radius: 3px;"></div>
+                            <div style="width: 20px; height: 20px; background: #FFFF00; border-radius: 3px;"></div>
+                            <div style="width: 20px; height: 20px; background: #FF00FF; border-radius: 3px;"></div>
+                            <div style="width: 20px; height: 20px; background: #00FFFF; border-radius: 3px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Daily Smart Tool</h3>
+                    <p>Your one-stop destination for free online utilities, calculators, converters, and productivity tools.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../all-tools.html">All Tools</a></li>
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Popular Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                        <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                        <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                        <li><a href="unit-converter.html">Converters</a></li>
+                        <li><a href="../tools/generators/password-generator.html">Generators</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li>Email: contact@dailysmarttool.com</li>
+                        <li>Feedback: feedback@dailysmarttool.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; <script>document.write(new Date().getFullYear())</script> Daily Smart Tool. All rights reserved. | Part of Safetyguide360 Network
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // Current color state
+        let currentColor = {
+            hex: '#4169E1',
+            rgb: { r: 65, g: 105, b: 225 },
+            hsl: { h: 225, s: 73, l: 57 },
+            cmyk: { c: 71, m: 53, y: 0, k: 12 }
+        };
+        
+        let colorHistory = [];
+        let savedPalettes = [];
+        
+        // Color conversion functions
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : { r: 0, g: 0, b: 0 };
+        }
+        
+        function rgbToHex(r, g, b) {
+            return '#' + [r, g, b].map(x => {
+                const hex = x.toString(16);
+                return hex.length === 1 ? '0' + hex : hex;
+            }).join('');
+        }
+        
+        function rgbToHsl(r, g, b) {
+            r /= 255;
+            g /= 255;
+            b /= 255;
+            
+            const max = Math.max(r, g, b);
+            const min = Math.min(r, g, b);
+            let h, s, l = (max + min) / 2;
+            
+            if (max === min) {
+                h = s = 0; // achromatic
+            } else {
+                const d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                
+                switch (max) {
+                    case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                    case g: h = (b - r) / d + 2; break;
+                    case b: h = (r - g) / d + 4; break;
+                }
+                h /= 6;
+            }
+            
+            return {
+                h: Math.round(h * 360),
+                s: Math.round(s * 100),
+                l: Math.round(l * 100)
+            };
+        }
+        
+        function hslToRgb(h, s, l) {
+            h /= 360;
+            s /= 100;
+            l /= 100;
+            
+            let r, g, b;
+            
+            if (s === 0) {
+                r = g = b = l; // achromatic
+            } else {
+                const hue2rgb = (p, q, t) => {
+                    if (t < 0) t += 1;
+                    if (t > 1) t -= 1;
+                    if (t < 1/6) return p + (q - p) * 6 * t;
+                    if (t < 1/2) return q;
+                    if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+                    return p;
+                };
+                
+                const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                const p = 2 * l - q;
+                
+                r = hue2rgb(p, q, h + 1/3);
+                g = hue2rgb(p, q, h);
+                b = hue2rgb(p, q, h - 1/3);
+            }
+            
+            return {
+                r: Math.round(r * 255),
+                g: Math.round(g * 255),
+                b: Math.round(b * 255)
+            };
+        }
+        
+        function rgbToCmyk(r, g, b) {
+            if (r === 0 && g === 0 && b === 0) {
+                return { c: 0, m: 0, y: 0, k: 100 };
+            }
+            
+            const c = 1 - (r / 255);
+            const m = 1 - (g / 255);
+            const y = 1 - (b / 255);
+            
+            const k = Math.min(c, m, y);
+            
+            return {
+                c: Math.round(((c - k) / (1 - k)) * 100),
+                m: Math.round(((m - k) / (1 - k)) * 100),
+                y: Math.round(((y - k) / (1 - k)) * 100),
+                k: Math.round(k * 100)
+            };
+        }
+        
+        function cmykToRgb(c, m, y, k) {
+            const r = 255 * (1 - c/100) * (1 - k/100);
+            const g = 255 * (1 - m/100) * (1 - k/100);
+            const b = 255 * (1 - y/100) * (1 - k/100);
+            
+            return {
+                r: Math.round(r),
+                g: Math.round(g),
+                b: Math.round(b)
+            };
+        }
+        
+        // Calculate relative luminance for contrast ratio
+        function getLuminance(r, g, b) {
+            const sRGB = [r, g, b].map(c => {
+                c /= 255;
+                return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+            });
+            return 0.2126 * sRGB[0] + 0.7152 * sRGB[1] + 0.0722 * sRGB[2];
+        }
+        
+        function getContrastRatio(color1, color2) {
+            const l1 = getLuminance(color1.r, color1.g, color1.b);
+            const l2 = getLuminance(color2.r, color2.g, color2.b);
+            const lighter = Math.max(l1, l2);
+            const darker = Math.min(l1, l2);
+            return (lighter + 0.05) / (darker + 0.05);
+        }
+        
+        // Update all displays based on current color
+        function updateColorDisplays() {
+            // Update HEX display
+            document.getElementById('hex-value').textContent = currentColor.hex;
+            document.getElementById('hex-input').value = currentColor.hex;
+            document.getElementById('hex-color-picker').value = currentColor.hex;
+            
+            // Update RGB displays
+            document.getElementById('red-value').textContent = currentColor.rgb.r;
+            document.getElementById('green-value').textContent = currentColor.rgb.g;
+            document.getElementById('blue-value').textContent = currentColor.rgb.b;
+            document.getElementById('red-slider').value = currentColor.rgb.r;
+            document.getElementById('green-slider').value = currentColor.rgb.g;
+            document.getElementById('blue-slider').value = currentColor.rgb.b;
+            
+            // Update HSL displays
+            document.getElementById('hue-value').textContent = currentColor.hsl.h + '°';
+            document.getElementById('saturation-value').textContent = currentColor.hsl.s + '%';
+            document.getElementById('lightness-value').textContent = currentColor.hsl.l + '%';
+            document.getElementById('hue-slider').value = currentColor.hsl.h;
+            document.getElementById('saturation-slider').value = currentColor.hsl.s;
+            document.getElementById('lightness-slider').value = currentColor.hsl.l;
+            
+            // Update CMYK displays
+            document.getElementById('cyan-value').textContent = currentColor.cmyk.c + '%';
+            document.getElementById('magenta-value').textContent = currentColor.cmyk.m + '%';
+            document.getElementById('yellow-value').textContent = currentColor.cmyk.y + '%';
+            document.getElementById('black-value').textContent = currentColor.cmyk.k + '%';
+            document.getElementById('cyan-slider').value = currentColor.cmyk.c;
+            document.getElementById('magenta-slider').value = currentColor.cmyk.m;
+            document.getElementById('yellow-slider').value = currentColor.cmyk.y;
+            document.getElementById('black-slider').value = currentColor.cmyk.k;
+            
+            // Update color picker
+            document.getElementById('color-picker').value = currentColor.hex;
+            
+            // Update main display
+            document.getElementById('color-display').style.background = currentColor.hex;
+            document.getElementById('color-preview').style.color = getTextColor(currentColor.rgb);
+            document.getElementById('color-values').textContent = 
+                `HEX: ${currentColor.hex} | RGB: ${currentColor.rgb.r}, ${currentColor.rgb.g}, ${currentColor.rgb.b}`;
+            
+            // Update contrast checker
+            updateContrastChecker();
+            
+            // Update color blindness simulator
+            updateColorBlindness();
+            
+            // Update gradient preview
+            updateGradientPreview();
+            
+            // Update color names
+            updateColorNames();
+            
+            // Update contrast grid
+            updateContrastGrid();
+            
+            // Add to history if different from last color
+            addToHistory();
+        }
+        
+        // Get appropriate text color (black or white) based on background
+        function getTextColor(rgb) {
+            const luminance = getLuminance(rgb.r, rgb.g, rgb.b);
+            return luminance > 0.179 ? '#000000' : '#FFFFFF';
+        }
+        
+        // Add color to history
+        function addToHistory() {
+            const historyContainer = document.getElementById('color-history');
+            
+            // Check if color is already in history
+            if (colorHistory.length > 0 && colorHistory[0].hex === currentColor.hex) {
+                return;
+            }
+            
+            // Add to beginning of history
+            colorHistory.unshift({
+                hex: currentColor.hex,
+                rgb: { ...currentColor.rgb },
+                timestamp: new Date().toLocaleTimeString()
+            });
+            
+            // Keep only last 10 colors
+            if (colorHistory.length > 10) {
+                colorHistory.pop();
+            }
+            
+            // Update history display
+            historyContainer.innerHTML = '';
+            colorHistory.forEach((color, index) => {
+                const colorDiv = document.createElement('div');
+                colorDiv.className = 'history-color';
+                colorDiv.style.background = color.hex;
+                colorDiv.title = `${color.hex}\n${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}\n${color.timestamp}`;
+                colorDiv.addEventListener('click', () => {
+                    currentColor = {
+                        hex: color.hex,
+                        rgb: { ...color.rgb },
+                        hsl: rgbToHsl(color.rgb.r, color.rgb.g, color.rgb.b),
+                        cmyk: rgbToCmyk(color.rgb.r, color.rgb.g, color.rgb.b)
+                    };
+                    updateColorDisplays();
+                });
+                historyContainer.appendChild(colorDiv);
+            });
+        }
+        
+        // Update contrast checker
+        function updateContrastChecker() {
+            const textColor = currentColor.hex;
+            const bgColor = '#FFFFFF';
+            
+            document.getElementById('text-color').value = textColor;
+            document.getElementById('bg-color').value = bgColor;
+            
+            document.getElementById('contrast-text').style.background = textColor;
+            document.getElementById('contrast-text').style.color = getTextColor(currentColor.rgb);
+            document.getElementById('contrast-bg').style.background = bgColor;
+            document.getElementById('contrast-bg').style.color = textColor;
+            
+            // Calculate contrast ratio
+            const textRgb = hexToRgb(textColor);
+            const bgRgb = hexToRgb(bgColor);
+            const ratio = getContrastRatio(textRgb, bgRgb);
+            
+            // Update WCAG results
+            const results = document.getElementById('wcag-results');
+            results.innerHTML = `
+                <div style="margin: 10px 0;">
+                    <strong>Contrast Ratio:</strong> ${ratio.toFixed(2)}:1
+                </div>
+                <div style="margin: 5px 0; ${ratio >= 4.5 ? 'color: #10b981;' : 'color: #ef4444;'}">
+                    • Normal Text (AA): ${ratio >= 4.5 ? '✓ PASS' : '✗ FAIL'}
+                </div>
+                <div style="margin: 5px 0; ${ratio >= 7 ? 'color: #10b981;' : 'color: #ef4444;'}">
+                    • Normal Text (AAA): ${ratio >= 7 ? '✓ PASS' : '✗ FAIL'}
+                </div>
+                <div style="margin: 5px 0; ${ratio >= 3 ? 'color: #10b981;' : 'color: #ef4444;'}">
+                    • Large Text (AA): ${ratio >= 3 ? '✓ PASS' : '✗ FAIL'}
+                </div>
+            `;
+        }
+        
+        // Update color blindness simulator
+        function updateColorBlindness() {
+            const container = document.getElementById('color-blindness');
+            const { r, g, b } = currentColor.rgb;
+            
+            const simulations = [
+                { name: 'Normal Vision', filter: 'none' },
+                { name: 'Protanopia (Red-blind)', filter: `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"><filter id="protanopia"><feColorMatrix type="matrix" values="0.567,0.433,0,0,0 0.558,0.442,0,0,0 0,0.242,0.758,0,0 0,0,0,1,0"/></filter></svg>#protanopia')` },
+                { name: 'Deuteranopia (Green-blind)', filter: `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"><filter id="deuteranopia"><feColorMatrix type="matrix" values="0.625,0.375,0,0,0 0.7,0.3,0,0,0 0,0.3,0.7,0,0 0,0,0,1,0"/></filter></svg>#deuteranopia')` },
+                { name: 'Tritanopia (Blue-blind)', filter: `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"><filter id="tritanopia"><feColorMatrix type="matrix" values="0.95,0.05,0,0,0 0,0.433,0.567,0,0 0,0.475,0.525,0,0 0,0,0,1,0"/></filter></svg>#tritanopia')` },
+                { name: 'Achromatopsia (Complete)', filter: 'grayscale(100%)' }
+            ];
+            
+            container.innerHTML = '';
+            simulations.forEach(sim => {
+                const preview = document.createElement('div');
+                preview.className = 'blindness-preview';
+                preview.innerHTML = `
+                    <div>${sim.name}</div>
+                    <div class="blindness-color" style="background: rgb(${r}, ${g}, ${b}); filter: ${sim.filter};"></div>
+                    <div style="font-size: 0.9rem; color: #64748b;">How this color appears</div>
+                `;
+                container.appendChild(preview);
+            });
+        }
+        
+        // Update gradient preview
+        function updateGradientPreview() {
+            const color1 = document.getElementById('gradient-color1').value;
+            const color2 = document.getElementById('gradient-color2').value;
+            const angle = document.getElementById('gradient-angle').value;
+            
+            const gradient = `linear-gradient(${angle}deg, ${color1}, ${color2})`;
+            document.getElementById('gradient-preview').style.background = gradient;
+            document.getElementById('angle-display').textContent = `${angle}°`;
+        }
+        
+        // Update color names
+        function updateColorNames() {
+            const container = document.getElementById('color-names');
+            const namedColors = [
+                { name: 'Red', hex: '#FF0000', rgb: '255,0,0' },
+                { name: 'Green', hex: '#00FF00', rgb: '0,255,0' },
+                { name: 'Blue', hex: '#0000FF', rgb: '0,0,255' },
+                { name: 'Yellow', hex: '#FFFF00', rgb: '255,255,0' },
+                { name: 'Cyan', hex: '#00FFFF', rgb: '0,255,255' },
+                { name: 'Magenta', hex: '#FF00FF', rgb: '255,0,255' },
+                { name: 'Orange', hex: '#FFA500', rgb: '255,165,0' },
+                { name: 'Purple', hex: '#800080', rgb: '128,0,128' },
+                { name: 'Pink', hex: '#FFC0CB', rgb: '255,192,203' },
+                { name: 'Brown', hex: '#A52A2A', rgb: '165,42,42' },
+                { name: 'White', hex: '#FFFFFF', rgb: '255,255,255' },
+                { name: 'Black', hex: '#000000', rgb: '0,0,0' }
+            ];
+            
+            container.innerHTML = '';
+            namedColors.forEach(color => {
+                const item = document.createElement('div');
+                item.className = 'color-name-item';
+                item.innerHTML = `
+                    <div class="name-color" style="background: ${color.hex};"></div>
+                    <div style="font-weight: bold;">${color.name}</div>
+                    <div style="font-size: 0.8rem; color: #64748b;">${color.hex}</div>
+                `;
+                item.addEventListener('click', () => {
+                    currentColor = {
+                        hex: color.hex,
+                        rgb: hexToRgb(color.hex),
+                        hsl: rgbToHsl(...Object.values(hexToRgb(color.hex))),
+                        cmyk: rgbToCmyk(...Object.values(hexToRgb(color.hex)))
+                    };
+                    updateColorDisplays();
+                });
+                container.appendChild(item);
+            });
+        }
+        
+        // Update contrast grid
+        function updateContrastGrid() {
+            const container = document.getElementById('contrast-grid');
+            const colors = [
+                '#FFFFFF', '#F8FAFC', '#E2E8F0', '#CBD5E1',
+                '#94A3B8', '#64748B', '#475569', '#334155',
+                '#1E293B', '#0F172A', '#000000'
+            ];
+            
+            container.innerHTML = '';
+            colors.forEach(bgColor => {
+                const item = document.createElement('div');
+                item.className = 'contrast-item';
+                item.style.background = bgColor;
+                item.style.color = getTextColor(hexToRgb(bgColor));
+                item.textContent = 'Aa';
+                item.title = `Background: ${bgColor}\nText: ${getTextColor(hexToRgb(bgColor))}`;
+                container.appendChild(item);
+            });
+        }
+        
+        // Generate color palette
+        function generateColorPalette() {
+            const container = document.getElementById('color-palette');
+            const { h, s, l } = currentColor.hsl;
+            
+            // Generate 5 colors based on current color
+            const colors = [];
+            for (let i = 0; i < 5; i++) {
+                const hue = (h + i * 72) % 360; // Spread colors around color wheel
+                const rgb = hslToRgb(hue, s, l);
+                colors.push({
+                    hex: rgbToHex(rgb.r, rgb.g, rgb.b),
+                    rgb: rgb,
+                    name: `Color ${i + 1}`
+                });
+            }
+            
+            container.innerHTML = '';
+            colors.forEach((color, index) => {
+                const colorDiv = document.createElement('div');
+                colorDiv.className = 'palette-color';
+                colorDiv.style.background = color.hex;
+                colorDiv.innerHTML = `<div class="palette-label">${color.hex}</div>`;
+                colorDiv.addEventListener('click', () => {
+                    currentColor = {
+                        hex: color.hex,
+                        rgb: color.rgb,
+                        hsl: rgbToHsl(color.rgb.r, color.rgb.g, color.rgb.b),
+                        cmyk: rgbToCmyk(color.rgb.r, color.rgb.g, color.rgb.b)
+                    };
+                    updateColorDisplays();
+                });
+                container.appendChild(colorDiv);
+            });
+        }
+        
+        // Generate color harmony
+        function generateColorHarmony(type) {
+            const container = document.getElementById('harmony-palette');
+            const { h, s, l } = currentColor.hsl;
+            let hues = [];
+            
+            switch(type) {
+                case 'analogous':
+                    hues = [h - 30, h, h + 30];
+                    break;
+                case 'complementary':
+                    hues = [h, (h + 180) % 360];
+                    break;
+                case 'triadic':
+                    hues = [h, (h + 120) % 360, (h + 240) % 360];
+                    break;
+                case 'tetradic':
+                    hues = [h, (h + 90) % 360, (h + 180) % 360, (h + 270) % 360];
+                    break;
+                case 'monochromatic':
+                    hues = [h, h, h, h, h];
+                    break;
+                case 'split-complementary':
+                    hues = [h, (h + 150) % 360, (h + 210) % 360];
+                    break;
+            }
+            
+            container.innerHTML = '';
+            hues.forEach((hue, index) => {
+                const lightness = type === 'monochromatic' ? 
+                    Math.min(100, Math.max(0, l + (index - 2) * 10)) : l;
+                const rgb = hslToRgb(hue, s, lightness);
+                const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
+                
+                const colorDiv = document.createElement('div');
+                colorDiv.className = 'palette-color';
+                colorDiv.style.background = hex;
+                colorDiv.innerHTML = `<div class="palette-label">${hex}</div>`;
+                colorDiv.addEventListener('click', () => {
+                    currentColor = {
+                        hex: hex,
+                        rgb: rgb,
+                        hsl: { h: hue, s: s, l: lightness },
+                        cmyk: rgbToCmyk(rgb.r, rgb.g, rgb.b)
+                    };
+                    updateColorDisplays();
+                });
+                container.appendChild(colorDiv);
+            });
+        }
+        
+        // Event Listeners
+        // Tab switching
+        document.querySelectorAll('.converter-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Update active tab
+                document.querySelectorAll('.converter-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Update active content
+                const tabId = tab.getAttribute('data-tab');
+                document.querySelectorAll('.converter-content').forEach(content => content.classList.remove('active'));
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+                
+                // Generate palette or harmony if needed
+                if (tabId === 'palette') {
+                    generateColorPalette();
+                } else if (tabId === 'harmony') {
+                    const activeHarmony = document.querySelector('.harmony-btn.active').getAttribute('data-harmony');
+                    generateColorHarmony(activeHarmony);
+                }
+            });
+        });
+        
+        // HEX input
+        document.getElementById('hex-input').addEventListener('input', function() {
+            let hex = this.value;
+            if (!hex.startsWith('#')) {
+                hex = '#' + hex;
+            }
+            if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(hex)) {
+                const rgb = hexToRgb(hex);
+                currentColor = {
+                    hex: hex,
+                    rgb: rgb,
+                    hsl: rgbToHsl(rgb.r, rgb.g, rgb.b),
+                    cmyk: rgbToCmyk(rgb.r, rgb.g, rgb.b)
+                };
+                updateColorDisplays();
+            }
+        });
+        
+        // RGB sliders
+        document.getElementById('red-slider').addEventListener('input', function() {
+            currentColor.rgb.r = parseInt(this.value);
+            updateFromRgb();
+        });
+        
+        document.getElementById('green-slider').addEventListener('input', function() {
+            currentColor.rgb.g = parseInt(this.value);
+            updateFromRgb();
+        });
+        
+        document.getElementById('blue-slider').addEventListener('input', function() {
+            currentColor.rgb.b = parseInt(this.value);
+            updateFromRgb();
+        });
+        
+        function updateFromRgb() {
+            currentColor.hex = rgbToHex(currentColor.rgb.r, currentColor.rgb.g, currentColor.rgb.b);
+            currentColor.hsl = rgbToHsl(currentColor.rgb.r, currentColor.rgb.g, currentColor.rgb.b);
+            currentColor.cmyk = rgbToCmyk(currentColor.rgb.r, currentColor.rgb.g, currentColor.rgb.b);
+            updateColorDisplays();
+        }
+        
+        // HSL sliders
+        document.getElementById('hue-slider').addEventListener('input', function() {
+            currentColor.hsl.h = parseInt(this.value);
+            updateFromHsl();
+        });
+        
+        document.getElementById('saturation-slider').addEventListener('input', function() {
+            currentColor.hsl.s = parseInt(this.value);
+            updateFromHsl();
+        });
+        
+        document.getElementById('lightness-slider').addEventListener('input', function() {
+            currentColor.hsl.l = parseInt(this.value);
+            updateFromHsl();
+        });
+        
+        function updateFromHsl() {
+            const rgb = hslToRgb(currentColor.hsl.h, currentColor.hsl.s, currentColor.hsl.l);
+            currentColor.rgb = rgb;
+            currentColor.hex = rgbToHex(rgb.r, rgb.g, rgb.b);
+            currentColor.cmyk = rgbToCmyk(rgb.r, rgb.g, rgb.b);
+            updateColorDisplays();
+        }
+        
+        // CMYK sliders
+        document.getElementById('cyan-slider').addEventListener('input', function() {
+            currentColor.cmyk.c = parseInt(this.value);
+            updateFromCmyk();
+        });
+        
+        document.getElementById('magenta-slider').addEventListener('input', function() {
+            currentColor.cmyk.m = parseInt(this.value);
+            updateFromCmyk();
+        });
+        
+        document.getElementById('yellow-slider').addEventListener('input', function() {
+            currentColor.cmyk.y = parseInt(this.value);
+            updateFromCmyk();
+        });
+        
+        document.getElementById('black-slider').addEventListener('input', function() {
+            currentColor.cmyk.k = parseInt(this.value);
+            updateFromCmyk();
+        });
+        
+        function updateFromCmyk() {
+            const rgb = cmykToRgb(currentColor.cmyk.c, currentColor.cmyk.m, currentColor.cmyk.y, currentColor.cmyk.k);
+            currentColor.rgb = rgb;
+            currentColor.hex = rgbToHex(rgb.r, rgb.g, rgb.b);
+            currentColor.hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+            updateColorDisplays();
+        }
+        
+        // Color picker
+        document.getElementById('color-picker').addEventListener('input', function() {
+            const hex = this.value;
+            const rgb = hexToRgb(hex);
+            currentColor = {
+                hex: hex,
+                rgb: rgb,
+                hsl: rgbToHsl(rgb.r, rgb.g, rgb.b),
+                cmyk: rgbToCmyk(rgb.r, rgb.g, rgb.b)
+            };
+            updateColorDisplays();
+        });
+        
+        // Random color
+        document.getElementById('random-color').addEventListener('click', () => {
+            const randomHex = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+            const rgb = hexToRgb(randomHex);
+            currentColor = {
+                hex: randomHex,
+                rgb: rgb,
+                hsl: rgbToHsl(rgb.r, rgb.g, rgb.b),
+                cmyk: rgbToCmyk(rgb.r, rgb.g, rgb.b)
+            };
+            updateColorDisplays();
+        });
+        
+        // Convert button
+        document.getElementById('convert-color').addEventListener('click', updateColorDisplays);
+        
+        // Reset button
+        document.getElementById('reset-color').addEventListener('click', () => {
+            currentColor = {
+                hex: '#4169E1',
+                rgb: { r: 65, g: 105, b: 225 },
+                hsl: { h: 225, s: 73, l: 57 },
+                cmyk: { c: 71, m: 53, y: 0, k: 12 }
+            };
+            updateColorDisplays();
+        });
+        
+        // Copy color
+        document.getElementById('copy-color').addEventListener('click', () => {
+            const text = `HEX: ${currentColor.hex}\nRGB: ${currentColor.rgb.r}, ${currentColor.rgb.g}, ${currentColor.rgb.b}\nHSL: ${currentColor.hsl.h}°, ${currentColor.hsl.s}%, ${currentColor.hsl.l}%`;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Color values copied to clipboard!');
+            });
+        });
+        
+        // Generate palette
+        document.getElementById('generate-palette').addEventListener('click', generateColorPalette);
+        
+        // Harmony buttons
+        document.querySelectorAll('.harmony-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.harmony-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                generateColorHarmony(btn.getAttribute('data-harmony'));
+            });
+        });
+        
+        // Gradient controls
+        document.getElementById('gradient-color1').addEventListener('input', updateGradientPreview);
+        document.getElementById('gradient-color2').addEventListener('input', updateGradientPreview);
+        document.getElementById('gradient-angle').addEventListener('input', function() {
+            updateGradientPreview();
+            document.getElementById('angle-display').textContent = `${this.value}°`;
+        });
+        
+        // Copy gradient CSS
+        document.getElementById('copy-gradient').addEventListener('click', () => {
+            const color1 = document.getElementById('gradient-color1').value;
+            const color2 = document.getElementById('gradient-color2').value;
+            const angle = document.getElementById('gradient-angle').value;
+            const css = `background: linear-gradient(${angle}deg, ${color1}, ${color2});`;
+            navigator.clipboard.writeText(css).then(() => {
+                alert('Gradient CSS copied to clipboard!');
+            });
+        });
+        
+        // Contrast checker inputs
+        document.getElementById('text-color').addEventListener('input', function() {
+            document.getElementById('contrast-text').style.background = this.value;
+            updateContrastChecker();
+        });
+        
+        document.getElementById('bg-color').addEventListener('input', function() {
+            document.getElementById('contrast-bg').style.background = this.value;
+            updateContrastChecker();
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateColorDisplays();
+            generateColorPalette();
+            generateColorHarmony('analogous');
+        });
+    </script>
+</body>
+</html>

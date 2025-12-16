@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remove Line Breaks - Daily Smart Tool</title>
+    <meta name="description" content="Remove line breaks from text. Convert multiline text to single line. Free online text formatting tool.">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .option-group {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #0ea5e9;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 10px 0;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+        }
+        .preset-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+        .preset-btn {
+            padding: 8px 15px;
+            background: #e2e8f0;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .preset-btn:hover {
+            background: #cbd5e1;
+        }
+        .preset-btn.active {
+            background: #0ea5e9;
+            color: white;
+            border-color: #0284c7;
+        }
+        .preview-box {
+            background: #f1f5f9;
+            border: 1px dashed #94a3b8;
+            border-radius: 6px;
+            padding: 12px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">⚙️</div>
+                <span>Daily Smart Tool</span>
+            </a>
+            <button class="mobile-menu-btn">☰</button>
+            <button class="theme-toggle" title="Toggle dark mode">🌙</button>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../all-tools.html">All Tools</a></li>
+                    <li><a href="text-case-converter.html">Text Tools</a></li>
+                    <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                    <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                    <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                    <li><a href="../tools/generators/password-generator.html">Generators</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li class="separator">/</li>
+                <li><a href="../all-tools.html">All Tools</a></li>
+                <li class="separator">/</li>
+                <li><a href="#">Text Tools</a></li>
+                <li class="separator">/</li>
+                <li>Remove Line Breaks</li>
+            </ul>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="tool-page">
+            <div class="tool-header">
+                <h1>Remove Line Breaks</h1>
+                <p>Remove or replace line breaks in text. Convert multiline text to single line or customize line break formatting.</p>
+            </div>
+            
+            <div class="tool-container">
+                <div class="tool-main">
+                    <div class="tool-input-area">
+                        <div class="input-group">
+                            <label for="input-text">Enter text with line breaks:</label>
+                            <textarea id="input-text" placeholder="Paste your text here..." style="font-family: 'Courier New', monospace; min-height: 200px;">This is a sample text
+with multiple lines.
+Each line ends with a line break.
+
+Some lines have extra spaces    .
+We can remove all line breaks
+and create a single line of text.</textarea>
+                        </div>
+                        
+                        <div class="option-group">
+                            <h4>Processing Options</h4>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="remove-all" checked>
+                                    <label for="remove-all">Remove all line breaks</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="trim-lines">
+                                    <label for="trim-lines">Trim spaces from each line</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="remove-empty">
+                                    <label for="remove-empty">Remove empty lines</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="preserve-paragraphs">
+                                    <label for="preserve-paragraphs">Preserve paragraphs (double line breaks)</label>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-top: 15px;">
+                                <label for="replacement-text">Replace line breaks with:</label>
+                                <div style="display: flex; gap: 10px; margin-top: 5px;">
+                                    <input type="text" id="replacement-text" value=" " placeholder="Space, comma, or custom text" style="flex: 1; padding: 8px;">
+                                    <div class="preset-buttons">
+                                        <button class="preset-btn" data-replacement=" ">Space</button>
+                                        <button class="preset-btn" data-replacement=", ">Comma</button>
+                                        <button class="preset-btn" data-replacement=". ">Period</button>
+                                        <button class="preset-btn" data-replacement=" ">Tab</button>
+                                        <button class="preset-btn" data-replacement=""><Empty></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tool-buttons">
+                            <button class="btn btn-primary" id="process-btn">Remove Line Breaks</button>
+                            <button class="btn btn-secondary" id="clear-btn">Clear</button>
+                            <button class="btn btn-success" id="copy-btn">Copy Result</button>
+                            <button class="btn btn-secondary" id="reverse-btn">Reverse (Add Line Breaks)</button>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="output-text">Result:</label>
+                            <textarea id="output-text" readonly style="font-family: 'Courier New', monospace; min-height: 200px;">Processed text will appear here...</textarea>
+                        </div>
+                        
+                        <div class="preview-box">
+                            <strong>Preview:</strong>
+                            <div id="live-preview">Preview will update as you type...</div>
+                        </div>
+                        
+                        <div class="info-section">
+                            <h3>About This Tool</h3>
+                            <p>The Remove Line Breaks tool helps you clean up text by removing or replacing line breaks. It's useful for:</p>
+                            <ul>
+                                <li>Preparing text for database insertion</li>
+                                <li>Cleaning up copied text from PDFs or websites</li>
+                                <li>Formatting text for single-line displays</li>
+                                <li>Creating CSV data from multiline text</li>
+                                <li>Removing unwanted line breaks in code</li>
+                            </ul>
+                            <p><strong>Common uses:</strong> Data processing, text normalization, content formatting, and code cleanup.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tool-sidebar">
+                    <div class="ad-banner vertical">Ad Space (300x250)</div>
+                    
+                    <h3>Related Text Tools</h3>
+                    <ul class="related-tools">
+                        <li><a href="text-case-converter.html">➤ Text Case Converter</a></li>
+                        <li><a href="text-diff-checker.html">➤ Text Diff Checker</a></li>
+                        <li><a href="url-encoder.html">➤ URL Encoder/Decoder</a></li>
+                        <li><a href="base64-encoder.html">➤ Base64 Encoder/Decoder</a></li>
+                        <li><a href="html-encoder.html">➤ HTML Encoder</a></li>
+                    </ul>
+                    
+                    <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <h4>Line Break Types</h4>
+                        <table style="width: 100%; font-size: 0.85rem;">
+                            <tr><td>Windows (CRLF)</td><td style="text-align: right;">\r\n</td></tr>
+                            <tr><td>Unix/Linux (LF)</td><td style="text-align: right;">\n</td></tr>
+                            <tr><td>Mac (CR)</td><td style="text-align: right;">\r</td></tr>
+                            <tr><td>HTML Break</td><td style="text-align: right;">&lt;br&gt;</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Daily Smart Tool</h3>
+                    <p>Your one-stop destination for free online utilities, calculators, converters, and productivity tools.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../all-tools.html">All Tools</a></li>
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Popular Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="text-case-converter.html">Text Tools</a></li>
+                        <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                        <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                        <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                        <li><a href="../tools/developers/html-encoder.html">Developer Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li>Email: contact@dailysmarttool.com</li>
+                        <li>Feedback: feedback@dailysmarttool.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; <script>document.write(new Date().getFullYear())</script> Daily Smart Tool. All rights reserved. | Part of Safetyguide360 Network
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // Remove Line Breaks functionality
+        function processText() {
+            const inputText = document.getElementById('input-text').value;
+            const removeAll = document.getElementById('remove-all').checked;
+            const trimLines = document.getElementById('trim-lines').checked;
+            const removeEmpty = document.getElementById('remove-empty').checked;
+            const preserveParagraphs = document.getElementById('preserve-paragraphs').checked;
+            const replacementText = document.getElementById('replacement-text').value;
+            
+            let result = inputText;
+            
+            // Handle different line break types
+            const lineBreaks = /\r\n|\r|\n/g;
+            
+            if (removeAll) {
+                if (preserveParagraphs) {
+                    // Replace double line breaks with a special marker
+                    result = result.replace(/\r\n\r\n|\r\r|\n\n/g, '{{PARAGRAPH}}');
+                    // Replace single line breaks with replacement
+                    result = result.replace(lineBreaks, replacementText);
+                    // Restore paragraphs
+                    result = result.replace(/{{PARAGRAPH}}/g, '\n\n');
+                } else {
+                    result = result.replace(lineBreaks, replacementText);
+                }
+            }
+            
+            // Split into lines for additional processing
+            let lines = result.split(lineBreaks);
+            
+            // Apply other options
+            if (trimLines) {
+                lines = lines.map(line => line.trim());
+            }
+            
+            if (removeEmpty) {
+                lines = lines.filter(line => line.trim() !== '');
+            }
+            
+            // Join back with appropriate separator
+            if (removeAll && !preserveParagraphs) {
+                result = lines.join(replacementText);
+            } else {
+                result = lines.join('\n');
+            }
+            
+            // Replace special replacement text
+            if (replacementText === '\\t') {
+                result = result.replace(/\\t/g, '\t');
+            }
+            
+            document.getElementById('output-text').value = result;
+            updateStats(inputText, result);
+            updatePreview(result);
+        }
+
+        function updateStats(original, processed) {
+            const originalLines = original.split(/\r\n|\r|\n/).length;
+            const processedLines = processed.split(/\r\n|\r|\n/).length;
+            const lineBreaksRemoved = originalLines - processedLines;
+            
+            // Create stats display
+            const statsHTML = `
+                <div style="margin-top: 10px; padding: 10px; background: #e2e8f0; border-radius: 6px;">
+                    <strong>Statistics:</strong><br>
+                    • Original lines: ${originalLines}<br>
+                    • Processed lines: ${processedLines}<br>
+                    • Line breaks removed: ${Math.max(0, lineBreaksRemoved)}<br>
+                    • Characters removed: ${original.length - processed.length}
+                </div>
+            `;
+            
+            // Check if stats already exist
+            let statsDiv = document.getElementById('text-stats');
+            if (!statsDiv) {
+                statsDiv = document.createElement('div');
+                statsDiv.id = 'text-stats';
+                document.getElementById('output-text').parentNode.insertBefore(statsDiv, document.getElementById('output-text').nextSibling);
+            }
+            statsDiv.innerHTML = statsHTML;
+        }
+
+        function updatePreview(text) {
+            const preview = document.getElementById('live-preview');
+            const maxLength = 200;
+            
+            if (text.length > maxLength) {
+                preview.textContent = text.substring(0, maxLength) + '...';
+            } else {
+                preview.textContent = text || 'Preview will update as you type...';
+            }
+        }
+
+        function addLineBreaks() {
+            const inputText = document.getElementById('input-text').value;
+            const replacementText = document.getElementById('replacement-text').value;
+            
+            // Replace the replacement text with line breaks
+            let result = inputText;
+            if (replacementText) {
+                const escapedReplacement = replacementText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const regex = new RegExp(escapedReplacement, 'g');
+                result = result.replace(regex, '\n');
+            }
+            
+            document.getElementById('output-text').value = result;
+            updateStats(inputText, result);
+            updatePreview(result);
+        }
+
+        // Event listeners
+        document.getElementById('process-btn').addEventListener('click', processText);
+
+        document.getElementById('clear-btn').addEventListener('click', function() {
+            document.getElementById('input-text').value = '';
+            document.getElementById('output-text').value = 'Processed text will appear here...';
+            document.getElementById('live-preview').textContent = 'Preview will update as you type...';
+            document.getElementById('replacement-text').value = ' ';
+            
+            // Remove stats if exists
+            const statsDiv = document.getElementById('text-stats');
+            if (statsDiv) {
+                statsDiv.remove();
+            }
+        });
+
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const resultText = document.getElementById('output-text').value;
+            if (resultText && !resultText.includes('Processed text will appear here')) {
+                navigator.clipboard.writeText(resultText).then(() => {
+                    alert('Result copied to clipboard!');
+                });
+            } else {
+                alert('Please process some text first.');
+            }
+        });
+
+        document.getElementById('reverse-btn').addEventListener('click', addLineBreaks);
+
+        // Preset button handlers
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const replacement = this.getAttribute('data-replacement');
+                document.getElementById('replacement-text').value = replacement === '\\t' ? '\t' : replacement;
+                
+                // Update active state
+                document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Live preview on input
+        let debounceTimer;
+        document.getElementById('input-text').addEventListener('input', function() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                const input = this.value;
+                if (input) {
+                    updatePreview(input);
+                } else {
+                    document.getElementById('live-preview').textContent = 'Preview will update as you type...';
+                }
+            }, 500);
+        });
+
+        // Auto-process when options change
+        document.querySelectorAll('input[type="checkbox"], #replacement-text').forEach(element => {
+            element.addEventListener('change', function() {
+                if (document.getElementById('input-text').value) {
+                    processText();
+                }
+            });
+        });
+
+        // Process on page load with sample text
+        document.addEventListener('DOMContentLoaded', function() {
+            processText();
+        });
+    </script>
+</body>
+</html>

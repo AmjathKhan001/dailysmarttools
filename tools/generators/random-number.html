@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Number Generator - Daily Smart Tool</title>
+    <meta name="description" content="Generate random numbers within a range. Free online random number generator.">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">⚙️</div>
+                <span>Daily Smart Tool</span>
+            </a>
+            <button class="mobile-menu-btn">☰</button>
+            <button class="theme-toggle" title="Toggle dark mode">🌙</button>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../all-tools.html">All Tools</a></li>
+                    <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                    <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                    <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                    <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                    <li><a href="password-generator.html">Generators</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li class="separator">/</li>
+                <li><a href="../all-tools.html">All Tools</a></li>
+                    <li class="separator">/</li>
+                <li><a href="#">Generators</a></li>
+                <li class="separator">/</li>
+                <li>Random Number Generator</li>
+            </ul>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="tool-page">
+            <div class="tool-header">
+                <h1>Random Number Generator</h1>
+                <p>Generate random numbers within a range. This is a free, browser-based tool. No installation required.</p>
+            </div>
+            
+            <div class="tool-container">
+                <div class="tool-main">
+                    <div class="tool-input-area">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div class="input-group">
+                                <label for="min-value">Minimum Value:</label>
+                                <input type="number" id="min-value" value="1">
+                            </div>
+                            <div class="input-group">
+                                <label for="max-value">Maximum Value:</label>
+                                <input type="number" id="max-value" value="100">
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="count">How many numbers:</label>
+                            <input type="number" id="count" value="5" min="1" max="100">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>
+                                <input type="checkbox" id="unique" checked> Generate unique numbers (no duplicates)
+                            </label>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>
+                                <input type="checkbox" id="sorted"> Sort numbers (ascending)
+                            </label>
+                        </div>
+                        
+                        <div class="tool-buttons">
+                            <button class="btn btn-primary" id="generate-btn">Generate Numbers</button>
+                            <button class="btn btn-primary" id="generate-sequence-btn">Generate Sequence</button>
+                            <button class="btn btn-secondary" id="clear-btn">Clear</button>
+                            <button class="btn btn-success" id="copy-btn">Copy Numbers</button>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="output-result">Generated Numbers:</label>
+                            <textarea id="output-result" readonly style="font-family: monospace; font-size: 1.1rem;">Random numbers will appear here.</textarea>
+                        </div>
+                        
+                        <div class="result-box" id="stats-box">
+                            <p>Statistics: <span id="stats-text">-</span></p>
+                        </div>
+                        
+                        <div class="info-section">
+                            <h3>About This Tool</h3>
+                            <p>The Random Number Generator allows you to generate random numbers within any range. It's designed to be fast, cryptographically secure, and easy to use.</p>
+                            <p><strong>Common uses:</strong> Lotteries, games, statistical sampling, cryptography, and simulations.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tool-sidebar">
+                    <div class="ad-banner vertical">Ad Space (300x250)</div>
+                    
+                    <h3>Related Generators</h3>
+                    <ul class="related-tools">
+                        <li><a href="password-generator.html">➤ Password Generator</a></li>
+                        <li><a href="random-password.html">➤ Random Password</a></li>
+                        <li><a href="qr-code-generator.html">➤ QR Code Generator</a></li>
+                        <li><a href="hash-generator.html">➤ Hash Generator</a></li>
+                    </ul>
+                    
+                    <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <h4>Quick Presets</h4>
+                        <button class="btn btn-secondary" style="width: 100%; margin-bottom: 5px;" onclick="quickPreset('dice')">Roll a Dice (1-6)</button>
+                        <button class="btn btn-secondary" style="width: 100%; margin-bottom: 5px;" onclick="quickPreset('lottery')">Lottery Numbers (1-49)</button>
+                        <button class="btn btn-secondary" style="width: 100%;" onclick="quickPreset('percent')">Percentage (0-100)</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Daily Smart Tool</h3>
+                    <p>Your one-stop destination for free online utilities, calculators, converters, and productivity tools.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../all-tools.html">All Tools</a></li>
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Popular Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                        <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                        <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                        <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                        <li><a href="../tools/developers/html-encoder.html">Developer Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li>Email: contact@dailysmarttool.com</li>
+                        <li>Feedback: feedback@dailysmarttool.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; <script>document.write(new Date().getFullYear())</script> Daily Smart Tool. All rights reserved. | Part of Safetyguide360 Network
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // Random Number Generator functionality
+        function generateRandomNumbers(min, max, count, unique, sorted) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            count = Math.min(count, max - min + 1);
+            
+            if (unique && count > (max - min + 1)) {
+                return `Error: Cannot generate ${count} unique numbers in range ${min}-${max}. Maximum unique numbers: ${max - min + 1}`;
+            }
+            
+            let numbers = [];
+            
+            if (unique) {
+                // Generate unique numbers
+                const allNumbers = Array.from({length: max - min + 1}, (_, i) => i + min);
+                
+                // Shuffle using Fisher-Yates algorithm
+                for (let i = allNumbers.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [allNumbers[i], allNumbers[j]] = [allNumbers[j], allNumbers[i]];
+                }
+                
+                numbers = allNumbers.slice(0, count);
+            } else {
+                // Generate with possible duplicates
+                for (let i = 0; i < count; i++) {
+                    numbers.push(Math.floor(Math.random() * (max - min + 1)) + min);
+                }
+            }
+            
+            if (sorted) {
+                numbers.sort((a, b) => a - b);
+            }
+            
+            return numbers;
+        }
+        
+        function calculateStats(numbers) {
+            if (!numbers.length) return null;
+            
+            const sum = numbers.reduce((a, b) => a + b, 0);
+            const avg = sum / numbers.length;
+            const min = Math.min(...numbers);
+            const max = Math.max(...numbers);
+            const range = max - min;
+            
+            // Calculate median
+            const sorted = [...numbers].sort((a, b) => a - b);
+            const mid = Math.floor(sorted.length / 2);
+            const median = sorted.length % 2 !== 0 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+            
+            return { sum, avg, min, max, range, median, count: numbers.length };
+        }
+
+        function generateAndDisplay() {
+            const min = parseInt(document.getElementById('min-value').value);
+            const max = parseInt(document.getElementById('max-value').value);
+            const count = parseInt(document.getElementById('count').value);
+            const unique = document.getElementById('unique').checked;
+            const sorted = document.getElementById('sorted').checked;
+            
+            if (min >= max) {
+                document.getElementById('output-result').value = 'Error: Minimum value must be less than maximum value.';
+                document.getElementById('stats-text').textContent = 'Invalid range';
+                return;
+            }
+            
+            if (count < 1) {
+                document.getElementById('output-result').value = 'Error: Count must be at least 1.';
+                document.getElementById('stats-text').textContent = 'Invalid count';
+                return;
+            }
+            
+            const numbers = generateRandomNumbers(min, max, count, unique, sorted);
+            
+            if (typeof numbers === 'string') {
+                // Error message
+                document.getElementById('output-result').value = numbers;
+                document.getElementById('stats-text').textContent = 'Error occurred';
+            } else {
+                // Display numbers
+                document.getElementById('output-result').value = numbers.join(', ');
+                
+                // Calculate and display statistics
+                const stats = calculateStats(numbers);
+                if (stats) {
+                    document.getElementById('stats-text').textContent = 
+                        `Count: ${stats.count} | Min: ${stats.min} | Max: ${stats.max} | Avg: ${stats.avg.toFixed(2)} | Median: ${stats.median}`;
+                }
+            }
+        }
+
+        function generateSequence() {
+            const min = parseInt(document.getElementById('min-value').value);
+            const max = parseInt(document.getElementById('max-value').value);
+            const count = parseInt(document.getElementById('count').value);
+            
+            if (min >= max) {
+                document.getElementById('output-result').value = 'Error: Minimum value must be less than maximum value.';
+                return;
+            }
+            
+            // Generate a sequence of random numbers with statistics
+            let sequences = '';
+            for (let i = 0; i < 5; i++) {
+                const numbers = generateRandomNumbers(min, max, count, true, true);
+                if (typeof numbers === 'string') {
+                    sequences += numbers + '\n\n';
+                } else {
+                    sequences += `Sequence ${i + 1}: ${numbers.join(', ')}\n`;
+                }
+            }
+            
+            document.getElementById('output-result').value = sequences;
+            document.getElementById('stats-text').textContent = 'Generated 5 sequences';
+        }
+
+        document.getElementById('generate-btn').addEventListener('click', generateAndDisplay);
+        
+        document.getElementById('generate-sequence-btn').addEventListener('click', generateSequence);
+
+        document.getElementById('clear-btn').addEventListener('click', function() {
+            document.getElementById('min-value').value = 1;
+            document.getElementById('max-value').value = 100;
+            document.getElementById('count').value = 5;
+            document.getElementById('unique').checked = true;
+            document.getElementById('sorted').checked = false;
+            document.getElementById('output-result').value = 'Random numbers will appear here.';
+            document.getElementById('stats-text').textContent = '-';
+        });
+
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const resultText = document.getElementById('output-result').value;
+            if (resultText && !resultText.includes('Random numbers')) {
+                navigator.clipboard.writeText(resultText).then(() => {
+                    alert('Numbers copied to clipboard!');
+                });
+            } else {
+                alert('Please generate some numbers first.');
+            }
+        });
+
+        // Quick preset function
+        window.quickPreset = function(preset) {
+            switch(preset) {
+                case 'dice':
+                    document.getElementById('min-value').value = 1;
+                    document.getElementById('max-value').value = 6;
+                    document.getElementById('count').value = 1;
+                    document.getElementById('unique').checked = false;
+                    document.getElementById('sorted').checked = false;
+                    break;
+                case 'lottery':
+                    document.getElementById('min-value').value = 1;
+                    document.getElementById('max-value').value = 49;
+                    document.getElementById('count').value = 6;
+                    document.getElementById('unique').checked = true;
+                    document.getElementById('sorted').checked = true;
+                    break;
+                case 'percent':
+                    document.getElementById('min-value').value = 0;
+                    document.getElementById('max-value').value = 100;
+                    document.getElementById('count').value = 1;
+                    document.getElementById('unique').checked = false;
+                    document.getElementById('sorted').checked = false;
+                    break;
+            }
+            generateAndDisplay();
+        };
+
+        // Generate on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            generateAndDisplay();
+        });
+    </script>
+</body>
+</html>

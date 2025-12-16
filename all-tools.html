@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Tools - Daily Smart Tools</title>
+    <meta name="description" content="A complete list of all free online tools, calculators, and converters available on Daily Smart Tools.">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #64748b;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --accent: #0ea5e9;
+            --success: #10b981;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+            --radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background-color: var(--primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--secondary);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        nav a.active {
+            color: var(--primary);
+        }
+
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        /* Main Page Content Styles */
+        .page-header {
+            background: var(--light);
+            padding: 40px 0;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-dark);
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--secondary);
+            margin-top: 10px;
+        }
+
+        .tools-list-section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--dark);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+
+        .category-tools-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .category-tools-list li a {
+            display: block;
+            background: white;
+            padding: 15px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .category-tools-list li a:hover {
+            background: #eef2ff;
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-wrap: wrap;
+            }
+            
+            nav {
+                width: 100%;
+                margin-top: 15px;
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .category-tools-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-icon">⚙️</div>
+                <span>Daily Smart Tools</span>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="all-tools.html" class="active">All Tools</a></li>
+                    <li><a href="text-case-converter.html">Text Tools</a></li>
+                    <li><a href="#">Image Tools</a></li>
+                    <li><a href="loan-calculator.html">Calculators</a></li>
+                    <li><a href="#">Converters</a></li>
+                    <li><a href="#">Generators</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1>All Online Tools & Utilities</h1>
+                <p>Browse our complete collection of free, smart tools categorized for easy access.</p>
+            </div>
+        </section>
+
+        <div class="container">
+            <section class="tools-list-section">
+                <h2 class="section-title">📝 Text Tools (24)</h2>
+                <ul class="category-tools-list">
+                    <li><a href="text-case-converter.html">Text Case Converter</a></li>
+                    <li><a href="#">Word Counter</a></li>
+                    <li><a href="#">Character Counter</a></li>
+                    <li><a href="#">Text Reverser</a></li>
+                    <li><a href="#">Remove Line Breaks</a></li>
+                    <li><a href="#">Base64 Encoder / Decoder</a></li>
+                    <li><a href="#">URL Encoder / Decoder</a></li>
+                    <li><a href="#">Lorem Ipsum Generator</a></li>
+                </ul>
+
+                <h2 class="section-title">🖼️ Image Tools (18)</h2>
+                <ul class="category-tools-list">
+                    <li><a href="#">Image Resizer</a></li>
+                    <li><a href="#">Image Compressor</a></li>
+                    <li><a href="#">JPG to PNG Converter</a></li>
+                    <li><a href="#">Image Cropper</a></li>
+                    <li><a href="#">Add Watermark</a></li>
+                </ul>
+
+                <h2 class="section-title">🧮 Calculators (32)</h2>
+                <ul class="category-tools-list">
+                    <li><a href="loan-calculator.html">Loan Calculator</a></li>
+                    <li><a href="#">Percentage Calculator</a></li>
+                    <li><a href="#">Age Calculator</a></li>
+                    <li><a href="#">Scientific Calculator</a></li>
+                    <li><a href="#">Tip Calculator</a></li>
+                </ul>
+                
+                <h2 class="section-title">🔧 Developer Tools (36)</h2>
+                <ul class="category-tools-list">
+                    <li><a href="#">JSON Formatter / Validator</a></li>
+                    <li><a href="#">MD5 Generator</a></li>
+                    <li><a href="#">Color Picker</a></li>
+                    <li><a href="#">HTML Encoder / Decoder</a></li>
+                    <li><a href="#">CSS Minifier</a></li>
+                </ul>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Daily Smart Tools</h3>
+                    <p>Your one-stop destination for free online utilities, calculators, converters, and productivity tools.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="all-tools.html">All Tools</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Popular Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="text-case-converter.html">Text Tools</a></li>
+                        <li><a href="#">Image Tools</a></li>
+                        <li><a href="loan-calculator.html">Calculators</a></li>
+                        <li><a href="#">Converters</a></li>
+                        <li><a href="#">Developer Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li>Email: contact@dailysmarttools.com</li>
+                        <li>Feedback: feedback@dailysmarttools.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 Daily Smart Tools. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

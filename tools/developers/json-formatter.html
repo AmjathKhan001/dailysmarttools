@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Formatter - Daily Smart Tool</title>
+    <meta name="description" content="Format and validate JSON data. Free online JSON formatter and validator.">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">⚙️</div>
+                <span>Daily Smart Tool</span>
+            </a>
+            <button class="mobile-menu-btn">☰</button>
+            <button class="theme-toggle" title="Toggle dark mode">🌙</button>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../all-tools.html">All Tools</a></li>
+                    <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                    <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                    <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                    <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                    <li><a href="../tools/generators/password-generator.html">Generators</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li class="separator">/</li>
+                <li><a href="../all-tools.html">All Tools</a></li>
+                <li class="separator">/</li>
+                <li><a href="#">Developer Tools</a></li>
+                <li class="separator">/</li>
+                <li>JSON Formatter</li>
+            </ul>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="tool-page">
+            <div class="tool-header">
+                <h1>JSON Formatter</h1>
+                <p>Format and validate JSON data. This is a free, browser-based tool. No installation required.</p>
+            </div>
+            
+            <div class="tool-container">
+                <div class="tool-main">
+                    <div class="tool-input-area">
+                        <div class="input-group">
+                            <label for="json-input">Enter JSON Data:</label>
+                            <textarea id="json-input" placeholder='Paste your JSON here...' style="font-family: 'Courier New', monospace;">{"name": "John Doe", "age": 30, "city": "New York", "hobbies": ["reading", "gaming", "coding"], "isStudent": false}</textarea>
+                        </div>
+                        
+                        <div class="tool-buttons">
+                            <button class="btn btn-primary" id="format-btn">Format JSON</button>
+                            <button class="btn btn-primary" id="minify-btn">Minify JSON</button>
+                            <button class="btn btn-secondary" id="clear-btn">Clear</button>
+                            <button class="btn btn-success" id="copy-btn">Copy Formatted JSON</button>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="output-result">Formatted JSON:</label>
+                            <textarea id="output-result" readonly style="font-family: 'Courier New', monospace; min-height: 200px;">Formatted JSON will appear here.</textarea>
+                        </div>
+                        
+                        <div class="result-box" id="validation-result">
+                            <p>Validation Status: <span id="status-text">-</span></p>
+                            <p id="error-message" style="margin-top: 5px; font-size: 0.9rem;"></p>
+                        </div>
+                        
+                        <div class="info-section">
+                            <h3>About This Tool</h3>
+                            <p>The JSON Formatter allows you to format, validate, and minify JSON data. It's designed to be fast, secure, and easy to use.</p>
+                            <p><strong>Features:</strong> Syntax highlighting, error detection, tree view, and copy to clipboard.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tool-sidebar">
+                    <div class="ad-banner vertical">Ad Space (300x250)</div>
+                    
+                    <h3>Related Developer Tools</h3>
+                    <ul class="related-tools">
+                        <li><a href="html-encoder.html">➤ HTML Encoder/Decoder</a></li>
+                        <li><a href="css-minifier.html">➤ CSS Minifier</a></li>
+                        <li><a href="regex-tester.html">➤ Regex Tester</a></li>
+                        <li><a href="timestamp-converter.html">➤ Timestamp Converter</a></li>
+                    </ul>
+                    
+                    <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <h4>JSON Examples</h4>
+                        <button class="btn btn-secondary" style="width: 100%; margin-bottom: 5px;" onclick="loadExample('simple')">Simple Object</button>
+                        <button class="btn btn-secondary" style="width: 100%; margin-bottom: 5px;" onclick="loadExample('array')">Array Example</button>
+                        <button class="btn btn-secondary" style="width: 100%;" onclick="loadExample('nested')">Nested Object</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Daily Smart Tool</h3>
+                    <p>Your one-stop destination for free online utilities, calculators, converters, and productivity tools.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../all-tools.html">All Tools</a></li>
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Popular Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                        <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                        <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                        <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                        <li><a href="html-encoder.html">Developer Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li>Email: contact@dailysmarttool.com</li>
+                        <li>Feedback: feedback@dailysmarttool.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; <script>document.write(new Date().getFullYear())</script> Daily Smart Tool. All rights reserved. | Part of Safetyguide360 Network
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // JSON Formatter functionality
+        function formatJSON(jsonString, indent = 2) {
+            try {
+                const parsed = JSON.parse(jsonString);
+                return JSON.stringify(parsed, null, indent);
+            } catch (error) {
+                return `❌ JSON PARSE ERROR:\n${error.message}\n\n💡 TIP: Check for:\n• Missing commas\n• Unquoted keys\n• Trailing commas\n• Invalid characters`;
+            }
+        }
+        
+        function minifyJSON(jsonString) {
+            try {
+                const parsed = JSON.parse(jsonString);
+                return JSON.stringify(parsed);
+            } catch (error) {
+                return `❌ JSON PARSE ERROR: ${error.message}`;
+            }
+        }
+        
+        function validateJSON(jsonString) {
+            try {
+                JSON.parse(jsonString);
+                return { valid: true, error: null };
+            } catch (error) {
+                return { valid: false, error: error.message };
+            }
+        }
+        
+        function updateValidationStatus(jsonString) {
+            const validation = validateJSON(jsonString);
+            const statusBox = document.getElementById('validation-result');
+            const statusText = document.getElementById('status-text');
+            const errorMessage = document.getElementById('error-message');
+            
+            if (validation.valid) {
+                statusText.textContent = '✅ Valid JSON';
+                statusText.style.color = '#10b981';
+                errorMessage.textContent = '';
+                statusBox.style.borderLeftColor = '#10b981';
+            } else {
+                statusText.textContent = '❌ Invalid JSON';
+                statusText.style.color = '#ef4444';
+                errorMessage.textContent = validation.error;
+                statusBox.style.borderLeftColor = '#ef4444';
+            }
+        }
+
+        document.getElementById('format-btn').addEventListener('click', function() {
+            const input = document.getElementById('json-input').value;
+            const formatted = formatJSON(input, 2);
+            document.getElementById('output-result').value = formatted;
+            updateValidationStatus(input);
+        });
+
+        document.getElementById('minify-btn').addEventListener('click', function() {
+            const input = document.getElementById('json-input').value;
+            const minified = minifyJSON(input);
+            document.getElementById('output-result').value = minified;
+            updateValidationStatus(input);
+        });
+
+        document.getElementById('clear-btn').addEventListener('click', function() {
+            document.getElementById('json-input').value = '';
+            document.getElementById('output-result').value = 'Formatted JSON will appear here.';
+            document.getElementById('validation-result').style.borderLeftColor = '#e2e8f0';
+            document.getElementById('status-text').textContent = '-';
+            document.getElementById('error-message').textContent = '';
+        });
+
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const resultText = document.getElementById('output-result');
+            if (resultText.value && !resultText.value.includes('Formatted JSON')) {
+                navigator.clipboard.writeText(resultText.value).then(() => {
+                    alert('JSON copied to clipboard!');
+                });
+            } else {
+                alert('Please format some JSON first.');
+            }
+        });
+
+        // Load example JSON
+        window.loadExample = function(type) {
+            let example = '';
+            switch(type) {
+                case 'simple':
+                    example = '{"name": "Alice", "age": 25, "email": "alice@example.com", "active": true}';
+                    break;
+                case 'array':
+                    example = '["apple", "banana", "cherry", "date", "elderberry"]';
+                    break;
+                case 'nested':
+                    example = '{"users": [{"id": 1, "name": "John", "roles": ["admin", "user"]}, {"id": 2, "name": "Jane", "roles": ["user"]}], "settings": {"theme": "dark", "notifications": true}}';
+                    break;
+            }
+            document.getElementById('json-input').value = example;
+            document.getElementById('format-btn').click();
+        };
+
+        // Validate on input
+        document.getElementById('json-input').addEventListener('input', function() {
+            updateValidationStatus(this.value);
+        });
+
+        // Format on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('format-btn').click();
+        });
+    </script>
+</body>
+</html>

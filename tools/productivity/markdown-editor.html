@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Editor - Daily Smart Tool</title>
+    <meta name="description" content="Edit and preview markdown text. Free online markdown editor with live preview.">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">⚙️</div>
+                <span>Daily Smart Tool</span>
+            </a>
+            <button class="mobile-menu-btn">☰</button>
+            <button class="theme-toggle" title="Toggle dark mode">🌙</button>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../all-tools.html">All Tools</a></li>
+                    <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                    <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                    <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                    <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                    <li><a href="../tools/generators/password-generator.html">Generators</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li class="separator">/</li>
+                <li><a href="../all-tools.html">All Tools</a></li>
+                <li class="separator">/</li>
+                <li><a href="#">Productivity Tools</a></li>
+                <li class="separator">/</li>
+                <li>Markdown Editor</li>
+            </ul>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="tool-page">
+            <div class="tool-header">
+                <h1>Markdown Editor</h1>
+                <p>Edit and preview markdown text with live preview. This is a free, browser-based tool. No installation required.</p>
+            </div>
+            
+            <div class="tool-container">
+                <div class="tool-main">
+                    <div class="tool-input-area">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <label style="font-weight: 500;">Markdown Editor:</label>
+                            <div style="display: flex; gap: 10px;">
+                                <button id="fullscreen-btn" class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.9rem;">Fullscreen</button>
+                                <button id="help-btn" class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.9rem;">Syntax Help</button>
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; min-height: 400px;">
+                            <div>
+                                <textarea id="markdown-input" placeholder="Type your markdown here..." style="width: 100%; height: 100%; min-height: 350px; font-family: 'Courier New', monospace; padding: 15px;"># Welcome to Markdown Editor
+
+## Basic Formatting
+**Bold text** and *italic text*
+~~Strikethrough~~ and `inline code`
+
+## Lists
+### Unordered List
+- Item 1
+- Item 2
+  - Subitem 2.1
+  - Subitem 2.2
+
+### Ordered List
+1. First item
+2. Second item
+3. Third item
+
+## Links & Images
+[Daily Smart Tool](https://www.dailysmarttool.com)
+
+## Code Blocks
+```javascript
+function hello() {
+    console.log("Hello, World!");
+    return true;
+}
+<div>
+                            <div style="font-weight: 500; margin-bottom: 10px;">Live Preview:</div>
+                            <div id="markdown-preview" class="markdown-body" style="width: 100%; height: 100%; min-height: 350px; padding: 15px; border: 1px solid var(--border); border-radius: var(--radius); overflow-y: auto; background: white;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="tool-buttons">
+                        <button class="btn btn-primary" id="preview-btn">Update Preview</button>
+                        <button class="btn btn-secondary" id="clear-btn">Clear Editor</button>
+                        <button class="btn btn-success" id="copy-btn">Copy Markdown</button>
+                        <button class="btn btn-success" id="copy-html-btn">Copy HTML</button>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="output-result">Editor Statistics:</label>
+                        <textarea id="output-result" readonly>Editor statistics will appear here.</textarea>
+                    </div>
+                    
+                    <div class="info-section">
+                        <h3>About This Tool</h3>
+                        <p>The Markdown Editor allows you to write and preview markdown text in real-time. It's designed to be fast, feature-rich, and easy to use.</p>
+                        <p><strong>Features:</strong> Live preview, syntax highlighting, markdown shortcuts, HTML export, and word count.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tool-sidebar">
+                <div class="ad-banner vertical">Ad Space (300x250)</div>
+                
+                <h3>Related Productivity Tools</h3>
+                <ul class="related-tools">
+                    <li><a href="todo-list.html">➤ Todo List</a></li>
+                    <li><a href="note-taker.html">➤ Note Taker</a></li>
+                    <li><a href="pomodoro-timer.html">➤ Pomodoro Timer</a></li>
+                    <li><a href="expense-tracker.html">➤ Expense Tracker</a></li>
+                </ul>
+                
+                <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                    <h4>Markdown Shortcuts</h4>
+                    <div style="font-size: 0.9rem; color: #64748b;">
+                        <div>**Bold** <code>Ctrl+B</code></div>
+                        <div>*Italic* <code>Ctrl+I</code></div>
+                        <div># Heading <code>Ctrl+H</code></div>
+                        <div>- List <code>Ctrl+L</code></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Daily Smart Tool</h3>
+                <p>Your one-stop destination for free online utilities, calculators, converters, and productivity tools.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../all-tools.html">All Tools</a></li>
+                    <li><a href="../about.html">About Us</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                    <li><a href="../privacy.html">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Popular Categories</h3>
+                <ul class="footer-links">
+                    <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                    <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                    <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                    <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                    <li><a href="../tools/developers/html-encoder.html">Developer Tools</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul class="footer-links">
+                    <li>Email: contact@dailysmarttool.com</li>
+                    <li>Feedback: feedback@dailysmarttool.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; <script>document.write(new Date().getFullYear())</script> Daily Smart Tool. All rights reserved. | Part of Safetyguide360 Network
+        </div>
+    </div>
+</footer>
+
+<script src="../script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+    // Markdown Editor functionality
+    function updatePreview() {
+        const markdown = document.getElementById('markdown-input').value;
+        const preview = document.getElementById('markdown-preview');
+        
+        try {
+            // Set marked options
+            marked.setOptions({
+                breaks: true,
+                gfm: true,
+                headerIds: true,
+                highlight: function(code, lang) {
+                    // Simple syntax highlighting
+                    return `<pre><code class="language-${lang}">${code}</code></pre>`;
+                }
+            });
+            
+            // Convert markdown to HTML
+            const html = marked.parse(markdown);
+            preview.innerHTML = html;
+            
+            // Update statistics
+            updateStatistics(markdown, html);
+        } catch (error) {
+            preview.innerHTML = `<div style="color: #ef4444;">Error parsing markdown: ${error.message}</div>`;
+        }
+    }
+    
+    function updateStatistics(markdown, html) {
+        const words = markdown.trim().split(/\s+/).filter(w => w).length;
+        const characters = markdown.length;
+        const lines = markdown.split('\n').length;
+        const headings = (markdown.match(/#+\s/g) || []).length;
+        const links = (markdown.match(/\[.*?\]\(.*?\)/g) || []).length;
+        const lists = (markdown.match(/^[\s]*[-*+]\s/gm) || []).length + (markdown.match(/^[\s]*\d+\.\s/gm) || []).length;
+        
+        const output = `📊 EDITOR STATISTICS:
+📝 MARKDOWN STATS:
+• Words: ${words}
+• Characters: ${characters}
+• Lines: ${lines}
+• Headings: ${headings}
+• Links: ${links}
+• List items: ${lists}
+
+📈 CONTENT ANALYSIS:
+• Reading time: ${Math.ceil(words / 200)} minutes
+• Average word length: ${words > 0 ? Math.round(characters / words) : 0} chars
+• Code blocks: ${(markdown.match(/[\s\S]*?/g) || []).length}
+
+🔄 CONVERSION INFO:
+• Markdown size: ${(markdown.length / 1024).toFixed(2)} KB
+• HTML size: ${(html.length / 1024).toFixed(2)} KB
+• Conversion ratio: ${((html.length / markdown.length) * 100).toFixed(1)}%
+
+💡 TIPS:
+• Use # for headings
+• Use ** for bold text
+• Use * for italic text
+• Use > for blockquotes
+• Use ``` for code blocks`;
+document.getElementById('output-result').value = output;
+    }
+    
+    function toggleFullscreen() {
+        const editor = document.getElementById('markdown-input');
+        const preview = document.getElementById('markdown-preview');
+        const container = editor.parentElement.parentElement;
+        
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+            container.style.gridTemplateColumns = '1fr 1fr';
+        } else {
+            container.requestFullscreen();
+            container.style.gridTemplateColumns = '1fr';
+            editor.style.height = '500px';
+            preview.style.display = 'none';
+        }
+    }
+    
+    function showSyntaxHelp() {
+        const helpText = `# Markdown Syntax Guide
+Headers
+H1
+H2
+H3
+Emphasis
+italic or italic
+bold or bold
+~~strikethrough~~
+
+Lists
+Unordered item
+
+Nested item
+
+Ordered item
+
+Another item
+
+Links & Images
+Link text
+https://image.jpg
+
+Code
+`inline code`
+```
+code block
+```
+
+Tables
+Header 1	Header 2
+Cell 1	Cell 2
+Blockquotes
+This is a blockquote
+
+Horizontal Rule
+---`;
+ document.getElementById('markdown-input').value = helpText;
+        updatePreview();
+    }
+
+    document.getElementById('preview-btn').addEventListener('click', updatePreview);
+    
+    document.getElementById('clear-btn').addEventListener('click', function() {
+        if (confirm('Clear the editor? This cannot be undone.')) {
+            document.getElementById('markdown-input').value = '# Start writing your markdown here...\n\nYour content will appear in the preview.';
+            updatePreview();
+        }
+    });
+
+    document.getElementById('copy-btn').addEventListener('click', function() {
+        const markdown = document.getElementById('markdown-input').value;
+        navigator.clipboard.writeText(markdown).then(() => {
+            alert('Markdown copied to clipboard!');
+        });
+    });
+
+    document.getElementById('copy-html-btn').addEventListener('click', function() {
+        const preview = document.getElementById('markdown-preview');
+        const html = preview.innerHTML;
+        navigator.clipboard.writeText(html).then(() => {
+            alert('HTML copied to clipboard!');
+        });
+    });
+
+    document.getElementById('fullscreen-btn').addEventListener('click', toggleFullscreen);
+    
+    document.getElementById('help-btn').addEventListener('click', showSyntaxHelp);
+
+    // Auto-update preview as user types
+    document.getElementById('markdown-input').addEventListener('input', function() {
+        // Use debouncing to prevent too frequent updates
+        clearTimeout(this._timer);
+        this._timer = setTimeout(updatePreview, 300);
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey || e.metaKey) {
+            switch(e.key) {
+                case 'b':
+                    e.preventDefault();
+                    insertText('**', '**');
+                    break;
+                case 'i':
+                    e.preventDefault();
+                    insertText('*', '*');
+                    break;
+                case 'h':
+                    e.preventDefault();
+                    insertText('# ', '');
+                    break;
+                case 'l':
+                    e.preventDefault();
+                    insertText('- ', '');
+                    break;
+            }
+        }
+    });
+    
+    function insertText(before, after) {
+        const editor = document.getElementById('markdown-input');
+        const start = editor.selectionStart;
+        const end = editor.selectionEnd;
+        const selected = editor.value.substring(start, end);
+        
+        editor.value = editor.value.substring(0, start) + before + selected + after + editor.value.substring(end);
+        editor.selectionStart = start + before.length;
+        editor.selectionEnd = end + before.length;
+        editor.focus();
+        updatePreview();
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        updatePreview();
+    });
+</script>
+<style>
+    .markdown-body {
+        box-sizing: border-box;
+        min-width: 200px;
+        max-width: 980px;
+        margin: 0 auto;
+    }
+    
+    .markdown-body pre {
+        background: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow: auto;
+    }
+    
+    .markdown-body code {
+        background: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+        font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    
+    .markdown-body table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 16px 0;
+    }
+    
+    .markdown-body th, .markdown-body td {
+        border: 1px solid #dfe2e5;
+        padding: 6px 13px;
+    }
+    
+    .markdown-body blockquote {
+        border-left: 4px solid #dfe2e5;
+        padding-left: 16px;
+        color: #6a737d;
+        margin: 16px 0;
+    }
+</style>
+</body>
+</html>

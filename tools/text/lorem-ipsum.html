@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum Generator - Daily Smart Tool</title>
+    <meta name="description" content="Generate placeholder text for your designs and layouts. Free online Lorem Ipsum generator.">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">⚙️</div>
+                <span>Daily Smart Tool</span>
+            </a>
+            <button class="mobile-menu-btn">☰</button>
+            <button class="theme-toggle" title="Toggle dark mode">🌙</button>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../all-tools.html">All Tools</a></li>
+                    <li><a href="text-case-converter.html">Text Tools</a></li>
+                    <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                    <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                    <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                    <li><a href="../tools/generators/password-generator.html">Generators</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li class="separator">/</li>
+                <li><a href="../all-tools.html">All Tools</a></li>
+                <li class="separator">/</li>
+                <li><a href="#">Text Tools</a></li>
+                <li class="separator">/</li>
+                <li>Lorem Ipsum Generator</li>
+            </ul>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="tool-page">
+            <div class="tool-header">
+                <h1>Lorem Ipsum Generator</h1>
+                <p>Generate placeholder text for your designs and layouts. This is a free, browser-based tool. No installation required.</p>
+            </div>
+            
+            <div class="tool-container">
+                <div class="tool-main">
+                    <div class="tool-input-area">
+                        <div class="input-group">
+                            <label for="paragraphs">Number of paragraphs:</label>
+                            <input type="number" id="paragraphs" value="3" min="1" max="20">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="words-per">Words per paragraph:</label>
+                            <input type="number" id="words-per" value="50" min="10" max="200">
+                        </div>
+                        
+                        <div class="tool-buttons">
+                            <button class="btn btn-primary" id="generate-btn">Generate Lorem Ipsum</button>
+                            <button class="btn btn-secondary" id="clear-btn">Clear</button>
+                            <button class="btn btn-success" id="copy-btn">Copy Text</button>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="output-result">Generated Text:</label>
+                            <textarea id="output-result" readonly>Generated Lorem Ipsum text will appear here.</textarea>
+                        </div>
+                        
+                        <div class="info-section">
+                            <h3>About This Tool</h3>
+                            <p>The Lorem Ipsum Generator allows you to create placeholder text for your designs, layouts, and prototypes. It's designed to be fast, secure, and easy to use.</p>
+                            <p><strong>Note:</strong> Lorem Ipsum is dummy text used by designers since the 1500s.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tool-sidebar">
+                    <div class="ad-banner vertical">Ad Space (300x250)</div>
+                    
+                    <h3>Related Text Tools</h3>
+                    <ul class="related-tools">
+                        <li><a href="word-counter.html">➤ Word Counter</a></li>
+                        <li><a href="character-counter.html">➤ Character Counter</a></li>
+                        <li><a href="text-case-converter.html">➤ Text Case Converter</a></li>
+                        <li><a href="text-reverser.html">➤ Text Reverser</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Daily Smart Tool</h3>
+                    <p>Your one-stop destination for free online utilities, calculators, converters, and productivity tools.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../all-tools.html">All Tools</a></li>
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Popular Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="text-case-converter.html">Text Tools</a></li>
+                        <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                        <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                        <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                        <li><a href="../tools/developers/html-encoder.html">Developer Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li>Email: contact@dailysmarttool.com</li>
+                        <li>Feedback: feedback@dailysmarttool.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; <script>document.write(new Date().getFullYear())</script> Daily Smart Tool. All rights reserved. | Part of Safetyguide360 Network
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // Lorem Ipsum Generator functionality
+        const loremWords = [
+            "lorem", "ipsum", "dolor", "sit", "amet", "consectetur", 
+            "adipiscing", "elit", "sed", "do", "eiusmod", "tempor", 
+            "incididunt", "ut", "labore", "et", "dolore", "magna", 
+            "aliqua", "enim", "ad", "minim", "veniam", "quis", 
+            "nostrud", "exercitation", "ullamco", "laboris", "nisi", 
+            "aliquip", "ex", "ea", "commodo", "consequat", "duis", 
+            "aute", "irure", "in", "reprehenderit", "voluptate", 
+            "velit", "esse", "cillum", "eu", "fugiat", "nulla", 
+            "pariatur", "excepteur", "sint", "occaecat", "cupidatat", 
+            "non", "proident", "sunt", "culpa", "qui", "officia", 
+            "deserunt", "mollit", "anim", "id", "est", "laborum"
+        ];
+
+        function generateLoremIpsum(paragraphs, wordsPerParagraph) {
+            let result = '';
+            
+            for (let p = 0; p < paragraphs; p++) {
+                let paragraph = '';
+                for (let w = 0; w < wordsPerParagraph; w++) {
+                    const randomWord = loremWords[Math.floor(Math.random() * loremWords.length)];
+                    paragraph += (w === 0 ? randomWord.charAt(0).toUpperCase() + randomWord.slice(1) : randomWord) + ' ';
+                    
+                    // Add punctuation occasionally
+                    if (w > 0 && w % 15 === 0 && w < wordsPerParagraph - 5) {
+                        paragraph = paragraph.trim() + '. ';
+                        const nextWord = loremWords[Math.floor(Math.random() * loremWords.length)];
+                        paragraph += nextWord.charAt(0).toUpperCase() + nextWord.slice(1) + ' ';
+                        w++;
+                    }
+                }
+                result += paragraph.trim() + '.\n\n';
+            }
+            
+            return result.trim();
+        }
+
+        document.getElementById('generate-btn').addEventListener('click', function() {
+            const paragraphs = parseInt(document.getElementById('paragraphs').value);
+            const wordsPer = parseInt(document.getElementById('words-per').value);
+            const output = generateLoremIpsum(paragraphs, wordsPer);
+            document.getElementById('output-result').value = output;
+        });
+
+        document.getElementById('clear-btn').addEventListener('click', function() {
+            document.getElementById('paragraphs').value = 3;
+            document.getElementById('words-per').value = 50;
+            document.getElementById('output-result').value = 'Generated Lorem Ipsum text will appear here.';
+        });
+
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const resultText = document.getElementById('output-result');
+            navigator.clipboard.writeText(resultText.value).then(() => {
+                alert('Lorem Ipsum text copied to clipboard!');
+            });
+        });
+
+        // Generate on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('generate-btn').click();
+        });
+    </script>
+</body>
+</html>

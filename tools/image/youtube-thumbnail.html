@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Thumbnail Downloader - Daily Smart Tool</title>
+    <meta name="description" content="Download YouTube video thumbnails. Free online YouTube thumbnail downloader.">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">⚙️</div>
+                <span>Daily Smart Tool</span>
+            </a>
+            <button class="mobile-menu-btn">☰</button>
+            <button class="theme-toggle" title="Toggle dark mode">🌙</button>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../all-tools.html">All Tools</a></li>
+                    <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                    <li><a href="image-resizer.html">Image Tools</a></li>
+                    <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                    <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                    <li><a href="../tools/generators/password-generator.html">Generators</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li class="separator">/</li>
+                <li><a href="../all-tools.html">All Tools</a></li>
+                <li class="separator">/</li>
+                <li><a href="#">Image Tools</a></li>
+                <li class="separator">/</li>
+                <li>YouTube Thumbnail Downloader</li>
+            </ul>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="tool-page">
+            <div class="tool-header">
+                <h1>YouTube Thumbnail Downloader</h1>
+                <p>Download YouTube video thumbnails. This is a free, browser-based tool. No installation required.</p>
+            </div>
+            
+            <div class="tool-container">
+                <div class="tool-main">
+                    <div class="tool-input-area">
+                        <div class="input-group">
+                            <label for="youtube-url">YouTube Video URL:</label>
+                            <input type="text" id="youtube-url" placeholder="https://www.youtube.com/watch?v=... or https://youtu.be/...">
+                            <p style="font-size: 0.9rem; color: #64748b; margin-top: 5px;">Paste any YouTube video link</p>
+                        </div>
+                        
+                        <div class="tool-buttons">
+                            <button class="btn btn-primary" id="fetch-btn">Fetch Thumbnails</button>
+                            <button class="btn btn-secondary" id="clear-btn">Clear</button>
+                            <button class="btn btn-success" id="copy-btn">Copy Image URLs</button>
+                        </div>
+                        
+                        <div id="thumbnail-preview" style="text-align: center; margin: 20px 0; min-height: 200px; padding: 20px; background: #f8fafc; border-radius: 8px;">
+                            <p>Enter a YouTube URL to see available thumbnails</p>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="output-result">Thumbnail Information:</label>
+                            <textarea id="output-result" readonly>Thumbnail information will appear here.</textarea>
+                        </div>
+                        
+                        <div class="info-section">
+                            <h3>About This Tool</h3>
+                            <p>The YouTube Thumbnail Downloader allows you to extract and download thumbnails from YouTube videos. It's designed to be fast, secure, and easy to use.</p>
+                            <p><strong>Supported formats:</strong> Max Resolution (1280×720), Standard Quality (640×480), High Quality (480×360), Medium Quality (320×180).</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tool-sidebar">
+                    <div class="ad-banner vertical">Ad Space (300x250)</div>
+                    
+                    <h3>Related Image Tools</h3>
+                    <ul class="related-tools">
+                        <li><a href="image-resizer.html">➤ Image Resizer</a></li>
+                        <li><a href="image-compressor.html">➤ Image Compressor</a></li>
+                        <li><a href="jpg-to-png.html">➤ JPG to PNG Converter</a></li>
+                        <li><a href="png-to-jpg.html">➤ PNG to JPG Converter</a></li>
+                    </ul>
+                    
+                    <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <h4>YouTube URL Examples</h4>
+                        <p style="font-size: 0.9rem; color: #64748b;">
+                            • https://www.youtube.com/watch?v=dQw4w9WgXcQ<br>
+                            • https://youtu.be/dQw4w9WgXcQ<br>
+                            • https://www.youtube.com/shorts/abc123
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Daily Smart Tool</h3>
+                    <p>Your one-stop destination for free online utilities, calculators, converters, and productivity tools.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../all-tools.html">All Tools</a></li>
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Popular Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                        <li><a href="image-resizer.html">Image Tools</a></li>
+                        <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                        <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                        <li><a href="../tools/developers/html-encoder.html">Developer Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li>Email: contact@dailysmarttool.com</li>
+                        <li>Feedback: feedback@dailysmarttool.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; <script>document.write(new Date().getFullYear())</script> Daily Smart Tool. All rights reserved. | Part of Safetyguide360 Network
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // YouTube Thumbnail Downloader functionality
+        function extractVideoID(url) {
+            // Extract video ID from various YouTube URL formats
+            const patterns = [
+                /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/v\/|youtube\.com\/shorts\/)([^&\n?#]+)/,
+                /youtube\.com\/watch\?.*v=([^&\n?#]+)/,
+                /youtu\.be\/([^?\n#]+)/
+            ];
+            
+            for (const pattern of patterns) {
+                const match = url.match(pattern);
+                if (match && match[1]) {
+                    return match[1].split('?')[0].split('#')[0];
+                }
+            }
+            
+            return null;
+        }
+        
+        function getThumbnailUrls(videoId) {
+            if (!videoId) return null;
+            
+            return {
+                maxres: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+                sddefault: `https://img.youtube.com/vi/${videoId}/sddefault.jpg`,
+                hqdefault: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
+                mqdefault: `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`,
+                default: `https://img.youtube.com/vi/${videoId}/default.jpg`
+            };
+        }
+        
+        function fetchThumbnails() {
+            const url = document.getElementById('youtube-url').value.trim();
+            const videoId = extractVideoID(url);
+            const preview = document.getElementById('thumbnail-preview');
+            
+            if (!url) {
+                preview.innerHTML = '<p style="color: #ef4444;">Please enter a YouTube URL</p>';
+                document.getElementById('output-result').value = 'Error: Please enter a YouTube URL.';
+                return;
+            }
+            
+            if (!videoId) {
+                preview.innerHTML = '<p style="color: #ef4444;">Invalid YouTube URL. Please check the format.</p>';
+                document.getElementById('output-result').value = 'Error: Invalid YouTube URL format.\n\nSupported formats:\n• https://www.youtube.com/watch?v=VIDEO_ID\n• https://youtu.be/VIDEO_ID\n• https://www.youtube.com/embed/VIDEO_ID';
+                return;
+            }
+            
+            const thumbnails = getThumbnailUrls(videoId);
+            
+            // Show loading
+            preview.innerHTML = '<p>Fetching thumbnails...</p>';
+            
+            // Simulate API call
+            setTimeout(() => {
+                let html = '<h3>Available Thumbnails</h3>';
+                html += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">';
+                
+                const sizes = {
+                    maxres: 'Max Resolution (1280×720)',
+                    sddefault: 'Standard Quality (640×480)',
+                    hqdefault: 'High Quality (480×360)',
+                    mqdefault: 'Medium Quality (320×180)',
+                    default: 'Default Quality (120×90)'
+                };
+                
+                for (const [key, thumbnailUrl] of Object.entries(thumbnails)) {
+                    html += `
+                        <div style="text-align: center; background: white; padding: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <img src="${thumbnailUrl}" 
+                                 style="width: 100%; height: 120px; object-fit: cover; border-radius: 4px; background: #f1f5f9;"
+                                 onerror="this.src='https://via.placeholder.com/200x120/f1f5f9/64748b?text=Thumbnail+not+available'"
+                                 alt="${sizes[key]}">
+                            <p style="margin: 8px 0; font-size: 0.9rem; font-weight: 500;">${sizes[key]}</p>
+                            <div style="display: flex; gap: 5px; justify-content: center;">
+                                <button onclick="downloadImage('${thumbnailUrl}', '${key}_${videoId}.jpg')" 
+                                        style="padding: 5px 10px; background: #2563eb; color: white; border: none; border-radius: 4px; font-size: 0.8rem; cursor: pointer;">
+                                    Download
+                                </button>
+                                <button onclick="copyToClipboard('${thumbnailUrl}')" 
+                                        style="padding: 5px 10px; background: #10b981; color: white; border: none; border-radius: 4px; font-size: 0.8rem; cursor: pointer;">
+                                    Copy URL
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                html += '</div>';
+                preview.innerHTML = html;
+                
+                // Update info
+                const output = `✅ THUMBNAILS EXTRACTED SUCCESSFULLY
+
+Video Information:
+• Video ID: ${videoId}
+• Original URL: ${url}
+• Thumbnails Found: 5 different sizes
+
+📸 AVAILABLE THUMBNAIL SIZES:
+1. Max Resolution: ${thumbnails.maxres}
+   Size: 1280×720 pixels
+   
+2. Standard Quality: ${thumbnails.sddefault}
+   Size: 640×480 pixels
+   
+3. High Quality: ${thumbnails.hqdefault}
+   Size: 480×360 pixels
+   
+4. Medium Quality: ${thumbnails.mqdefault}
+   Size: 320×180 pixels
+   
+5. Default Quality: ${thumbnails.default}
+   Size: 120×90 pixels
+
+📥 DOWNLOAD INSTRUCTIONS:
+1. Click any "Download" button above
+2. Or right-click image → "Save image as..."
+3. Use "Copy URL" to get direct link
+
+⚠️ NOTE:
+• Some videos may not have max resolution thumbnails
+• Thumbnails are property of video uploader
+• Use only for personal/fair use purposes`;
+                
+                document.getElementById('output-result').value = output;
+            }, 1000);
+        }
+        
+        // Helper functions
+        window.downloadImage = function(url, filename) {
+            // In a real implementation, this would trigger download
+            // For demo, we'll show a message
+            alert(`In full version, this would download: ${filename}\n\nFor now, right-click the image and select "Save image as..."`);
+        };
+        
+        window.copyToClipboard = function(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Image URL copied to clipboard!');
+            });
+        };
+
+        document.getElementById('fetch-btn').addEventListener('click', fetchThumbnails);
+
+        document.getElementById('clear-btn').addEventListener('click', function() {
+            document.getElementById('youtube-url').value = '';
+            document.getElementById('thumbnail-preview').innerHTML = '<p>Enter a YouTube URL to see available thumbnails</p>';
+            document.getElementById('output-result').value = 'Thumbnail information will appear here.';
+        });
+
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const resultText = document.getElementById('output-result').value;
+            if (resultText && !resultText.includes('Thumbnail information')) {
+                navigator.clipboard.writeText(resultText).then(() => {
+                    alert('Thumbnail information copied to clipboard!');
+                });
+            } else {
+                alert('Please fetch thumbnails first.');
+            }
+        });
+
+        // Example URLs for demo
+        const exampleUrls = [
+            'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+            'https://youtu.be/dQw4w9WgXcQ',
+            'https://www.youtube.com/shorts/abc123def45'
+        ];
+
+        // Set example URL on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('youtube-url').value = exampleUrls[0];
+            document.getElementById('fetch-btn').click();
+        });
+    </script>
+</body>
+</html>

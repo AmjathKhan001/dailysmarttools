@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Compressor - Daily Smart Tool</title>
+    <meta name="description" content="Compress images to reduce file size. Free online image compression tool for JPG, PNG, GIF, and WebP.">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .upload-area {
+            border: 3px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 20px 0;
+            background: #f8fafc;
+        }
+        .upload-area:hover {
+            border-color: #0ea5e9;
+            background: #f0f9ff;
+        }
+        .upload-area.dragover {
+            border-color: #0ea5e9;
+            background: #e0f2fe;
+        }
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        .file-info {
+            background: #e2e8f0;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: none;
+        }
+        .compression-controls {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #0ea5e9;
+        }
+        .slider-container {
+            margin: 15px 0;
+        }
+        .quality-slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: #cbd5e1;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        .quality-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #0ea5e9;
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+        .image-preview-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 25px 0;
+        }
+        .preview-box {
+            text-align: center;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 15px;
+            background: white;
+        }
+        .preview-image {
+            max-width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            margin: 10px 0;
+        }
+        .compression-results {
+            background: #f0f9ff;
+            border: 2px solid #0ea5e9;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            display: none;
+        }
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .stat-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #0ea5e9;
+            margin: 5px 0;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+        .percentage-change {
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        .percentage-change.positive {
+            color: #10b981;
+        }
+        .percentage-change.negative {
+            color: #ef4444;
+        }
+        @media (max-width: 768px) {
+            .image-preview-container {
+                grid-template-columns: 1fr;
+            }
+            .result-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">⚙️</div>
+                <span>Daily Smart Tool</span>
+            </a>
+            <button class="mobile-menu-btn">☰</button>
+            <button class="theme-toggle" title="Toggle dark mode">🌙</button>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../all-tools.html">All Tools</a></li>
+                    <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                    <li><a href="image-resizer.html">Image Tools</a></li>
+                    <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                    <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                    <li><a href="../tools/generators/password-generator.html">Generators</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li class="separator">/</li>
+                <li><a href="../all-tools.html">All Tools</a></li>
+                <li class="separator">/</li>
+                <li><a href="image-resizer.html">Image Tools</a></li>
+                <li class="separator">/</li>
+                <li>Image Compressor</li>
+            </ul>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="tool-page">
+            <div class="tool-header">
+                <h1>Image Compressor</h1>
+                <p>Reduce image file size without significant quality loss. Supports JPG, PNG, GIF, and WebP formats.</p>
+            </div>
+            
+            <div class="tool-container">
+                <div class="tool-main">
+                    <div class="tool-input-area">
+                        <!-- Upload Area -->
+                        <div class="upload-area" id="upload-area">
+                            <div class="upload-icon">📁</div>
+                            <h3>Drag & Drop Image Here</h3>
+                            <p>or click to browse files</p>
+                            <p style="font-size: 0.9rem; color: #64748b; margin-top: 10px;">
+                                Supports JPG, PNG, GIF, WebP (Max: 10MB)
+                            </p>
+                            <input type="file" id="file-input" accept="image/*" style="display: none;">
+                        </div>
+                        
+                        <div class="file-info" id="file-info">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="font-size: 24px;">🖼️</div>
+                                <div style="flex: 1;">
+                                    <strong id="file-name"></strong><br>
+                                    <span id="file-size"></span> • <span id="file-dimensions"></span>
+                                </div>
+                                <button class="btn btn-secondary" id="remove-file">Remove</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Compression Controls -->
+                        <div class="compression-controls">
+                            <h4>Compression Settings</h4>
+                            
+                            <div class="slider-container">
+                                <label for="quality-slider">Quality: <span id="quality-value">85</span>%</label>
+                                <input type="range" id="quality-slider" class="quality-slider" min="1" max="100" value="85">
+                                <div class="slider-labels">
+                                    <span>Smaller File</span>
+                                    <span>Better Quality</span>
+                                </div>
+                            </div>
+                            
+                            <div style="margin: 20px 0;">
+                                <label>Output Format:</label>
+                                <div style="display: flex; gap: 15px; margin-top: 10px;">
+                                    <label class="checkbox-item">
+                                        <input type="radio" name="format" value="original" checked>
+                                        Keep Original
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="radio" name="format" value="jpg">
+                                        JPG
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="radio" name="format" value="png">
+                                        PNG
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="radio" name="format" value="webp">
+                                        WebP
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div style="margin: 20px 0;">
+                                <label for="resize-toggle">Resize Image:</label>
+                                <label class="checkbox-item" style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+                                    <input type="checkbox" id="resize-toggle">
+                                    <span>Resize to maximum dimensions</span>
+                                </label>
+                                <div id="resize-controls" style="margin-top: 15px; display: none;">
+                                    <div style="display: flex; gap: 15px;">
+                                        <div style="flex: 1;">
+                                            <label for="max-width">Max Width (px):</label>
+                                            <input type="number" id="max-width" min="50" max="5000" value="1920" style="width: 100%; padding: 8px;">
+                                        </div>
+                                        <div style="flex: 1;">
+                                            <label for="max-height">Max Height (px):</label>
+                                            <input type="number" id="max-height" min="50" max="5000" value="1080" style="width: 100%; padding: 8px;">
+                                        </div>
+                                    </div>
+                                    <label class="checkbox-item" style="margin-top: 10px;">
+                                        <input type="checkbox" id="preserve-aspect" checked>
+                                        Preserve aspect ratio
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="tool-buttons">
+                            <button class="btn btn-primary" id="compress-btn" disabled>Compress Image</button>
+                            <button class="btn btn-secondary" id="reset-btn">Reset</button>
+                            <button class="btn btn-success" id="download-btn" style="display: none;">Download Compressed Image</button>
+                        </div>
+                        
+                        <!-- Image Preview -->
+                        <div class="image-preview-container" id="preview-container" style="display: none;">
+                            <div class="preview-box">
+                                <h4>Original Image</h4>
+                                <img id="original-preview" class="preview-image" src="" alt="Original">
+                                <div id="original-stats"></div>
+                            </div>
+                            <div class="preview-box">
+                                <h4>Compressed Image</h4>
+                                <img id="compressed-preview" class="preview-image" src="" alt="Compressed">
+                                <div id="compressed-stats"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Compression Results -->
+                        <div class="compression-results" id="results">
+                            <h4>Compression Results</h4>
+                            <div class="result-stats">
+                                <div class="stat-box">
+                                    <div class="stat-value" id="original-size">0 KB</div>
+                                    <div class="stat-label">Original Size</div>
+                                </div>
+                                <div class="stat-box">
+                                    <div class="stat-value" id="compressed-size">0 KB</div>
+                                    <div class="stat-label">Compressed Size</div>
+                                </div>
+                                <div class="stat-box">
+                                    <div class="stat-value" id="reduction-percentage">0%</div>
+                                    <div class="stat-label">Size Reduction</div>
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: center; margin-top: 20px;">
+                                <button class="btn btn-success" id="download-result">Download Compressed Image</button>
+                                <button class="btn btn-secondary" id="compress-another">Compress Another Image</button>
+                            </div>
+                        </div>
+                        
+                        <div class="info-section">
+                            <h3>About This Tool</h3>
+                            <p>The Image Compressor reduces file size while maintaining visual quality. It's perfect for:</p>
+                            <ul>
+                                <li>Optimizing images for websites</li>
+                                <li>Reducing email attachment size</li>
+                                <li>Preparing images for social media</li>
+                                <li>Saving storage space</li>
+                                <li>Improving website loading speed</li>
+                            </ul>
+                            <p><strong>Features:</strong> Adjustable quality, multiple format support, resizing options, and batch processing (coming soon).</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tool-sidebar">
+                    <div class="ad-banner vertical">Ad Space (300x250)</div>
+                    
+                    <h3>Related Image Tools</h3>
+                    <ul class="related-tools">
+                        <li><a href="image-resizer.html">➤ Image Resizer</a></li>
+                        <li><a href="image-cropper.html">➤ Image Cropper</a></li>
+                        <li><a href="jpg-to-png.html">➤ JPG to PNG Converter</a></li>
+                        <li><a href="png-to-jpg.html">➤ PNG to JPG Converter</a></li>
+                    </ul>
+                    
+                    <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <h4>Recommended Quality</h4>
+                        <table style="width: 100%; font-size: 0.85rem;">
+                            <tr><td>Web Display</td><td style="text-align: right;">80-85%</td></tr>
+                            <tr><td>Social Media</td><td style="text-align: right;">75-80%</td></tr>
+                            <tr><td>Email</td><td style="text-align: right;">70-75%</td></tr>
+                            <tr><td>Thumbnails</td><td style="text-align: right;">60-70%</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Daily Smart Tool</h3>
+                    <p>Your one-stop destination for free online utilities, calculators, converters, and productivity tools.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../all-tools.html">All Tools</a></li>
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Popular Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                        <li><a href="image-resizer.html">Image Tools</a></li>
+                        <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                        <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                        <li><a href="../tools/generators/password-generator.html">Generators</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li>Email: contact@dailysmarttool.com</li>
+                        <li>Feedback: feedback@dailysmarttool.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; <script>document.write(new Date().getFullYear())</script> Daily Smart Tool. All rights reserved. | Part of Safetyguide360 Network
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // Variables
+        let originalImage = null;
+        let compressedImage = null;
+        let originalFile = null;
+        
+        // Format bytes to readable size
+        function formatBytes(bytes, decimals = 2) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const dm = decimals < 0 ? 0 : decimals;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+        }
+        
+        // Get file info
+        function updateFileInfo(file) {
+            originalFile = file;
+            const fileName = file.name;
+            const fileSize = formatBytes(file.size);
+            
+            document.getElementById('file-name').textContent = fileName;
+            document.getElementById('file-size').textContent = fileSize;
+            
+            // Read image dimensions
+            const img = new Image();
+            img.onload = function() {
+                document.getElementById('file-dimensions').textContent = `${this.width} × ${this.height}px`;
+                originalImage = this;
+                
+                // Update resize controls with image dimensions
+                const maxWidthInput = document.getElementById('max-width');
+                const maxHeightInput = document.getElementById('max-height');
+                maxWidthInput.value = Math.min(1920, this.width);
+                maxHeightInput.value = Math.min(1080, this.height);
+                
+                // Show preview
+                document.getElementById('original-preview').src = this.src;
+                document.getElementById('original-stats').innerHTML = `
+                    ${fileSize}<br>
+                    ${this.width} × ${this.height}px
+                `;
+                document.getElementById('preview-container').style.display = 'grid';
+            };
+            img.src = URL.createObjectURL(file);
+            
+            // Show file info and enable compress button
+            document.getElementById('file-info').style.display = 'block';
+            document.getElementById('compress-btn').disabled = false;
+        }
+        
+        // Compress image
+        function compressImage() {
+            if (!originalImage) return;
+            
+            const quality = parseInt(document.getElementById('quality-slider').value) / 100;
+            const outputFormat = document.querySelector('input[name="format"]:checked').value;
+            const resizeToggle = document.getElementById('resize-toggle').checked;
+            
+            // Create canvas
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Calculate new dimensions if resizing is enabled
+            let width = originalImage.width;
+            let height = originalImage.height;
+            
+            if (resizeToggle) {
+                const maxWidth = parseInt(document.getElementById('max-width').value);
+                const maxHeight = parseInt(document.getElementById('max-height').value);
+                const preserveAspect = document.getElementById('preserve-aspect').checked;
+                
+                if (preserveAspect) {
+                    if (width > height) {
+                        if (width > maxWidth) {
+                            height = Math.round((height * maxWidth) / width);
+                            width = maxWidth;
+                        }
+                    } else {
+                        if (height > maxHeight) {
+                            width = Math.round((width * maxHeight) / height);
+                            height = maxHeight;
+                        }
+                    }
+                } else {
+                    width = Math.min(width, maxWidth);
+                    height = Math.min(height, maxHeight);
+                }
+            }
+            
+            // Set canvas dimensions
+            canvas.width = width;
+            canvas.height = height;
+            
+            // Draw image on canvas
+            ctx.drawImage(originalImage, 0, 0, width, height);
+            
+            // Get compressed data URL
+            let mimeType = 'image/jpeg';
+            if (outputFormat === 'png') mimeType = 'image/png';
+            if (outputFormat === 'webp') mimeType = 'image/webp';
+            if (outputFormat === 'original' && originalFile.type) {
+                mimeType = originalFile.type;
+            }
+            
+            const dataUrl = canvas.toDataURL(mimeType, quality);
+            
+            // Update compressed preview
+            document.getElementById('compressed-preview').src = dataUrl;
+            document.getElementById('compressed-stats').innerHTML = `
+                ${formatBytes(dataUrl.length * 0.75)}<br>
+                ${width} × ${height}px
+            `;
+            
+            // Calculate and show results
+            const originalSize = originalFile.size;
+            const compressedSize = dataUrl.length * 0.75; // Approximate byte size from base64
+            const reduction = ((originalSize - compressedSize) / originalSize * 100).toFixed(1);
+            
+            document.getElementById('original-size').textContent = formatBytes(originalSize);
+            document.getElementById('compressed-size').textContent = formatBytes(compressedSize);
+            document.getElementById('reduction-percentage').textContent = reduction + '%';
+            
+            // Color code reduction percentage
+            const reductionElement = document.getElementById('reduction-percentage');
+            if (parseFloat(reduction) > 0) {
+                reductionElement.style.color = '#10b981';
+            } else {
+                reductionElement.style.color = '#ef4444';
+            }
+            
+            // Show results section
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('download-btn').style.display = 'inline-block';
+            
+            // Store compressed image data
+            compressedImage = {
+                dataUrl: dataUrl,
+                size: compressedSize,
+                width: width,
+                height: height,
+                mimeType: mimeType,
+                fileName: originalFile.name.replace(/\.[^/.]+$/, "") + '_compressed' + 
+                          (outputFormat === 'original' ? '' : '.' + outputFormat)
+            };
+        }
+        
+        // Download compressed image
+        function downloadCompressedImage() {
+            if (!compressedImage) return;
+            
+            const link = document.createElement('a');
+            link.href = compressedImage.dataUrl;
+            link.download = compressedImage.fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        // Event Listeners
+        document.getElementById('upload-area').addEventListener('click', () => {
+            document.getElementById('file-input').click();
+        });
+        
+        document.getElementById('file-input').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                if (file.size > 10 * 1024 * 1024) {
+                    alert('File size must be less than 10MB');
+                    return;
+                }
+                updateFileInfo(file);
+            }
+        });
+        
+        // Drag and drop functionality
+        const uploadArea = document.getElementById('upload-area');
+        
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, highlight, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, unhighlight, false);
+        });
+        
+        function highlight() {
+            uploadArea.classList.add('dragover');
+        }
+        
+        function unhighlight() {
+            uploadArea.classList.remove('dragover');
+        }
+        
+        uploadArea.addEventListener('drop', (e) => {
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                if (file.size > 10 * 1024 * 1024) {
+                    alert('File size must be less than 10MB');
+                    return;
+                }
+                updateFileInfo(file);
+            }
+        });
+        
+        // Remove file
+        document.getElementById('remove-file').addEventListener('click', () => {
+            originalImage = null;
+            compressedImage = null;
+            originalFile = null;
+            document.getElementById('file-info').style.display = 'none';
+            document.getElementById('preview-container').style.display = 'none';
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('compress-btn').disabled = true;
+            document.getElementById('file-input').value = '';
+        });
+        
+        // Quality slider
+        const qualitySlider = document.getElementById('quality-slider');
+        const qualityValue = document.getElementById('quality-value');
+        
+        qualitySlider.addEventListener('input', () => {
+            qualityValue.textContent = qualitySlider.value;
+            if (originalImage) {
+                compressImage();
+            }
+        });
+        
+        // Resize toggle
+        document.getElementById('resize-toggle').addEventListener('change', (e) => {
+            document.getElementById('resize-controls').style.display = e.target.checked ? 'block' : 'none';
+            if (originalImage) {
+                compressImage();
+            }
+        });
+        
+        // Resize controls
+        document.querySelectorAll('#max-width, #max-height, #preserve-aspect').forEach(input => {
+            input.addEventListener('input', () => {
+                if (originalImage) {
+                    compressImage();
+                }
+            });
+        });
+        
+        // Format selection
+        document.querySelectorAll('input[name="format"]').forEach(input => {
+            input.addEventListener('change', () => {
+                if (originalImage) {
+                    compressImage();
+                }
+            });
+        });
+        
+        // Compress button
+        document.getElementById('compress-btn').addEventListener('click', compressImage);
+        
+        // Reset button
+        document.getElementById('reset-btn').addEventListener('click', () => {
+            document.getElementById('remove-file').click();
+            document.getElementById('quality-slider').value = 85;
+            qualityValue.textContent = '85';
+            document.querySelector('input[name="format"][value="original"]').checked = true;
+            document.getElementById('resize-toggle').checked = false;
+            document.getElementById('resize-controls').style.display = 'none';
+        });
+        
+        // Download buttons
+        document.getElementById('download-btn').addEventListener('click', downloadCompressedImage);
+        document.getElementById('download-result').addEventListener('click', downloadCompressedImage);
+        
+        // Compress another
+        document.getElementById('compress-another').addEventListener('click', () => {
+            document.getElementById('reset-btn').click();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter - Daily Smart Tool</title>
+    <meta name="description" content="Convert between units of length, weight, temperature, and more. Free online unit converter.">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">⚙️</div>
+                <span>Daily Smart Tool</span>
+            </a>
+            <button class="mobile-menu-btn">☰</button>
+            <button class="theme-toggle" title="Toggle dark mode">🌙</button>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../all-tools.html">All Tools</a></li>
+                    <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                    <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                    <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                    <li><a href="currency-converter.html">Converters</a></li>
+                    <li><a href="../tools/generators/password-generator.html">Generators</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li class="separator">/</li>
+                <li><a href="../all-tools.html">All Tools</a></li>
+                <li class="separator">/</li>
+                <li><a href="#">Converters</a></li>
+                <li class="separator">/</li>
+                <li>Unit Converter</li>
+            </ul>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="tool-page">
+            <div class="tool-header">
+                <h1>Unit Converter</h1>
+                <p>Convert between units of length, weight, temperature, and more. This is a free, browser-based tool. No installation required.</p>
+            </div>
+            
+            <div class="tool-container">
+                <div class="tool-main">
+                    <div class="tool-input-area">
+                        <div class="input-group">
+                            <label for="category-select">Conversion Category:</label>
+                            <select id="category-select">
+                                <option value="length">Length</option>
+                                <option value="weight">Weight</option>
+                                <option value="temperature">Temperature</option>
+                                <option value="area">Area</option>
+                                <option value="volume">Volume</option>
+                                <option value="speed">Speed</option>
+                                <option value="time">Time</option>
+                            </select>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 15px; align-items: end;">
+                            <div class="input-group">
+                                <label for="from-value">From:</label>
+                                <input type="number" id="from-value" value="1" step="any">
+                            </div>
+                            
+                            <div style="text-align: center; padding-bottom: 15px;">
+                                <button id="swap-btn" style="background: none; border: 2px solid var(--border); border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem;">⇄</button>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="to-value">To:</label>
+                                <input type="number" id="to-value" readonly>
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div class="input-group">
+                                <label for="from-unit">From Unit:</label>
+                                <select id="from-unit">
+                                    <!-- Units will be populated by JavaScript -->
+                                </select>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="to-unit">To Unit:</label>
+                                <select id="to-unit">
+                                    <!-- Units will be populated by JavaScript -->
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="tool-buttons">
+                            <button class="btn btn-primary" id="convert-btn">Convert</button>
+                            <button class="btn btn-secondary" id="clear-btn">Clear</button>
+                            <button class="btn btn-success" id="copy-btn">Copy Result</button>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="output-result">Conversion Result:</label>
+                            <textarea id="output-result" readonly>Conversion results will appear here.</textarea>
+                        </div>
+                        
+                        <div class="info-section">
+                            <h3>About This Tool</h3>
+                            <p>The Unit Converter allows you to convert between different units of measurement. It's designed to be fast, accurate, and easy to use.</p>
+                            <p><strong>Supported categories:</strong> Length, Weight, Temperature, Area, Volume, Speed, Time.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tool-sidebar">
+                    <div class="ad-banner vertical">Ad Space (300x250)</div>
+                    
+                    <h3>Related Converters</h3>
+                    <ul class="related-tools">
+                        <li><a href="currency-converter.html">➤ Currency Converter</a></li>
+                        <li><a href="pdf-to-word.html">➤ PDF to Word Converter</a></li>
+                        <li><a href="temperature-converter.html">➤ Temperature Converter</a></li>
+                        <li><a href="color-converter.html">➤ Color Converter</a></li>
+                    </ul>
+                    
+                    <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <h4>Quick Conversions</h4>
+                        <button class="btn btn-secondary" style="width: 100%; margin-bottom: 5px;" onclick="quickConvert('length', 'kilometer', 'mile', 5)">5 km → miles</button>
+                        <button class="btn btn-secondary" style="width: 100%; margin-bottom: 5px;" onclick="quickConvert('weight', 'kilogram', 'pound', 10)">10 kg → lbs</button>
+                        <button class="btn btn-secondary" style="width: 100%;" onclick="quickConvert('temperature', 'celsius', 'fahrenheit', 25)">25°C → °F</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Daily Smart Tool</h3>
+                    <p>Your one-stop destination for free online utilities, calculators, converters, and productivity tools.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../all-tools.html">All Tools</a></li>
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Popular Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                        <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                        <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                        <li><a href="currency-converter.html">Converters</a></li>
+                        <li><a href="../tools/developers/html-encoder.html">Developer Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li>Email: contact@dailysmarttool.com</li>
+                        <li>Feedback: feedback@dailysmarttool.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; <script>document.write(new Date().getFullYear())</script> Daily Smart Tool. All rights reserved. | Part of Safetyguide360 Network
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // Unit Converter functionality
+        const conversionData = {
+            length: {
+                units: ['meter', 'kilometer', 'centimeter', 'millimeter', 'mile', 'yard', 'foot', 'inch'],
+                conversions: {
+                    meter: 1,
+                    kilometer: 1000,
+                    centimeter: 0.01,
+                    millimeter: 0.001,
+                    mile: 1609.34,
+                    yard: 0.9144,
+                    foot: 0.3048,
+                    inch: 0.0254
+                }
+            },
+            weight: {
+                units: ['kilogram', 'gram', 'milligram', 'pound', 'ounce', 'ton'],
+                conversions: {
+                    kilogram: 1,
+                    gram: 0.001,
+                    milligram: 0.000001,
+                    pound: 0.453592,
+                    ounce: 0.0283495,
+                    ton: 1000
+                }
+            },
+            temperature: {
+                units: ['celsius', 'fahrenheit', 'kelvin'],
+                conversions: {} // Special handling for temperature
+            },
+            area: {
+                units: ['square meter', 'square kilometer', 'square foot', 'square mile', 'acre', 'hectare'],
+                conversions: {
+                    'square meter': 1,
+                    'square kilometer': 1000000,
+                    'square foot': 0.092903,
+                    'square mile': 2589990,
+                    acre: 4046.86,
+                    hectare: 10000
+                }
+            },
+            volume: {
+                units: ['liter', 'milliliter', 'gallon', 'quart', 'pint', 'cup'],
+                conversions: {
+                    liter: 1,
+                    milliliter: 0.001,
+                    gallon: 3.78541,
+                    quart: 0.946353,
+                    pint: 0.473176,
+                    cup: 0.24
+                }
+            },
+            speed: {
+                units: ['km/h', 'm/s', 'mph', 'knot'],
+                conversions: {
+                    'km/h': 1,
+                    'm/s': 3.6,
+                    mph: 1.60934,
+                    knot: 1.852
+                }
+            },
+            time: {
+                units: ['second', 'minute', 'hour', 'day', 'week', 'month', 'year'],
+                conversions: {
+                    second: 1,
+                    minute: 60,
+                    hour: 3600,
+                    day: 86400,
+                    week: 604800,
+                    month: 2592000, // 30 days
+                    year: 31536000 // 365 days
+                }
+            }
+        };
+
+        function populateUnits() {
+            const category = document.getElementById('category-select').value;
+            const fromSelect = document.getElementById('from-unit');
+            const toSelect = document.getElementById('to-unit');
+            
+            // Clear existing options
+            fromSelect.innerHTML = '';
+            toSelect.innerHTML = '';
+            
+            // Add units for selected category
+            conversionData[category].units.forEach(unit => {
+                const option1 = document.createElement('option');
+                option1.value = unit;
+                option1.textContent = unit;
+                fromSelect.appendChild(option1);
+                
+                const option2 = document.createElement('option');
+                option2.value = unit;
+                option2.textContent = unit;
+                toSelect.appendChild(option2);
+            });
+            
+            // Set default selections
+            fromSelect.selectedIndex = 0;
+            toSelect.selectedIndex = 1;
+            
+            // Convert with new units
+            convertUnits();
+        }
+
+        function convertTemperature(value, fromUnit, toUnit) {
+            let celsius;
+            
+            // Convert to Celsius first
+            switch(fromUnit) {
+                case 'celsius':
+                    celsius = value;
+                    break;
+                case 'fahrenheit':
+                    celsius = (value - 32) * 5/9;
+                    break;
+                case 'kelvin':
+                    celsius = value - 273.15;
+                    break;
+            }
+            
+            // Convert from Celsius to target unit
+            switch(toUnit) {
+                case 'celsius':
+                    return celsius;
+                case 'fahrenheit':
+                    return (celsius * 9/5) + 32;
+                case 'kelvin':
+                    return celsius + 273.15;
+            }
+        }
+
+        function convertUnits() {
+            const category = document.getElementById('category-select').value;
+            const fromValue = parseFloat(document.getElementById('from-value').value);
+            const fromUnit = document.getElementById('from-unit').value;
+            const toUnit = document.getElementById('to-unit').value;
+            
+            if (isNaN(fromValue)) {
+                document.getElementById('to-value').value = '';
+                document.getElementById('output-result').value = 'Please enter a valid number.';
+                return;
+            }
+            
+            let result;
+            
+            // Special handling for temperature
+            if (category === 'temperature') {
+                result = convertTemperature(fromValue, fromUnit, toUnit);
+            } else {
+                // Convert to base unit first, then to target unit
+                const baseValue = fromValue * conversionData[category].conversions[fromUnit];
+                result = baseValue / conversionData[category].conversions[toUnit];
+            }
+            
+            // Update result field
+            document.getElementById('to-value').value = result.toFixed(6);
+            
+            // Update detailed result
+            const output = `📏 CONVERSION RESULT:
+${fromValue} ${fromUnit} = ${result.toFixed(6)} ${toUnit}
+
+🔢 DETAILED BREAKDOWN:
+• Input: ${fromValue} ${fromUnit}
+• Output: ${result.toFixed(2)} ${toUnit} (rounded)
+• Category: ${category.charAt(0).toUpperCase() + category.slice(1)}
+
+📈 OTHER FORMATS:
+• Scientific: ${result.toExponential(4)} ${toUnit}
+• Full precision: ${result} ${toUnit}`;
+            
+            document.getElementById('output-result').value = output;
+        }
+
+        document.getElementById('category-select').addEventListener('change', populateUnits);
+        document.getElementById('from-value').addEventListener('input', convertUnits);
+        document.getElementById('from-unit').addEventListener('change', convertUnits);
+        document.getElementById('to-unit').addEventListener('change', convertUnits);
+
+        document.getElementById('convert-btn').addEventListener('click', convertUnits);
+
+        document.getElementById('swap-btn').addEventListener('click', function() {
+            const fromUnit = document.getElementById('from-unit');
+            const toUnit = document.getElementById('to-unit');
+            const fromValue = document.getElementById('from-value');
+            const toValue = document.getElementById('to-value');
+            
+            // Swap units
+            const tempUnit = fromUnit.value;
+            fromUnit.value = toUnit.value;
+            toUnit.value = tempUnit;
+            
+            // Swap values if toValue has a number
+            if (toValue.value && !isNaN(parseFloat(toValue.value))) {
+                const tempValue = fromValue.value;
+                fromValue.value = toValue.value;
+                toValue.value = tempValue;
+            }
+            
+            convertUnits();
+        });
+
+        document.getElementById('clear-btn').addEventListener('click', function() {
+            document.getElementById('from-value').value = '1';
+            document.getElementById('to-value').value = '';
+            document.getElementById('output-result').value = 'Conversion results will appear here.';
+        });
+
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const result = document.getElementById('output-result').value;
+            if (result && !result.includes('Conversion results')) {
+                navigator.clipboard.writeText(result).then(() => {
+                    alert('Conversion result copied to clipboard!');
+                });
+            } else {
+                alert('Please perform a conversion first.');
+            }
+        });
+
+        // Quick conversion function
+        window.quickConvert = function(category, fromUnit, toUnit, value) {
+            document.getElementById('category-select').value = category;
+            populateUnits();
+            document.getElementById('from-value').value = value;
+            document.getElementById('from-unit').value = fromUnit;
+            document.getElementById('to-unit').value = toUnit;
+            convertUnits();
+        };
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            populateUnits();
+            convertUnits();
+        });
+    </script>
+</body>
+</html>

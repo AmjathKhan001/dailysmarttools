@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Counter - Daily Smart Tool</title>
+    <meta name="description" content="Count characters with and without spaces. Free online character counting tool.">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">⚙️</div>
+                <span>Daily Smart Tool</span>
+            </a>
+            <button class="mobile-menu-btn">☰</button>
+            <button class="theme-toggle" title="Toggle dark mode">🌙</button>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../all-tools.html">All Tools</a></li>
+                    <li><a href="text-case-converter.html">Text Tools</a></li>
+                    <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                    <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                    <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                    <li><a href="../tools/generators/password-generator.html">Generators</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li class="separator">/</li>
+                <li><a href="../all-tools.html">All Tools</a></li>
+                <li class="separator">/</li>
+                <li><a href="#">Text Tools</a></li>
+                <li class="separator">/</li>
+                <li>Character Counter</li>
+            </ul>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="tool-page">
+            <div class="tool-header">
+                <h1>Character Counter</h1>
+                <p>Count characters with and without spaces. This is a free, browser-based tool. No installation required.</p>
+            </div>
+            
+            <div class="tool-container">
+                <div class="tool-main">
+                    <div class="tool-input-area">
+                        <div class="input-group">
+                            <label for="user-input">Enter your text:</label>
+                            <textarea id="user-input" placeholder="Paste or type your content here...">Count the characters in this sample text. See how it works with and without spaces.</textarea>
+                        </div>
+                        
+                        <div class="tool-buttons">
+                            <button class="btn btn-primary" id="process-btn">Count Characters</button>
+                            <button class="btn btn-secondary" id="clear-btn">Clear</button>
+                            <button class="btn btn-success" id="copy-btn">Copy Result</button>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="output-result">Character Count:</label>
+                            <textarea id="output-result" readonly>Character count results will appear here.</textarea>
+                        </div>
+                        
+                        <div class="info-section">
+                            <h3>About This Tool</h3>
+                            <p>The Character Counter allows you to count characters with and without spaces in any text. It's designed to be fast, secure, and easy to use.</p>
+                            <p><strong>Note:</strong> This tool updates in real-time as you type.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tool-sidebar">
+                    <div class="ad-banner vertical">Ad Space (300x250)</div>
+                    
+                    <h3>Related Text Tools</h3>
+                    <ul class="related-tools">
+                        <li><a href="word-counter.html">➤ Word Counter</a></li>
+                        <li><a href="text-case-converter.html">➤ Text Case Converter</a></li>
+                        <li><a href="text-reverser.html">➤ Text Reverser</a></li>
+                        <li><a href="lorem-ipsum.html">➤ Lorem Ipsum Generator</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Daily Smart Tool</h3>
+                    <p>Your one-stop destination for free online utilities, calculators, converters, and productivity tools.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../all-tools.html">All Tools</a></li>
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Popular Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="text-case-converter.html">Text Tools</a></li>
+                        <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                        <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                        <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                        <li><a href="../tools/developers/html-encoder.html">Developer Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li>Email: contact@dailysmarttool.com</li>
+                        <li>Feedback: feedback@dailysmarttool.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; <script>document.write(new Date().getFullYear())</script> Daily Smart Tool. All rights reserved. | Part of Safetyguide360 Network
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // Character Counter functionality
+        function countCharacters(text) {
+            const withSpaces = text.length;
+            const withoutSpaces = text.replace(/\s/g, '').length;
+            const letters = text.replace(/[^a-zA-Z]/g, '').length;
+            const digits = text.replace(/[^0-9]/g, '').length;
+            const specialChars = text.replace(/[a-zA-Z0-9\s]/g, '').length;
+            
+            return `🔢 CHARACTER COUNT RESULTS:
+• Characters (with spaces): ${withSpaces}
+• Characters (without spaces): ${withoutSpaces}
+• Letters only: ${letters}
+• Digits only: ${digits}
+• Special characters: ${specialChars}
+
+📊 BREAKDOWN:
+• Spaces: ${withSpaces - withoutSpaces}
+• Average characters per word: ${text.trim().split(/\s+/).filter(w => w).length > 0 
+    ? (withoutSpaces / text.trim().split(/\s+/).filter(w => w).length).toFixed(1) 
+    : 0}`;
+        }
+
+        document.getElementById('process-btn').addEventListener('click', function() {
+            const input = document.getElementById('user-input').value;
+            const output = countCharacters(input);
+            document.getElementById('output-result').value = output;
+        });
+
+        document.getElementById('clear-btn').addEventListener('click', function() {
+            document.getElementById('user-input').value = '';
+            document.getElementById('output-result').value = 'Character count results will appear here.';
+        });
+
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const resultText = document.getElementById('output-result');
+            navigator.clipboard.writeText(resultText.value).then(() => {
+                alert('Results copied to clipboard!');
+            });
+        });
+
+        // Real-time counting as user types
+        document.getElementById('user-input').addEventListener('input', function() {
+            const input = this.value;
+            const output = countCharacters(input);
+            document.getElementById('output-result').value = output;
+        });
+
+        // Count on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('process-btn').click();
+        });
+    </script>
+</body>
+</html>

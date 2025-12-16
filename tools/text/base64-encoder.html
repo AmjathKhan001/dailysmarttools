@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base64 Encoder/Decoder - Daily Smart Tool</title>
+    <meta name="description" content="Encode and decode Base64 strings. Free online Base64 encoder/decoder tool.">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">⚙️</div>
+                <span>Daily Smart Tool</span>
+            </a>
+            <button class="mobile-menu-btn">☰</button>
+            <button class="theme-toggle" title="Toggle dark mode">🌙</button>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../all-tools.html">All Tools</a></li>
+                    <li><a href="text-case-converter.html">Text Tools</a></li>
+                    <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                    <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                    <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                    <li><a href="../tools/generators/password-generator.html">Generators</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li class="separator">/</li>
+                <li><a href="../all-tools.html">All Tools</a></li>
+                <li class="separator">/</li>
+                <li><a href="#">Text Tools</a></li>
+                <li class="separator">/</li>
+                <li>Base64 Encoder/Decoder</li>
+            </ul>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="tool-page">
+            <div class="tool-header">
+                <h1>Base64 Encoder/Decoder</h1>
+                <p>Encode and decode Base64 strings. This is a free, browser-based tool. No installation required.</p>
+            </div>
+            
+            <div class="tool-container">
+                <div class="tool-main">
+                    <div class="tool-input-area">
+                        <div class="input-group">
+                            <label for="input-text">Enter text to encode/decode:</label>
+                            <textarea id="input-text" placeholder="Enter text or Base64 string..." style="font-family: 'Courier New', monospace; min-height: 150px;">Hello, this is a sample text for Base64 encoding!</textarea>
+                        </div>
+                        
+                        <div class="tool-buttons">
+                            <button class="btn btn-primary" id="encode-btn">Encode to Base64</button>
+                            <button class="btn btn-primary" id="decode-btn">Decode from Base64</button>
+                            <button class="btn btn-secondary" id="clear-btn">Clear</button>
+                            <button class="btn btn-success" id="copy-btn">Copy Result</button>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="output-result">Result:</label>
+                            <textarea id="output-result" readonly style="font-family: 'Courier New', monospace; min-height: 150px;">Base64 encoded/decoded result will appear here.</textarea>
+                        </div>
+                        
+                        <div class="result-box" id="validation-result">
+                            <p>Validation: <span id="validation-text">-</span></p>
+                        </div>
+                        
+                        <div class="info-section">
+                            <h3>About This Tool</h3>
+                            <p>The Base64 Encoder/Decoder allows you to convert text to Base64 format and vice versa. It's designed to be fast, secure, and easy to use.</p>
+                            <p><strong>Common uses:</strong> Data transmission, storing binary data in text format, encoding credentials, and embedding images in HTML/CSS.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tool-sidebar">
+                    <div class="ad-banner vertical">Ad Space (300x250)</div>
+                    
+                    <h3>Related Text Tools</h3>
+                    <ul class="related-tools">
+                        <li><a href="url-encoder.html">➤ URL Encoder/Decoder</a></li>
+                        <li><a href="html-encoder.html">➤ HTML Encoder</a></li>
+                        <li><a href="word-counter.html">➤ Word Counter</a></li>
+                        <li><a href="text-case-converter.html">➤ Text Case Converter</a></li>
+                    </ul>
+                    
+                    <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <h4>Base64 Examples</h4>
+                        <div style="font-size: 0.85rem; font-family: monospace; color: #64748b;">
+                            <div>"hello" → "aGVsbG8="</div>
+                            <div>"test123" → "dGVzdDEyMw=="</div>
+                            <div>"data" → "ZGF0YQ=="</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Daily Smart Tool</h3>
+                    <p>Your one-stop destination for free online utilities, calculators, converters, and productivity tools.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../all-tools.html">All Tools</a></li>
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Popular Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="text-case-converter.html">Text Tools</a></li>
+                        <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
+                        <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                        <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                        <li><a href="../tools/developers/html-encoder.html">Developer Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li>Email: contact@dailysmarttool.com</li>
+                        <li>Feedback: feedback@dailysmarttool.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; <script>document.write(new Date().getFullYear())</script> Daily Smart Tool. All rights reserved. | Part of Safetyguide360 Network
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // Base64 Encoder/Decoder functionality
+        function encodeBase64(text) {
+            try {
+                return btoa(unescape(encodeURIComponent(text)));
+            } catch (error) {
+                return `Error: ${error.message}`;
+            }
+        }
+        
+        function decodeBase64(base64) {
+            try {
+                // Check if it's valid base64
+                if (!/^[A-Za-z0-9+/]*={0,2}$/.test(base64)) {
+                    throw new Error('Invalid Base64 string');
+                }
+                
+                return decodeURIComponent(escape(atob(base64)));
+            } catch (error) {
+                return `Error: ${error.message}`;
+            }
+        }
+        
+        function isValidBase64(str) {
+            try {
+                return btoa(atob(str)) === str;
+            } catch (error) {
+                return false;
+            }
+        }
+
+        document.getElementById('encode-btn').addEventListener('click', function() {
+            const input = document.getElementById('input-text').value;
+            const encoded = encodeBase64(input);
+            document.getElementById('output-result').value = encoded;
+            
+            // Update validation
+            const validation = document.getElementById('validation-result');
+            const validationText = document.getElementById('validation-text');
+            
+            if (encoded.startsWith('Error:')) {
+                validationText.textContent = '❌ Encoding failed';
+                validationText.style.color = '#ef4444';
+                validation.style.borderLeftColor = '#ef4444';
+            } else {
+                validationText.textContent = '✅ Encoded successfully';
+                validationText.style.color = '#10b981';
+                validation.style.borderLeftColor = '#10b981';
+                
+                // Update output with stats
+                const originalSize = new Blob([input]).size;
+                const encodedSize = new Blob([encoded]).size;
+                const ratio = ((encodedSize / originalSize) * 100).toFixed(1);
+                
+                document.getElementById('output-result').value += `\n\n📊 ENCODING STATS:
+Original size: ${originalSize} bytes
+Base64 size: ${encodedSize} bytes
+Size increase: ${ratio}%
+Characters: ${encoded.length}`;
+            }
+        });
+
+        document.getElementById('decode-btn').addEventListener('click', function() {
+            const input = document.getElementById('input-text').value.trim();
+            const decoded = decodeBase64(input);
+            document.getElementById('output-result').value = decoded;
+            
+            // Update validation
+            const validation = document.getElementById('validation-result');
+            const validationText = document.getElementById('validation-text');
+            
+            if (decoded.startsWith('Error:')) {
+                validationText.textContent = '❌ Invalid Base64';
+                validationText.style.color = '#ef4444';
+                validation.style.borderLeftColor = '#ef4444';
+            } else {
+                validationText.textContent = '✅ Decoded successfully';
+                validationText.style.color = '#10b981';
+                validation.style.borderLeftColor = '#10b981';
+                
+                // Check if it looks like binary data
+                const isLikelyBinary = /[\x00-\x08\x0B\x0C\x0E-\x1F]/.test(decoded);
+                if (isLikelyBinary) {
+                    document.getElementById('output-result').value += `\n\n⚠️ WARNING: Output contains binary/non-printable characters`;
+                }
+            }
+        });
+
+        document.getElementById('clear-btn').addEventListener('click', function() {
+            document.getElementById('input-text').value = '';
+            document.getElementById('output-result').value = 'Base64 encoded/decoded result will appear here.';
+            document.getElementById('validation-text').textContent = '-';
+            document.getElementById('validation-result').style.borderLeftColor = '#e2e8f0';
+        });
+
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const resultText = document.getElementById('output-result').value;
+            if (resultText && !resultText.includes('Base64 encoded/decoded result')) {
+                navigator.clipboard.writeText(resultText).then(() => {
+                    alert('Result copied to clipboard!');
+                });
+            } else {
+                alert('Please encode or decode some text first.');
+            }
+        });
+
+        // Auto-detect and validate input
+        document.getElementById('input-text').addEventListener('input', function() {
+            const input = this.value.trim();
+            const validation = document.getElementById('validation-result');
+            const validationText = document.getElementById('validation-text');
+            
+            if (!input) {
+                validationText.textContent = '-';
+                validation.style.borderLeftColor = '#e2e8f0';
+                return;
+            }
+            
+            // Check if it looks like Base64
+            const isBase64 = /^[A-Za-z0-9+/]*={0,2}$/.test(input) && input.length % 4 === 0;
+            
+            if (isBase64 && isValidBase64(input)) {
+                validationText.textContent = '🔍 Detected: Valid Base64';
+                validationText.style.color = '#0ea5e9';
+                validation.style.borderLeftColor = '#0ea5e9';
+            } else if (isBase64) {
+                validationText.textContent = '⚠️ Detected: Possible Base64';
+                validationText.style.color = '#f59e0b';
+                validation.style.borderLeftColor = '#f59e0b';
+            } else {
+                validationText.textContent = '📝 Detected: Plain text';
+                validationText.style.color = '#64748b';
+                validation.style.borderLeftColor = '#64748b';
+            }
+        });
+
+        // Encode on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('encode-btn').click();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Resizer - Daily Smart Tool</title>
+    <meta name="description" content="Resize images to any dimensions. Free online image resizing tool.">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">⚙️</div>
+                <span>Daily Smart Tool</span>
+            </a>
+            <button class="mobile-menu-btn">☰</button>
+            <button class="theme-toggle" title="Toggle dark mode">🌙</button>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../all-tools.html">All Tools</a></li>
+                    <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                    <li><a href="youtube-thumbnail.html">Image Tools</a></li>
+                    <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                    <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                    <li><a href="../tools/generators/password-generator.html">Generators</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li class="separator">/</li>
+                <li><a href="../all-tools.html">All Tools</a></li>
+                <li class="separator">/</li>
+                <li><a href="#">Image Tools</a></li>
+                <li class="separator">/</li>
+                <li>Image Resizer</li>
+            </ul>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="tool-page">
+            <div class="tool-header">
+                <h1>Image Resizer</h1>
+                <p>Resize images to any dimensions. This is a free, browser-based tool. No installation required.</p>
+            </div>
+            
+            <div class="tool-container">
+                <div class="tool-main">
+                    <div class="tool-input-area">
+                        <div class="input-group">
+                            <label for="image-upload">Upload Image:</label>
+                            <input type="file" id="image-upload" accept="image/*">
+                            <div id="image-preview" style="margin-top: 15px; text-align: center; padding: 20px; border: 2px dashed #ccc; border-radius: 8px; min-height: 100px;">
+                                <p>No image selected. Upload an image to preview.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="width">Width (pixels):</label>
+                            <input type="number" id="width" value="800" min="1" max="5000">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="height">Height (pixels):</label>
+                            <input type="number" id="height" value="600" min="1" max="5000">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="aspect-ratio">
+                                <input type="checkbox" id="aspect-ratio" checked> Maintain aspect ratio
+                            </label>
+                        </div>
+                        
+                        <div class="tool-buttons">
+                            <button class="btn btn-primary" id="resize-btn">Resize Image</button>
+                            <button class="btn btn-secondary" id="clear-btn">Clear All</button>
+                            <button class="btn btn-success" id="download-btn">Download Image</button>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="output-result">Resized Image Info:</label>
+                            <textarea id="output-result" readonly>Image information will appear here after resizing.</textarea>
+                        </div>
+                        
+                        <div class="info-section">
+                            <h3>About This Tool</h3>
+                            <p>The Image Resizer allows you to resize images to any dimensions while maintaining quality. It's designed to be fast, secure, and easy to use.</p>
+                            <p><strong>Note:</strong> For demo purposes, this tool simulates the resizing process. Full functionality with actual image processing is coming soon.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tool-sidebar">
+                    <div class="ad-banner vertical">Ad Space (300x250)</div>
+                    
+                    <h3>Related Image Tools</h3>
+                    <ul class="related-tools">
+                        <li><a href="image-compressor.html">➤ Image Compressor</a></li>
+                        <li><a href="jpg-to-png.html">➤ JPG to PNG Converter</a></li>
+                        <li><a href="png-to-jpg.html">➤ PNG to JPG Converter</a></li>
+                        <li><a href="youtube-thumbnail.html">➤ YouTube Thumbnail Downloader</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Daily Smart Tool</h3>
+                    <p>Your one-stop destination for free online utilities, calculators, converters, and productivity tools.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../all-tools.html">All Tools</a></li>
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Popular Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
+                        <li><a href="image-compressor.html">Image Tools</a></li>
+                        <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
+                        <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
+                        <li><a href="../tools/developers/html-encoder.html">Developer Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li>Email: contact@dailysmarttool.com</li>
+                        <li>Feedback: feedback@dailysmarttool.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; <script>document.write(new Date().getFullYear())</script> Daily Smart Tool. All rights reserved. | Part of Safetyguide360 Network
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // Image Resizer functionality
+        document.getElementById('image-upload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const preview = document.getElementById('image-preview');
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" style="max-width: 100%; max-height: 200px; border-radius: 4px;" alt="Image preview">
+                                         <p style="margin-top: 10px; font-size: 0.9rem;">${file.name} (${(file.size/1024).toFixed(1)} KB)</p>`;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('resize-btn').addEventListener('click', function() {
+            const fileInput = document.getElementById('image-upload');
+            const width = document.getElementById('width').value;
+            const height = document.getElementById('height').value;
+            const maintainRatio = document.getElementById('aspect-ratio').checked;
+            
+            if (!fileInput.files[0]) {
+                alert('Please upload an image first.');
+                return;
+            }
+            
+            const file = fileInput.files[0];
+            const newWidth = maintainRatio ? width : width;
+            const newHeight = maintainRatio ? Math.round(height * (width / height)) : height;
+            
+            const output = `✅ IMAGE RESIZED SUCCESSFULLY
+
+Original Image:
+• Name: ${file.name}
+• Size: ${(file.size/1024).toFixed(1)} KB
+• Type: ${file.type}
+
+Resized Dimensions:
+• Width: ${newWidth}px
+• Height: ${newHeight}px
+• Aspect Ratio: ${maintainRatio ? 'Maintained' : 'Custom'}
+
+Estimated New Size: ${(file.size * (newWidth * newHeight) / (800 * 600) / 1024).toFixed(1)} KB
+
+Note: This is a simulation. Full image processing functionality is coming soon.`;
+            
+            document.getElementById('output-result').value = output;
+        });
+
+        document.getElementById('width').addEventListener('input', function() {
+            if (document.getElementById('aspect-ratio').checked) {
+                const ratio = 600/800; // Default ratio
+                document.getElementById('height').value = Math.round(this.value * ratio);
+            }
+        });
+
+        document.getElementById('height').addEventListener('input', function() {
+            if (document.getElementById('aspect-ratio').checked) {
+                const ratio = 800/600; // Default ratio
+                document.getElementById('width').value = Math.round(this.value * ratio);
+            }
+        });
+
+        document.getElementById('clear-btn').addEventListener('click', function() {
+            document.getElementById('image-upload').value = '';
+            document.getElementById('width').value = 800;
+            document.getElementById('height').value = 600;
+            document.getElementById('image-preview').innerHTML = '<p>No image selected. Upload an image to preview.</p>';
+            document.getElementById('output-result').value = 'Image information will appear here after resizing.';
+        });
+
+        document.getElementById('download-btn').addEventListener('click', function() {
+            alert('Full download functionality coming soon! For now, right-click the preview image to save it.');
+        });
+    </script>
+</body>
+</html>
