@@ -3,189 +3,296 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Character Counter - Daily Smart Tool</title>
-    <meta name="description" content="Count characters with and without spaces. Free online character counting tool.">
-    <link rel="stylesheet" href="../style.css">
+    <title>Character Counter - Count Characters, Words, Sentences | Daily Smart Tools</title>
+    <meta name="description" content="Free online character counter tool that counts characters, words, sentences, paragraphs, and reading time instantly. Perfect for writers, students, and professionals.">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <div class="container header-container">
-            <a href="../index.html" class="logo">
-                <div class="logo-icon">⚙️</div>
-                <span>Daily Smart Tool</span>
-            </a>
-            <button class="mobile-menu-btn">☰</button>
-            <button class="theme-toggle" title="Toggle dark mode">🌙</button>
-            <nav>
-                <ul>
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../all-tools.html">All Tools</a></li>
-                    <li><a href="text-case-converter.html">Text Tools</a></li>
-                    <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
-                    <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
-                    <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
-                    <li><a href="../tools/generators/password-generator.html">Generators</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <div id="nav-placeholder"></div>
 
-    <section class="breadcrumb">
-        <div class="container">
-            <ul>
-                <li><a href="../index.html">Home</a></li>
-                <li class="separator">/</li>
-                <li><a href="../all-tools.html">All Tools</a></li>
-                <li class="separator">/</li>
-                <li><a href="#">Text Tools</a></li>
-                <li class="separator">/</li>
-                <li>Character Counter</li>
-            </ul>
+    <main class="tool-container">
+        <div class="breadcrumb">
+            <a href="https://www.dailysmarttool.com/">Home</a> &gt;
+            <a href="../text-tools.html">Text Tools</a> &gt;
+            <span>Character Counter</span>
         </div>
-    </section>
 
-    <main class="container">
-        <section class="tool-page">
-            <div class="tool-header">
-                <h1>Character Counter</h1>
-                <p>Count characters with and without spaces. This is a free, browser-based tool. No installation required.</p>
+        <header class="tool-header">
+            <h1><i class="fas fa-text-width"></i> Character Counter</h1>
+            <p class="tool-description">Count characters, words, sentences, paragraphs, and reading time instantly. Supports multiple languages and provides detailed statistics.</p>
+        </header>
+
+        <div class="tool-wrapper">
+            <div class="input-section">
+                <div class="input-header">
+                    <h3>Enter Your Text</h3>
+                    <div class="input-actions">
+                        <button id="clear-btn" class="btn-secondary">
+                            <i class="fas fa-eraser"></i> Clear
+                        </button>
+                        <button id="sample-btn" class="btn-secondary">
+                            <i class="fas fa-file-alt"></i> Sample Text
+                        </button>
+                        <button id="paste-btn" class="btn-secondary">
+                            <i class="fas fa-paste"></i> Paste
+                        </button>
+                    </div>
+                </div>
+                <textarea id="text-input" class="text-input" placeholder="Start typing or paste your text here to analyze it..." rows="10"></textarea>
+                
+                <div class="options-section">
+                    <div class="options-row">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="include-spaces" checked>
+                            Include spaces in character count
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="include-punctuation" checked>
+                            Include punctuation in word count
+                        </label>
+                    </div>
+                </div>
             </div>
-            
-            <div class="tool-container">
-                <div class="tool-main">
-                    <div class="tool-input-area">
-                        <div class="input-group">
-                            <label for="user-input">Enter your text:</label>
-                            <textarea id="user-input" placeholder="Paste or type your content here...">Count the characters in this sample text. See how it works with and without spaces.</textarea>
+
+            <div class="results-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Characters</div>
+                        <div class="stat-value" id="char-count">0</div>
+                        <div class="stat-subtitle">Total characters</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Characters (no spaces)</div>
+                        <div class="stat-value" id="char-no-spaces">0</div>
+                        <div class="stat-subtitle">Excluding spaces</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Words</div>
+                        <div class="stat-value" id="word-count">0</div>
+                        <div class="stat-subtitle">Total words</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Sentences</div>
+                        <div class="stat-value" id="sentence-count">0</div>
+                        <div class="stat-subtitle">Total sentences</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Paragraphs</div>
+                        <div class="stat-value" id="paragraph-count">0</div>
+                        <div class="stat-subtitle">Total paragraphs</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Reading Time</div>
+                        <div class="stat-value" id="reading-time">0s</div>
+                        <div class="stat-subtitle">At 200 WPM</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Longest Word</div>
+                        <div class="stat-value" id="longest-word">-</div>
+                        <div class="stat-subtitle" id="longest-word-length">0 chars</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Most Common Word</div>
+                        <div class="stat-value" id="common-word">-</div>
+                        <div class="stat-subtitle" id="common-word-count">0 times</div>
+                    </div>
+                </div>
+
+                <div class="advanced-stats">
+                    <h3><i class="fas fa-chart-bar"></i> Text Analysis</h3>
+                    <div class="stats-details">
+                        <div class="detail-row">
+                            <span>Average word length:</span>
+                            <span id="avg-word-length">0.00</span>
                         </div>
-                        
-                        <div class="tool-buttons">
-                            <button class="btn btn-primary" id="process-btn">Count Characters</button>
-                            <button class="btn btn-secondary" id="clear-btn">Clear</button>
-                            <button class="btn btn-success" id="copy-btn">Copy Result</button>
+                        <div class="detail-row">
+                            <span>Average sentence length:</span>
+                            <span id="avg-sentence-length">0.00 words</span>
                         </div>
-                        
-                        <div class="input-group">
-                            <label for="output-result">Character Count:</label>
-                            <textarea id="output-result" readonly>Character count results will appear here.</textarea>
+                        <div class="detail-row">
+                            <span>Character distribution:</span>
+                            <span id="char-distribution">Letters: 0, Digits: 0, Other: 0</span>
                         </div>
-                        
-                        <div class="info-section">
-                            <h3>About This Tool</h3>
-                            <p>The Character Counter allows you to count characters with and without spaces in any text. It's designed to be fast, secure, and easy to use.</p>
-                            <p><strong>Note:</strong> This tool updates in real-time as you type.</p>
+                        <div class="detail-row">
+                            <span>Text density:</span>
+                            <span id="text-density">0.00%</span>
                         </div>
                     </div>
                 </div>
-                
-                <div class="tool-sidebar">
-                    <div class="ad-banner vertical">Ad Space (300x250)</div>
-                    
-                    <h3>Related Text Tools</h3>
-                    <ul class="related-tools">
-                        <li><a href="word-counter.html">➤ Word Counter</a></li>
-                        <li><a href="text-case-converter.html">➤ Text Case Converter</a></li>
-                        <li><a href="text-reverser.html">➤ Text Reverser</a></li>
-                        <li><a href="lorem-ipsum.html">➤ Lorem Ipsum Generator</a></li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Daily Smart Tool</h3>
-                    <p>Your one-stop destination for free online utilities, calculators, converters, and productivity tools.</p>
-                </div>
-                <div class="footer-column">
-                    <h3>Quick Links</h3>
-                    <ul class="footer-links">
-                        <li><a href="../index.html">Home</a></li>
-                        <li><a href="../all-tools.html">All Tools</a></li>
-                        <li><a href="../about.html">About Us</a></li>
-                        <li><a href="../contact.html">Contact</a></li>
-                        <li><a href="../privacy.html">Privacy Policy</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Popular Categories</h3>
-                    <ul class="footer-links">
-                        <li><a href="text-case-converter.html">Text Tools</a></li>
-                        <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
-                        <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
-                        <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
-                        <li><a href="../tools/developers/html-encoder.html">Developer Tools</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Contact Us</h3>
-                    <ul class="footer-links">
-                        <li>Email: contact@dailysmarttool.com</li>
-                        <li>Feedback: feedback@dailysmarttool.com</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright">
-                &copy; <script>document.write(new Date().getFullYear())</script> Daily Smart Tool. All rights reserved. | Part of Safetyguide360 Network
             </div>
         </div>
-    </footer>
 
-    <script src="../script.js"></script>
-    <script>
-        // Character Counter functionality
-        function countCharacters(text) {
-            const withSpaces = text.length;
-            const withoutSpaces = text.replace(/\s/g, '').length;
-            const letters = text.replace(/[^a-zA-Z]/g, '').length;
-            const digits = text.replace(/[^0-9]/g, '').length;
-            const specialChars = text.replace(/[a-zA-Z0-9\s]/g, '').length;
+        <div class="tool-info">
+            <div class="info-card">
+                <h3><i class="fas fa-info-circle"></i> About This Tool</h3>
+                <p>The Character Counter is a comprehensive text analysis tool that provides detailed statistics about your text. It's perfect for writers, students, social media managers, and anyone who needs to meet specific character or word limits.</p>
+            </div>
             
-            return `🔢 CHARACTER COUNT RESULTS:
-• Characters (with spaces): ${withSpaces}
-• Characters (without spaces): ${withoutSpaces}
-• Letters only: ${letters}
-• Digits only: ${digits}
-• Special characters: ${specialChars}
+            <div class="info-card">
+                <h3><i class="fas fa-lightbulb"></i> How to Use</h3>
+                <ol>
+                    <li>Type or paste your text in the input box above</li>
+                    <li>All statistics update automatically as you type</li>
+                    <li>Use the options to include/exclude spaces and punctuation</li>
+                    <li>Clear the text using the Clear button when needed</li>
+                </ol>
+            </div>
+            
+            <div class="info-card">
+                <h3><i class="fas fa-tachometer-alt"></i> Common Use Cases</h3>
+                <ul>
+                    <li><strong>Social Media:</strong> Stay within character limits for Twitter, Facebook, Instagram</li>
+                    <li><strong>Academic Writing:</strong> Meet word count requirements for essays and papers</li>
+                    <li><strong>SEO Content:</strong> Optimize meta descriptions and title tags</li>
+                    <li><strong>Professional Writing:</strong> Ensure documents meet specific length requirements</li>
+                </ul>
+            </div>
+        </div>
+    </main>
 
-📊 BREAKDOWN:
-• Spaces: ${withSpaces - withoutSpaces}
-• Average characters per word: ${text.trim().split(/\s+/).filter(w => w).length > 0 
-    ? (withoutSpaces / text.trim().split(/\s+/).filter(w => w).length).toFixed(1) 
-    : 0}`;
-        }
+    <div id="footer-placeholder"></div>
 
-        document.getElementById('process-btn').addEventListener('click', function() {
-            const input = document.getElementById('user-input').value;
-            const output = countCharacters(input);
-            document.getElementById('output-result').value = output;
-        });
-
-        document.getElementById('clear-btn').addEventListener('click', function() {
-            document.getElementById('user-input').value = '';
-            document.getElementById('output-result').value = 'Character count results will appear here.';
-        });
-
-        document.getElementById('copy-btn').addEventListener('click', function() {
-            const resultText = document.getElementById('output-result');
-            navigator.clipboard.writeText(resultText.value).then(() => {
-                alert('Results copied to clipboard!');
-            });
-        });
-
-        // Real-time counting as user types
-        document.getElementById('user-input').addEventListener('input', function() {
-            const input = this.value;
-            const output = countCharacters(input);
-            document.getElementById('output-result').value = output;
-        });
-
-        // Count on page load
+    <script src="../js/navigation.js"></script>
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('process-btn').click();
+            // Load navigation
+            loadNavigation();
+            
+            const textInput = document.getElementById('text-input');
+            const clearBtn = document.getElementById('clear-btn');
+            const sampleBtn = document.getElementById('sample-btn');
+            const pasteBtn = document.getElementById('paste-btn');
+            const includeSpaces = document.getElementById('include-spaces');
+            const includePunctuation = document.getElementById('include-punctuation');
+            
+            // Sample text
+            const sampleText = `The Character Counter is a versatile tool designed to analyze text with precision. It provides comprehensive statistics including character count (with and without spaces), word count, sentence count, paragraph count, and estimated reading time.
+
+This tool is particularly useful for writers, students, and professionals who need to meet specific length requirements for their documents. Social media managers can use it to craft perfect posts within platform limits.
+
+Simply type or paste your text, and all statistics update in real-time. The tool also analyzes text density, finds the longest word, and identifies the most common word in your text.`;
+
+            // Initialize
+            updateStats();
+
+            // Event listeners
+            textInput.addEventListener('input', updateStats);
+            clearBtn.addEventListener('click', () => {
+                textInput.value = '';
+                updateStats();
+            });
+            
+            sampleBtn.addEventListener('click', () => {
+                textInput.value = sampleText;
+                updateStats();
+            });
+            
+            pasteBtn.addEventListener('click', async () => {
+                try {
+                    const text = await navigator.clipboard.readText();
+                    textInput.value = text;
+                    updateStats();
+                } catch (err) {
+                    alert('Unable to paste. Please paste manually.');
+                }
+            });
+            
+            includeSpaces.addEventListener('change', updateStats);
+            includePunctuation.addEventListener('change', updateStats);
+
+            function updateStats() {
+                const text = textInput.value;
+                
+                // Character counts
+                const charCount = text.length;
+                const charNoSpaces = text.replace(/\s/g, '').length;
+                
+                // Word count (handles punctuation option)
+                let words = text.match(/\b[\w']+\b/g) || [];
+                if (!includePunctuation.checked) {
+                    words = words.filter(word => !/^[^\w\s]+$/.test(word));
+                }
+                const wordCount = words.length;
+                
+                // Sentence count
+                const sentenceCount = text.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
+                
+                // Paragraph count
+                const paragraphCount = text.split(/\n+/).filter(p => p.trim().length > 0).length;
+                
+                // Reading time (200 words per minute)
+                const readingTimeMinutes = wordCount / 200;
+                const readingTime = readingTimeMinutes < 1 ? 
+                    Math.ceil(readingTimeMinutes * 60) + 's' : 
+                    readingTimeMinutes.toFixed(1) + 'min';
+                
+                // Find longest word
+                let longestWord = '';
+                let longestLength = 0;
+                words.forEach(word => {
+                    if (word.length > longestLength) {
+                        longestWord = word;
+                        longestLength = word.length;
+                    }
+                });
+                
+                // Find most common word
+                const wordFreq = {};
+                words.forEach(word => {
+                    const lowerWord = word.toLowerCase();
+                    wordFreq[lowerWord] = (wordFreq[lowerWord] || 0) + 1;
+                });
+                
+                let mostCommonWord = '';
+                let mostCommonCount = 0;
+                Object.entries(wordFreq).forEach(([word, count]) => {
+                    if (count > mostCommonCount) {
+                        mostCommonWord = word;
+                        mostCommonCount = count;
+                    }
+                });
+                
+                // Average word length
+                const avgWordLength = wordCount > 0 ? 
+                    (charNoSpaces / wordCount).toFixed(2) : '0.00';
+                
+                // Average sentence length
+                const avgSentenceLength = sentenceCount > 0 ? 
+                    (wordCount / sentenceCount).toFixed(2) : '0.00';
+                
+                // Character distribution
+                const letters = (text.match(/[a-zA-Z]/g) || []).length;
+                const digits = (text.match(/\d/g) || []).length;
+                const others = charCount - letters - digits - (charCount - charNoSpaces);
+                
+                // Text density (non-space characters vs total)
+                const textDensity = charCount > 0 ? 
+                    ((charNoSpaces / charCount) * 100).toFixed(2) : '0.00';
+                
+                // Update UI
+                document.getElementById('char-count').textContent = 
+                    includeSpaces.checked ? charCount : charNoSpaces;
+                document.getElementById('char-no-spaces').textContent = charNoSpaces;
+                document.getElementById('word-count').textContent = wordCount;
+                document.getElementById('sentence-count').textContent = sentenceCount;
+                document.getElementById('paragraph-count').textContent = paragraphCount;
+                document.getElementById('reading-time').textContent = readingTime;
+                document.getElementById('longest-word').textContent = 
+                    longestWord || '-';
+                document.getElementById('longest-word-length').textContent = 
+                    longestWord ? `${longestLength} chars` : '0 chars';
+                document.getElementById('common-word').textContent = 
+                    mostCommonWord || '-';
+                document.getElementById('common-word-count').textContent = 
+                    mostCommonWord ? `${mostCommonCount} times` : '0 times';
+                document.getElementById('avg-word-length').textContent = avgWordLength;
+                document.getElementById('avg-sentence-length').textContent = 
+                    `${avgSentenceLength} words`;
+                document.getElementById('char-distribution').textContent = 
+                    `Letters: ${letters}, Digits: ${digits}, Other: ${others}`;
+                document.getElementById('text-density').textContent = `${textDensity}%`;
+            }
         });
     </script>
 </body>
