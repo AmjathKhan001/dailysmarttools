@@ -3,41 +3,416 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Resizer - Daily Smart Tool</title>
-    <meta name="description" content="Resize images to any dimensions. Free online image resizing tool.">
-    <link rel="stylesheet" href="../style.css">
+    <title>Image Resizer - Daily Smart Tools</title>
+    <meta name="description" content="Resize images online for free. Resize JPG, PNG, GIF, WebP images to any dimensions while maintaining quality.">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="icon" type="image/x-icon" href="../../favicon.ico">
+    <!-- Image Resizer Specific Styles -->
+    <style>
+        .image-resizer-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        
+        @media (min-width: 992px) {
+            .image-resizer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .upload-area {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 2px dashed var(--border);
+            transition: var(--transition);
+        }
+        
+        .upload-area.drag-over {
+            border-color: var(--primary);
+            background: #eef2ff;
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        .upload-text h3 {
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+        
+        .upload-text p {
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .file-input {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .file-input-label {
+            display: inline-block;
+            padding: 12px 25px;
+            background: var(--primary);
+            color: white;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        .file-input-label:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .supported-formats {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: var(--secondary);
+        }
+        
+        .image-preview-container {
+            background: white;
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .image-preview {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: var(--radius);
+            margin-bottom: 15px;
+            display: none;
+        }
+        
+        .preview-placeholder {
+            padding: 40px;
+            color: var(--secondary);
+            font-style: italic;
+        }
+        
+        .image-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--secondary);
+        }
+        
+        .resize-options {
+            background: white;
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-top: 20px;
+        }
+        
+        .resize-modes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .resize-mode {
+            position: relative;
+        }
+        
+        .resize-mode input {
+            position: absolute;
+            opacity: 0;
+        }
+        
+        .mode-label {
+            display: block;
+            padding: 15px;
+            background: var(--light);
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .mode-label:hover {
+            border-color: var(--primary);
+        }
+        
+        .resize-mode input:checked + .mode-label {
+            border-color: var(--primary);
+            background: #eef2ff;
+            font-weight: 500;
+        }
+        
+        .dimension-inputs {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 15px;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .dimension-group {
+            text-align: center;
+        }
+        
+        .dimension-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .dimension-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        
+        .dimension-separator {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            padding-top: 20px;
+        }
+        
+        .aspect-ratio {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .aspect-toggle {
+            padding: 8px 15px;
+            background: var(--light);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        
+        .aspect-toggle.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .preset-sizes {
+            margin-top: 25px;
+        }
+        
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .preset-btn {
+            padding: 10px;
+            background: var(--light);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+        
+        .preset-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .resize-result {
+            background: white;
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .result-image {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: var(--radius);
+            margin-bottom: 15px;
+            display: none;
+        }
+        
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .result-stat {
+            text-align: center;
+            padding: 15px;
+            background: var(--light);
+            border-radius: var(--radius);
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--secondary);
+        }
+        
+        .result-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        .quality-slider {
+            margin: 20px 0;
+        }
+        
+        .quality-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: var(--light);
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+        }
+        
+        /* Dark mode styles */
+        body.dark-mode .upload-area,
+        body.dark-mode .image-preview-container,
+        body.dark-mode .resize-options,
+        body.dark-mode .resize-result {
+            background: #2d3748;
+            border-color: #4a5568;
+        }
+        
+        body.dark-mode .upload-area.drag-over {
+            background: #4a5568;
+            border-color: var(--primary);
+        }
+        
+        body.dark-mode .mode-label {
+            background: #4a5568;
+            border-color: #718096;
+            color: #e2e8f0;
+        }
+        
+        body.dark-mode .preset-btn,
+        body.dark-mode .aspect-toggle {
+            background: #4a5568;
+            border-color: #718096;
+            color: #e2e8f0;
+        }
+        
+        body.dark-mode .preset-btn:hover,
+        body.dark-mode .aspect-toggle.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        body.dark-mode .dimension-input {
+            background: #4a5568;
+            border-color: #718096;
+            color: #e2e8f0;
+        }
+        
+        body.dark-mode .result-stat {
+            background: #4a5568;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dimension-inputs {
+                grid-template-columns: 1fr;
+            }
+            
+            .dimension-separator {
+                padding-top: 0;
+                padding-bottom: 20px;
+            }
+            
+            .result-actions {
+                flex-direction: column;
+            }
+            
+            .result-actions .btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
         <div class="container header-container">
-            <a href="../index.html" class="logo">
+            <a href="../../index.html" class="logo">
                 <div class="logo-icon">⚙️</div>
-                <span>Daily Smart Tool</span>
+                <span>Daily Smart Tools</span>
             </a>
             <button class="mobile-menu-btn">☰</button>
             <button class="theme-toggle" title="Toggle dark mode">🌙</button>
-            <nav>
-                <ul>
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../all-tools.html">All Tools</a></li>
-                    <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
-                    <li><a href="youtube-thumbnail.html">Image Tools</a></li>
-                    <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
-                    <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
-                    <li><a href="../tools/generators/password-generator.html">Generators</a></li>
-                </ul>
-            </nav>
         </div>
     </header>
 
     <section class="breadcrumb">
         <div class="container">
             <ul>
-                <li><a href="../index.html">Home</a></li>
+                <li><a href="../../index.html">Home</a></li>
                 <li class="separator">/</li>
-                <li><a href="../all-tools.html">All Tools</a></li>
-                <li class="separator">/</li>
-                <li><a href="#">Image Tools</a></li>
+                <li><a href="../../image-tools.html">Image Tools</a></li>
                 <li class="separator">/</li>
                 <li>Image Resizer</li>
             </ul>
@@ -48,51 +423,253 @@
         <section class="tool-page">
             <div class="tool-header">
                 <h1>Image Resizer</h1>
-                <p>Resize images to any dimensions. This is a free, browser-based tool. No installation required.</p>
+                <p>Resize images online for free. Resize JPG, PNG, GIF, WebP images to any dimensions while maintaining quality.</p>
             </div>
             
             <div class="tool-container">
                 <div class="tool-main">
                     <div class="tool-input-area">
-                        <div class="input-group">
-                            <label for="image-upload">Upload Image:</label>
-                            <input type="file" id="image-upload" accept="image/*">
-                            <div id="image-preview" style="margin-top: 15px; text-align: center; padding: 20px; border: 2px dashed #ccc; border-radius: 8px; min-height: 100px;">
-                                <p>No image selected. Upload an image to preview.</p>
+                        <!-- Upload Area -->
+                        <div class="upload-area" id="upload-area">
+                            <div class="upload-icon">🖼️</div>
+                            <div class="upload-text">
+                                <h3>Upload Your Image</h3>
+                                <p>Drag & drop your image here or click to browse</p>
+                                <div class="file-input-wrapper">
+                                    <input type="file" id="file-input" class="file-input" accept=".jpg,.jpeg,.png,.gif,.webp,.bmp">
+                                    <label for="file-input" class="file-input-label">Choose Image</label>
+                                </div>
+                                <div class="supported-formats">
+                                    Supports: JPG, PNG, GIF, WebP, BMP (Max: 10MB)
+                                </div>
                             </div>
                         </div>
                         
-                        <div class="input-group">
-                            <label for="width">Width (pixels):</label>
-                            <input type="number" id="width" value="800" min="1" max="5000">
+                        <!-- Image Preview -->
+                        <div class="image-preview-container">
+                            <img id="image-preview" class="image-preview" alt="Preview">
+                            <div id="preview-placeholder" class="preview-placeholder">
+                                Your image will appear here
+                            </div>
+                            <div class="image-info">
+                                <div id="original-size">-</div>
+                                <div id="image-dimensions">-</div>
+                                <div id="image-format">-</div>
+                            </div>
                         </div>
                         
-                        <div class="input-group">
-                            <label for="height">Height (pixels):</label>
-                            <input type="number" id="height" value="600" min="1" max="5000">
+                        <!-- Resize Options -->
+                        <div class="resize-options">
+                            <h3>Resize Options</h3>
+                            
+                            <!-- Resize Modes -->
+                            <div class="resize-modes">
+                                <div class="resize-mode">
+                                    <input type="radio" id="mode-percent" name="resize-mode" value="percent" checked>
+                                    <label for="mode-percent" class="mode-label">
+                                        Percentage
+                                    </label>
+                                </div>
+                                <div class="resize-mode">
+                                    <input type="radio" id="mode-pixels" name="resize-mode" value="pixels">
+                                    <label for="mode-pixels" class="mode-label">
+                                        Pixels
+                                    </label>
+                                </div>
+                                <div class="resize-mode">
+                                    <input type="radio" id="mode-preset" name="resize-mode" value="preset">
+                                    <label for="mode-preset" class="mode-label">
+                                        Preset Size
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <!-- Dimension Inputs -->
+                            <div class="dimension-inputs">
+                                <div class="dimension-group">
+                                    <label class="dimension-label">Width</label>
+                                    <input type="number" id="width-input" class="dimension-input" value="800" min="1" max="10000">
+                                </div>
+                                <div class="dimension-separator">×</div>
+                                <div class="dimension-group">
+                                    <label class="dimension-label">Height</label>
+                                    <input type="number" id="height-input" class="dimension-input" value="600" min="1" max="10000">
+                                </div>
+                            </div>
+                            
+                            <!-- Aspect Ratio -->
+                            <div class="aspect-ratio">
+                                <span>Aspect Ratio:</span>
+                                <button class="aspect-toggle active" id="lock-aspect">Lock</button>
+                                <button class="aspect-toggle" id="unlock-aspect">Unlock</button>
+                            </div>
+                            
+                            <!-- Percentage Slider -->
+                            <div class="quality-slider" id="percent-slider">
+                                <div class="quality-label">
+                                    <span>Scale Percentage:</span>
+                                    <span id="percent-value">100%</span>
+                                </div>
+                                <input type="range" class="slider" id="percent-range" min="1" max="200" value="100">
+                                <div class="slider-ticks">
+                                    <span>1%</span>
+                                    <span>50%</span>
+                                    <span>100%</span>
+                                    <span>150%</span>
+                                    <span>200%</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Preset Sizes -->
+                            <div class="preset-sizes" id="preset-sizes" style="display: none;">
+                                <h4>Common Sizes:</h4>
+                                <div class="preset-grid">
+                                    <button class="preset-btn" data-width="1920" data-height="1080">Full HD</button>
+                                    <button class="preset-btn" data-width="1280" data-height="720">HD Ready</button>
+                                    <button class="preset-btn" data-width="800" data-height="600">Small</button>
+                                    <button class="preset-btn" data-width="400" data-height="300">Thumbnail</button>
+                                    <button class="preset-btn" data-width="1200" data-height="630">Facebook</button>
+                                    <button class="preset-btn" data-width="1080" data-height="1080">Instagram</button>
+                                    <button class="preset-btn" data-width="150" data-height="150">Avatar</button>
+                                    <button class="preset-btn" data-width="300" data-height="250">Banner</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Quality Slider -->
+                            <div class="quality-slider">
+                                <div class="quality-label">
+                                    <span>Quality:</span>
+                                    <span id="quality-value">85%</span>
+                                </div>
+                                <input type="range" class="slider" id="quality-range" min="1" max="100" value="85">
+                                <div class="slider-ticks">
+                                    <span>Low</span>
+                                    <span>Medium</span>
+                                    <span>High</span>
+                                    <span>Best</span>
+                                </div>
+                            </div>
                         </div>
                         
-                        <div class="input-group">
-                            <label for="aspect-ratio">
-                                <input type="checkbox" id="aspect-ratio" checked> Maintain aspect ratio
-                            </label>
-                        </div>
-                        
+                        <!-- Action Buttons -->
                         <div class="tool-buttons">
-                            <button class="btn btn-primary" id="resize-btn">Resize Image</button>
-                            <button class="btn btn-secondary" id="clear-btn">Clear All</button>
-                            <button class="btn btn-success" id="download-btn">Download Image</button>
+                            <button class="btn btn-primary" id="resize-btn" disabled>
+                                🔄 Resize Image
+                            </button>
+                            <button class="btn btn-secondary" id="reset-btn">
+                                ↩️ Reset
+                            </button>
+                            <button class="btn btn-warning" id="rotate-btn">
+                                ↻ Rotate
+                            </button>
+                            <button class="btn btn-success" id="crop-btn">
+                                ✂️ Crop
+                            </button>
                         </div>
                         
-                        <div class="input-group">
-                            <label for="output-result">Resized Image Info:</label>
-                            <textarea id="output-result" readonly>Image information will appear here after resizing.</textarea>
+                        <!-- Resize Result -->
+                        <div class="resize-result" id="resize-result">
+                            <h3>Resized Image</h3>
+                            <img id="result-image" class="result-image" alt="Resized Result">
+                            <div id="result-placeholder" class="preview-placeholder">
+                                Resized image will appear here
+                            </div>
+                            
+                            <div class="result-stats">
+                                <div class="result-stat">
+                                    <div class="stat-value" id="new-width">-</div>
+                                    <div class="stat-label">New Width</div>
+                                </div>
+                                <div class="result-stat">
+                                    <div class="stat-value" id="new-height">-</div>
+                                    <div class="stat-label">New Height</div>
+                                </div>
+                                <div class="result-stat">
+                                    <div class="stat-value" id="size-reduction">-</div>
+                                    <div class="stat-label">Size Reduction</div>
+                                </div>
+                                <div class="result-stat">
+                                    <div class="stat-value" id="new-size">-</div>
+                                    <div class="stat-label">New File Size</div>
+                                </div>
+                            </div>
+                            
+                            <div class="result-actions">
+                                <button class="btn btn-success" id="download-btn">
+                                    ⬇️ Download
+                                </button>
+                                <button class="btn btn-primary" id="copy-btn">
+                                    📋 Copy Image
+                                </button>
+                                <button class="btn btn-secondary" id="share-btn">
+                                    ↗️ Share
+                                </button>
+                                <button class="btn btn-warning" id="new-resize-btn">
+                                    🔄 Resize Again
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-section">
+                        <h3>About This Tool</h3>
+                        <p>The Image Resizer allows you to resize images quickly and easily without losing quality. Perfect for social media, websites, emails, and documents.</p>
+                        
+                        <h4>Key Features:</h4>
+                        <ul>
+                            <li><strong>Multiple Formats:</strong> Support for JPG, PNG, GIF, WebP, BMP</li>
+                            <li><strong>Quality Preservation:</strong> Maintain image quality during resizing</li>
+                            <li><strong>Batch Processing:</strong> Resize multiple images at once</li>
+                            <li><strong>Preset Sizes:</strong> Common dimensions for social media and web</li>
+                            <li><strong>Aspect Ratio Lock:</strong> Maintain proportions automatically</li>
+                            <li><strong>No Uploads:</strong> All processing happens in your browser</li>
+                        </ul>
+                        
+                        <div class="image-tips">
+                            <h4>💡 Image Optimization Tips:</h4>
+                            <ul>
+                                <li><strong>Web Images:</strong> Use JPEG for photos, PNG for graphics with transparency</li>
+                                <li><strong>Social Media:</strong> Check platform-specific size requirements</li>
+                                <li><strong>File Size:</strong> Aim for under 1MB for web images</li>
+                                <li><strong>Resolution:</strong> 72 DPI is standard for web, 300 DPI for print</li>
+                                <li><strong>Compression:</strong> Balance quality and file size for optimal performance</li>
+                            </ul>
                         </div>
                         
-                        <div class="info-section">
-                            <h3>About This Tool</h3>
-                            <p>The Image Resizer allows you to resize images to any dimensions while maintaining quality. It's designed to be fast, secure, and easy to use.</p>
-                            <p><strong>Note:</strong> For demo purposes, this tool simulates the resizing process. Full functionality with actual image processing is coming soon.</p>
+                        <div class="common-sizes">
+                            <h4>📱 Common Image Sizes:</h4>
+                            <table class="examples-table">
+                                <tr>
+                                    <th>Platform</th>
+                                    <th>Recommended Size</th>
+                                    <th>Use Case</th>
+                                </tr>
+                                <tr>
+                                    <td>Facebook Post</td>
+                                    <td>1200 × 630px</td>
+                                    <td>Link sharing</td>
+                                </tr>
+                                <tr>
+                                    <td>Instagram Square</td>
+                                    <td>1080 × 1080px</td>
+                                    <td>Feed posts</td>
+                                </tr>
+                                <tr>
+                                    <td>Twitter Header</td>
+                                    <td>1500 × 500px</td>
+                                    <td>Profile banner</td>
+                                </tr>
+                                <tr>
+                                    <td>Website Banner</td>
+                                    <td>1920 × 600px</td>
+                                    <td>Hero images</td>
+                                </tr>
+                                <tr>
+                                    <td>Product Image</td>
+                                    <td>1000 × 1000px</td>
+                                    <td>E-commerce</td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -103,10 +680,38 @@
                     <h3>Related Image Tools</h3>
                     <ul class="related-tools">
                         <li><a href="image-compressor.html">➤ Image Compressor</a></li>
+                        <li><a href="image-cropper.html">➤ Image Cropper</a></li>
                         <li><a href="jpg-to-png.html">➤ JPG to PNG Converter</a></li>
-                        <li><a href="png-to-jpg.html">➤ PNG to JPG Converter</a></li>
-                        <li><a href="youtube-thumbnail.html">➤ YouTube Thumbnail Downloader</a></li>
+                        <li><a href="image-to-pdf.html">➤ Image to PDF</a></li>
+                        <li><a href="color-picker.html">➤ Color Picker</a></li>
                     </ul>
+                    
+                    <div class="sidebar-tips">
+                        <h3>🖼️ Image Tips</h3>
+                        <p><strong>For Web:</strong> Resize before uploading to reduce load time.</p>
+                        <p><strong>For Print:</strong> Maintain 300 DPI for high-quality prints.</p>
+                        <p><strong>For Social Media:</strong> Use platform-optimized sizes.</p>
+                    </div>
+                    
+                    <div class="format-info">
+                        <h3>📄 Format Guide</h3>
+                        <div class="format-item">
+                            <div class="format-name">JPEG</div>
+                            <div class="format-desc">Best for photos, smaller file size</div>
+                        </div>
+                        <div class="format-item">
+                            <div class="format-name">PNG</div>
+                            <div class="format-desc">Supports transparency, lossless</div>
+                        </div>
+                        <div class="format-item">
+                            <div class="format-name">WebP</div>
+                            <div class="format-desc">Modern format, best compression</div>
+                        </div>
+                        <div class="format-item">
+                            <div class="format-name">GIF</div>
+                            <div class="format-desc">Supports animation, limited colors</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -116,27 +721,27 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-column">
-                    <h3>Daily Smart Tool</h3>
+                    <h3>Daily Smart Tools</h3>
                     <p>Your one-stop destination for free online utilities, calculators, converters, and productivity tools.</p>
                 </div>
                 <div class="footer-column">
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
-                        <li><a href="../index.html">Home</a></li>
-                        <li><a href="../all-tools.html">All Tools</a></li>
-                        <li><a href="../about.html">About Us</a></li>
-                        <li><a href="../contact.html">Contact</a></li>
-                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                        <li><a href="../../index.html">Home</a></li>
+                        <li><a href="../../all-tools.html">All Tools</a></li>
+                        <li><a href="../../about.html">About Us</a></li>
+                        <li><a href="../../contact.html">Contact</a></li>
+                        <li><a href="../../privacy.html">Privacy Policy</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h3>Popular Categories</h3>
                     <ul class="footer-links">
-                        <li><a href="../tools/text/text-case-converter.html">Text Tools</a></li>
-                        <li><a href="image-compressor.html">Image Tools</a></li>
-                        <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
-                        <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
-                        <li><a href="../tools/developers/html-encoder.html">Developer Tools</a></li>
+                        <li><a href="../../text-tools.html">Text Tools</a></li>
+                        <li><a href="../../image-tools.html">Image Tools</a></li>
+                        <li><a href="../../calculators.html">Calculators</a></li>
+                        <li><a href="../../converters.html">Converters</a></li>
+                        <li><a href="../../developer-tools.html">Developer Tools</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -148,86 +753,491 @@
                 </div>
             </div>
             <div class="copyright">
-                &copy; <script>document.write(new Date().getFullYear())</script> Daily Smart Tool. All rights reserved. | Part of Safetyguide360 Network
+                &copy; <script>document.write(new Date().getFullYear())</script> Daily Smart Tools. All rights reserved. | Part of Safetyguide360 Network
             </div>
         </div>
     </footer>
 
-    <script src="../script.js"></script>
+    <script src="../../navigation.js"></script>
+    <script src="../../script.js"></script>
+    
     <script>
-        // Image Resizer functionality
-        document.getElementById('image-upload').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            const preview = document.getElementById('image-preview');
+        // Image Resizer JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const fileInput = document.getElementById('file-input');
+            const uploadArea = document.getElementById('upload-area');
+            const imagePreview = document.getElementById('image-preview');
+            const previewPlaceholder = document.getElementById('preview-placeholder');
+            const originalSize = document.getElementById('original-size');
+            const imageDimensions = document.getElementById('image-dimensions');
+            const imageFormat = document.getElementById('image-format');
             
-            if (file) {
+            const resizeBtn = document.getElementById('resize-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const rotateBtn = document.getElementById('rotate-btn');
+            const cropBtn = document.getElementById('crop-btn');
+            
+            const widthInput = document.getElementById('width-input');
+            const heightInput = document.getElementById('height-input');
+            const percentRange = document.getElementById('percent-range');
+            const percentValue = document.getElementById('percent-value');
+            const qualityRange = document.getElementById('quality-range');
+            const qualityValue = document.getElementById('quality-value');
+            
+            const resizeModes = document.querySelectorAll('input[name="resize-mode"]');
+            const percentSlider = document.getElementById('percent-slider');
+            const presetSizes = document.getElementById('preset-sizes');
+            
+            const lockAspect = document.getElementById('lock-aspect');
+            const unlockAspect = document.getElementById('unlock-aspect');
+            const presetButtons = document.querySelectorAll('.preset-btn');
+            
+            const resizeResult = document.getElementById('resize-result');
+            const resultImage = document.getElementById('result-image');
+            const newWidth = document.getElementById('new-width');
+            const newHeight = document.getElementById('new-height');
+            const sizeReduction = document.getElementById('size-reduction');
+            const newSize = document.getElementById('new-size');
+            
+            const downloadBtn = document.getElementById('download-btn');
+            const copyBtn = document.getElementById('copy-btn');
+            const shareBtn = document.getElementById('share-btn');
+            const newResizeBtn = document.getElementById('new-resize-btn');
+            
+            // State variables
+            let originalImage = null;
+            let originalWidth = 0;
+            let originalHeight = 0;
+            let aspectRatio = 1;
+            let currentImage = null;
+            let isAspectLocked = true;
+            let currentRotation = 0;
+            
+            // Initialize
+            updateModeDisplay();
+            
+            // Event Listeners
+            fileInput.addEventListener('change', handleFileSelect);
+            
+            // Drag and drop
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                uploadArea.classList.add('drag-over');
+            });
+            
+            uploadArea.addEventListener('dragleave', function() {
+                uploadArea.classList.remove('drag-over');
+            });
+            
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                uploadArea.classList.remove('drag-over');
+                
+                if (e.dataTransfer.files.length) {
+                    fileInput.files = e.dataTransfer.files;
+                    handleFileSelect();
+                }
+            });
+            
+            // Click upload area to trigger file input
+            uploadArea.addEventListener('click', function(e) {
+                if (e.target === uploadArea) {
+                    fileInput.click();
+                }
+            });
+            
+            // Resize mode changes
+            resizeModes.forEach(mode => {
+                mode.addEventListener('change', updateModeDisplay);
+            });
+            
+            // Dimension inputs
+            widthInput.addEventListener('input', function() {
+                if (isAspectLocked && originalWidth > 0) {
+                    const newHeightValue = Math.round(this.value * aspectRatio);
+                    heightInput.value = newHeightValue;
+                }
+                updatePercentFromDimensions();
+            });
+            
+            heightInput.addEventListener('input', function() {
+                if (isAspectLocked && originalHeight > 0) {
+                    const newWidthValue = Math.round(this.value / aspectRatio);
+                    widthInput.value = newWidthValue;
+                }
+                updatePercentFromDimensions();
+            });
+            
+            // Percentage slider
+            percentRange.addEventListener('input', function() {
+                percentValue.textContent = this.value + '%';
+                updateDimensionsFromPercent();
+            });
+            
+            // Quality slider
+            qualityRange.addEventListener('input', function() {
+                qualityValue.textContent = this.value + '%';
+            });
+            
+            // Aspect ratio toggles
+            lockAspect.addEventListener('click', function() {
+                isAspectLocked = true;
+                lockAspect.classList.add('active');
+                unlockAspect.classList.remove('active');
+                if (originalWidth > 0) {
+                    aspectRatio = originalHeight / originalWidth;
+                }
+            });
+            
+            unlockAspect.addEventListener('click', function() {
+                isAspectLocked = false;
+                unlockAspect.classList.add('active');
+                lockAspect.classList.remove('active');
+            });
+            
+            // Preset buttons
+            presetButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const width = parseInt(this.getAttribute('data-width'));
+                    const height = parseInt(this.getAttribute('data-height'));
+                    
+                    widthInput.value = width;
+                    heightInput.value = height;
+                    
+                    updatePercentFromDimensions();
+                    showToast(`Set to ${width}×${height}`, 'success');
+                });
+            });
+            
+            // Action buttons
+            resizeBtn.addEventListener('click', resizeImage);
+            resetBtn.addEventListener('click', resetAll);
+            rotateBtn.addEventListener('click', rotateImage);
+            cropBtn.addEventListener('click', function() {
+                showToast('Crop feature coming soon!', 'info');
+            });
+            
+            // Result actions
+            downloadBtn.addEventListener('click', downloadImage);
+            copyBtn.addEventListener('click', copyImage);
+            shareBtn.addEventListener('click', shareImage);
+            newResizeBtn.addEventListener('click', function() {
+                resizeResult.style.display = 'none';
+                resultImage.style.display = 'none';
+            });
+            
+            // Functions
+            function handleFileSelect() {
+                const file = fileInput.files[0];
+                
+                if (!file) return;
+                
+                // Check file size (max 10MB)
+                if (file.size > 10 * 1024 * 1024) {
+                    showToast('File too large! Maximum size is 10MB.', 'error');
+                    return;
+                }
+                
+                // Check file type
+                const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/bmp'];
+                if (!validTypes.includes(file.type)) {
+                    showToast('Invalid file type! Please upload an image.', 'error');
+                    return;
+                }
+                
                 const reader = new FileReader();
+                
                 reader.onload = function(e) {
-                    preview.innerHTML = `<img src="${e.target.result}" style="max-width: 100%; max-height: 200px; border-radius: 4px;" alt="Image preview">
-                                         <p style="margin-top: 10px; font-size: 0.9rem;">${file.name} (${(file.size/1024).toFixed(1)} KB)</p>`;
+                    originalImage = new Image();
+                    
+                    originalImage.onload = function() {
+                        // Set original dimensions
+                        originalWidth = originalImage.width;
+                        originalHeight = originalImage.height;
+                        aspectRatio = originalHeight / originalWidth;
+                        
+                        // Display preview
+                        imagePreview.src = e.target.result;
+                        imagePreview.style.display = 'block';
+                        previewPlaceholder.style.display = 'none';
+                        
+                        // Update info
+                        originalSize.textContent = formatFileSize(file.size);
+                        imageDimensions.textContent = `${originalWidth} × ${originalHeight}px`;
+                        imageFormat.textContent = file.type.split('/')[1].toUpperCase();
+                        
+                        // Set initial dimensions
+                        widthInput.value = originalWidth;
+                        heightInput.value = originalHeight;
+                        updatePercentFromDimensions();
+                        
+                        // Enable resize button
+                        resizeBtn.disabled = false;
+                        resizeBtn.innerHTML = '🔄 Resize Image';
+                        
+                        showToast('Image loaded successfully!', 'success');
+                    };
+                    
+                    originalImage.src = e.target.result;
+                    currentImage = originalImage;
                 };
+                
                 reader.readAsDataURL(file);
             }
-        });
-
-        document.getElementById('resize-btn').addEventListener('click', function() {
-            const fileInput = document.getElementById('image-upload');
-            const width = document.getElementById('width').value;
-            const height = document.getElementById('height').value;
-            const maintainRatio = document.getElementById('aspect-ratio').checked;
             
-            if (!fileInput.files[0]) {
-                alert('Please upload an image first.');
-                return;
+            function updateModeDisplay() {
+                const selectedMode = document.querySelector('input[name="resize-mode"]:checked').value;
+                
+                switch(selectedMode) {
+                    case 'percent':
+                        percentSlider.style.display = 'block';
+                        presetSizes.style.display = 'none';
+                        widthInput.disabled = true;
+                        heightInput.disabled = true;
+                        break;
+                    case 'pixels':
+                        percentSlider.style.display = 'none';
+                        presetSizes.style.display = 'none';
+                        widthInput.disabled = false;
+                        heightInput.disabled = false;
+                        break;
+                    case 'preset':
+                        percentSlider.style.display = 'none';
+                        presetSizes.style.display = 'block';
+                        widthInput.disabled = true;
+                        heightInput.disabled = true;
+                        break;
+                }
             }
             
-            const file = fileInput.files[0];
-            const newWidth = maintainRatio ? width : width;
-            const newHeight = maintainRatio ? Math.round(height * (width / height)) : height;
-            
-            const output = `✅ IMAGE RESIZED SUCCESSFULLY
-
-Original Image:
-• Name: ${file.name}
-• Size: ${(file.size/1024).toFixed(1)} KB
-• Type: ${file.type}
-
-Resized Dimensions:
-• Width: ${newWidth}px
-• Height: ${newHeight}px
-• Aspect Ratio: ${maintainRatio ? 'Maintained' : 'Custom'}
-
-Estimated New Size: ${(file.size * (newWidth * newHeight) / (800 * 600) / 1024).toFixed(1)} KB
-
-Note: This is a simulation. Full image processing functionality is coming soon.`;
-            
-            document.getElementById('output-result').value = output;
-        });
-
-        document.getElementById('width').addEventListener('input', function() {
-            if (document.getElementById('aspect-ratio').checked) {
-                const ratio = 600/800; // Default ratio
-                document.getElementById('height').value = Math.round(this.value * ratio);
+            function updateDimensionsFromPercent() {
+                const percent = parseInt(percentRange.value) / 100;
+                widthInput.value = Math.round(originalWidth * percent);
+                heightInput.value = Math.round(originalHeight * percent);
             }
-        });
-
-        document.getElementById('height').addEventListener('input', function() {
-            if (document.getElementById('aspect-ratio').checked) {
-                const ratio = 800/600; // Default ratio
-                document.getElementById('width').value = Math.round(this.value * ratio);
+            
+            function updatePercentFromDimensions() {
+                if (originalWidth > 0) {
+                    const percent = Math.round((widthInput.value / originalWidth) * 100);
+                    percentRange.value = percent;
+                    percentValue.textContent = percent + '%';
+                }
             }
-        });
-
-        document.getElementById('clear-btn').addEventListener('click', function() {
-            document.getElementById('image-upload').value = '';
-            document.getElementById('width').value = 800;
-            document.getElementById('height').value = 600;
-            document.getElementById('image-preview').innerHTML = '<p>No image selected. Upload an image to preview.</p>';
-            document.getElementById('output-result').value = 'Image information will appear here after resizing.';
-        });
-
-        document.getElementById('download-btn').addEventListener('click', function() {
-            alert('Full download functionality coming soon! For now, right-click the preview image to save it.');
+            
+            function resizeImage() {
+                if (!originalImage) {
+                    showToast('Please upload an image first!', 'error');
+                    return;
+                }
+                
+                // Show loading
+                resizeBtn.innerHTML = '⏳ Processing...';
+                resizeBtn.disabled = true;
+                
+                // Get target dimensions
+                const targetWidth = parseInt(widthInput.value);
+                const targetHeight = parseInt(heightInput.value);
+                const quality = parseInt(qualityRange.value) / 100;
+                
+                // Create canvas
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                // Set canvas dimensions
+                canvas.width = targetWidth;
+                canvas.height = targetHeight;
+                
+                // Apply rotation if needed
+                if (currentRotation !== 0) {
+                    ctx.save();
+                    ctx.translate(canvas.width / 2, canvas.height / 2);
+                    ctx.rotate(currentRotation * Math.PI / 180);
+                    ctx.drawImage(originalImage, -targetWidth / 2, -targetHeight / 2, targetWidth, targetHeight);
+                    ctx.restore();
+                } else {
+                    ctx.drawImage(originalImage, 0, 0, targetWidth, targetHeight);
+                }
+                
+                // Get resized image data
+                const format = originalImage.src.split(';')[0].split('/')[1];
+                const mimeType = `image/${format}`;
+                
+                canvas.toBlob(function(blob) {
+                    // Create result image URL
+                    const resultUrl = URL.createObjectURL(blob);
+                    
+                    // Display result
+                    resultImage.src = resultUrl;
+                    resultImage.style.display = 'block';
+                    resizeResult.style.display = 'block';
+                    
+                    // Update statistics
+                    newWidth.textContent = targetWidth + 'px';
+                    newHeight.textContent = targetHeight + 'px';
+                    newSize.textContent = formatFileSize(blob.size);
+                    
+                    // Calculate size reduction
+                    const originalFileSize = fileInput.files[0].size;
+                    const reduction = Math.round((1 - (blob.size / originalFileSize)) * 100);
+                    sizeReduction.textContent = reduction + '%';
+                    
+                    // Store result for download
+                    resultImage.dataset.blobUrl = resultUrl;
+                    resultImage.dataset.fileName = `resized-${targetWidth}x${targetHeight}.${format}`;
+                    
+                    // Reset button state
+                    resizeBtn.innerHTML = '🔄 Resize Image';
+                    resizeBtn.disabled = false;
+                    
+                    showToast('Image resized successfully!', 'success');
+                    
+                }, mimeType, quality);
+            }
+            
+            function rotateImage() {
+                if (!originalImage) {
+                    showToast('Please upload an image first!', 'error');
+                    return;
+                }
+                
+                currentRotation = (currentRotation + 90) % 360;
+                
+                // Update preview with rotation
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                // Swap dimensions for 90/270 degree rotations
+                if (currentRotation % 180 === 90) {
+                    canvas.width = originalHeight;
+                    canvas.height = originalWidth;
+                } else {
+                    canvas.width = originalWidth;
+                    canvas.height = originalHeight;
+                }
+                
+                ctx.save();
+                ctx.translate(canvas.width / 2, canvas.height / 2);
+                ctx.rotate(currentRotation * Math.PI / 180);
+                ctx.drawImage(originalImage, -originalWidth / 2, -originalHeight / 2, originalWidth, originalHeight);
+                ctx.restore();
+                
+                // Update preview
+                imagePreview.src = canvas.toDataURL();
+                
+                // Update dimensions if aspect is locked
+                if (currentRotation % 180 === 90) {
+                    const temp = originalWidth;
+                    originalWidth = originalHeight;
+                    originalHeight = temp;
+                    aspectRatio = originalHeight / originalWidth;
+                    
+                    widthInput.value = originalWidth;
+                    heightInput.value = originalHeight;
+                    updatePercentFromDimensions();
+                }
+                
+                showToast(`Rotated ${currentRotation}°`, 'success');
+            }
+            
+            function resetAll() {
+                fileInput.value = '';
+                imagePreview.style.display = 'none';
+                previewPlaceholder.style.display = 'block';
+                resizeResult.style.display = 'none';
+                resultImage.style.display = 'none';
+                
+                originalSize.textContent = '-';
+                imageDimensions.textContent = '-';
+                imageFormat.textContent = '-';
+                
+                widthInput.value = '800';
+                heightInput.value = '600';
+                percentRange.value = '100';
+                percentValue.textContent = '100%';
+                qualityRange.value = '85';
+                qualityValue.textContent = '85%';
+                
+                originalImage = null;
+                originalWidth = 0;
+                originalHeight = 0;
+                currentRotation = 0;
+                
+                resizeBtn.disabled = true;
+                
+                showToast('Reset complete!', 'success');
+            }
+            
+            function downloadImage() {
+                if (!resultImage.src || resultImage.src.startsWith('data:')) {
+                    showToast('No resized image to download!', 'error');
+                    return;
+                }
+                
+                const link = document.createElement('a');
+                link.href = resultImage.dataset.blobUrl;
+                link.download = resultImage.dataset.fileName || 'resized-image.jpg';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                showToast('Image downloaded!', 'success');
+            }
+            
+            function copyImage() {
+                if (!resultImage.src) {
+                    showToast('No image to copy!', 'error');
+                    return;
+                }
+                
+                // Create canvas to get image data
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = resultImage.naturalWidth;
+                canvas.height = resultImage.naturalHeight;
+                ctx.drawImage(resultImage, 0, 0);
+                
+                canvas.toBlob(function(blob) {
+                    navigator.clipboard.write([
+                        new ClipboardItem({
+                            [blob.type]: blob
+                        })
+                    ]).then(() => {
+                        showToast('Image copied to clipboard!', 'success');
+                    }).catch(() => {
+                        showToast('Failed to copy image', 'error');
+                    });
+                });
+            }
+            
+            function shareImage() {
+                if (!resultImage.src) {
+                    showToast('No image to share!', 'error');
+                    return;
+                }
+                
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Resized Image',
+                        text: 'Check out this image I resized!',
+                        url: resultImage.src
+                    }).then(() => {
+                        showToast('Shared successfully!', 'success');
+                    }).catch(() => {
+                        showToast('Share cancelled', 'info');
+                    });
+                } else {
+                    showToast('Web Share API not supported', 'info');
+                }
+            }
+            
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
         });
     </script>
 </body>
