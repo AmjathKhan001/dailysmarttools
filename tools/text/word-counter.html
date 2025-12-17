@@ -3,41 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Word Counter - Daily Smart Tool</title>
-    <meta name="description" content="Count words, characters, sentences in text. Free online tool.">
-    <link rel="stylesheet" href="../style.css">
+    <title>Word Counter - Daily Smart Tools</title>
+    <meta name="description" content="Free online word counter tool. Count words, characters, sentences, paragraphs, and reading time instantly.">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="icon" type="image/x-icon" href="../../favicon.ico">
 </head>
 <body>
     <header>
         <div class="container header-container">
-            <a href="../index.html" class="logo">
+            <a href="../../index.html" class="logo">
                 <div class="logo-icon">⚙️</div>
-                <span>Daily Smart Tool</span>
+                <span>Daily Smart Tools</span>
             </a>
             <button class="mobile-menu-btn">☰</button>
             <button class="theme-toggle" title="Toggle dark mode">🌙</button>
-            <nav>
-                <ul>
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../all-tools.html">All Tools</a></li>
-                    <li><a href="text-case-converter.html">Text Tools</a></li>
-                    <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
-                    <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
-                    <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
-                    <li><a href="../tools/generators/password-generator.html">Generators</a></li>
-                </ul>
-            </nav>
         </div>
     </header>
 
     <section class="breadcrumb">
         <div class="container">
             <ul>
-                <li><a href="../index.html">Home</a></li>
+                <li><a href="../../index.html">Home</a></li>
                 <li class="separator">/</li>
-                <li><a href="../all-tools.html">All Tools</a></li>
-                <li class="separator">/</li>
-                <li><a href="#">Text Tools</a></li>
+                <li><a href="../../text-tools.html">Text Tools</a></li>
                 <li class="separator">/</li>
                 <li>Word Counter</li>
             </ul>
@@ -48,32 +36,121 @@
         <section class="tool-page">
             <div class="tool-header">
                 <h1>Word Counter</h1>
-                <p>Count words, characters, sentences in text. This is a free, browser-based tool. No installation required.</p>
+                <p>Count words, characters, sentences, paragraphs, and reading time instantly. Perfect for writers, students, and content creators.</p>
             </div>
             
             <div class="tool-container">
                 <div class="tool-main">
                     <div class="tool-input-area">
+                        <!-- Text Input -->
                         <div class="input-group">
-                            <label for="user-input">Enter your text:</label>
-                            <textarea id="user-input" placeholder="Paste or type your content here...">This is a sample text. It has multiple sentences. You can replace it with your own text to count words, characters, and more.</textarea>
+                            <label for="text-input">Enter your text:</label>
+                            <textarea id="text-input" rows="8" placeholder="Paste or type your text here...">Welcome to Daily Smart Tools Word Counter! This is a sample text to demonstrate our word counting capabilities.
+
+You can type or paste any text in this area, and the word counter will update in real-time. It counts words, characters (with and without spaces), sentences, paragraphs, and even estimates reading time.
+
+Try it now with your own text! The counter updates automatically as you type.</textarea>
+                            <div class="text-info">
+                                <span id="word-count-display">0 words</span> • 
+                                <span id="char-count-display">0 characters</span>
+                            </div>
                         </div>
                         
+                        <!-- Action Buttons -->
                         <div class="tool-buttons">
-                            <button class="btn btn-primary" id="process-btn">Count Words</button>
-                            <button class="btn btn-secondary" id="clear-btn">Clear</button>
-                            <button class="btn btn-success" id="copy-btn">Copy Result</button>
+                            <button class="btn btn-primary" id="count-btn">
+                                📊 Count Words
+                            </button>
+                            <button class="btn btn-secondary" id="clear-btn">
+                                🗑️ Clear Text
+                            </button>
+                            <button class="btn btn-success" id="copy-btn">
+                                📋 Copy Results
+                            </button>
+                            <button class="btn btn-warning" id="sample-btn">
+                                📝 Load Sample
+                            </button>
                         </div>
                         
-                        <div class="input-group">
-                            <label for="output-result">Counting Results:</label>
-                            <textarea id="output-result" readonly>Results will appear here after counting.</textarea>
+                        <!-- Results Grid -->
+                        <div class="results-section">
+                            <h3>📊 Counting Results</h3>
+                            <div class="results-grid">
+                                <div class="result-item">
+                                    <div class="result-label">Words</div>
+                                    <div class="result-value" id="word-count">0</div>
+                                </div>
+                                <div class="result-item">
+                                    <div class="result-label">Characters</div>
+                                    <div class="result-value" id="char-count">0</div>
+                                    <div class="result-sub">(with spaces)</div>
+                                </div>
+                                <div class="result-item">
+                                    <div class="result-label">Characters</div>
+                                    <div class="result-value" id="char-nospace-count">0</div>
+                                    <div class="result-sub">(without spaces)</div>
+                                </div>
+                                <div class="result-item">
+                                    <div class="result-label">Sentences</div>
+                                    <div class="result-value" id="sentence-count">0</div>
+                                </div>
+                                <div class="result-item">
+                                    <div class="result-label">Paragraphs</div>
+                                    <div class="result-value" id="paragraph-count">0</div>
+                                </div>
+                                <div class="result-item">
+                                    <div class="result-label">Reading Time</div>
+                                    <div class="result-value" id="reading-time">0 min</div>
+                                    <div class="result-sub">(at 200 WPM)</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Advanced Stats -->
+                            <div class="advanced-stats">
+                                <h4>📈 Advanced Statistics</h4>
+                                <div class="stats-grid">
+                                    <div class="stat-box">
+                                        <div class="stat-title">Average Word Length</div>
+                                        <div class="stat-value" id="avg-word-length">0.0</div>
+                                        <div class="stat-desc">characters per word</div>
+                                    </div>
+                                    <div class="stat-box">
+                                        <div class="stat-title">Average Sentence Length</div>
+                                        <div class="stat-value" id="avg-sentence-length">0.0</div>
+                                        <div class="stat-desc">words per sentence</div>
+                                    </div>
+                                    <div class="stat-box">
+                                        <div class="stat-title">Longest Word</div>
+                                        <div class="stat-value" id="longest-word">-</div>
+                                        <div class="stat-desc" id="longest-word-length">0 chars</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                    
+                    <div class="info-section">
+                        <h3>About This Tool</h3>
+                        <p>The Word Counter is an essential tool for writers, students, bloggers, and professionals who need accurate word counts for their work.</p>
                         
-                        <div class="info-section">
-                            <h3>About This Tool</h3>
-                            <p>The Word Counter allows you to count words, characters, sentences, and paragraphs in any text. It's designed to be fast, secure, and easy to use.</p>
-                            <p><strong>Note:</strong> This is a functional demo. Real-time counting will be added soon.</p>
+                        <h4>Common Uses:</h4>
+                        <ul>
+                            <li><strong>Academic Writing:</strong> Meet essay and thesis word limits</li>
+                            <li><strong>Content Creation:</strong> Optimize blog posts and articles for SEO</li>
+                            <li><strong>Social Media:</strong> Stay within character limits for posts</li>
+                            <li><strong>Professional Writing:</strong> Track progress on reports and documents</li>
+                            <li><strong>Translation Work:</strong> Estimate costs based on word count</li>
+                        </ul>
+                        
+                        <div class="word-count-standards">
+                            <h4>📖 Word Count Standards:</h4>
+                            <ul>
+                                <li><strong>Twitter:</strong> 280 characters max</li>
+                                <li><strong>Facebook Post:</strong> Optimal 40-80 characters</li>
+                                <li><strong>Blog Post:</strong> Ideal 1,500-2,500 words</li>
+                                <li><strong>Academic Essay:</strong> Typically 1,000-5,000 words</li>
+                                <li><strong>Novel Chapter:</strong> Usually 3,000-5,000 words</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -86,8 +163,36 @@
                         <li><a href="character-counter.html">➤ Character Counter</a></li>
                         <li><a href="text-case-converter.html">➤ Text Case Converter</a></li>
                         <li><a href="text-reverser.html">➤ Text Reverser</a></li>
+                        <li><a href="remove-line-breaks.html">➤ Remove Line Breaks</a></li>
                         <li><a href="lorem-ipsum.html">➤ Lorem Ipsum Generator</a></li>
                     </ul>
+                    
+                    <div class="sidebar-tips">
+                        <h3>💡 Writing Tips</h3>
+                        <p><strong>For SEO:</strong> Aim for 1,500+ words for comprehensive articles.</p>
+                        <p><strong>For Readability:</strong> Keep sentences under 20 words on average.</p>
+                        <p><strong>For Engagement:</strong> Use short paragraphs (2-3 sentences).</p>
+                    </div>
+                    
+                    <div class="reading-times">
+                        <h3>⏱️ Reading Times</h3>
+                        <div class="time-item">
+                            <div class="time-label">100 words</div>
+                            <div class="time-value">30 seconds</div>
+                        </div>
+                        <div class="time-item">
+                            <div class="time-label">500 words</div>
+                            <div class="time-value">2.5 minutes</div>
+                        </div>
+                        <div class="time-item">
+                            <div class="time-label">1,000 words</div>
+                            <div class="time-value">5 minutes</div>
+                        </div>
+                        <div class="time-item">
+                            <div class="time-label">2,000 words</div>
+                            <div class="time-value">10 minutes</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -97,27 +202,27 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-column">
-                    <h3>Daily Smart Tool</h3>
+                    <h3>Daily Smart Tools</h3>
                     <p>Your one-stop destination for free online utilities, calculators, converters, and productivity tools.</p>
                 </div>
                 <div class="footer-column">
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
-                        <li><a href="../index.html">Home</a></li>
-                        <li><a href="../all-tools.html">All Tools</a></li>
-                        <li><a href="../about.html">About Us</a></li>
-                        <li><a href="../contact.html">Contact</a></li>
-                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                        <li><a href="../../index.html">Home</a></li>
+                        <li><a href="../../all-tools.html">All Tools</a></li>
+                        <li><a href="../../about.html">About Us</a></li>
+                        <li><a href="../../contact.html">Contact</a></li>
+                        <li><a href="../../privacy.html">Privacy Policy</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h3>Popular Categories</h3>
                     <ul class="footer-links">
-                        <li><a href="text-case-converter.html">Text Tools</a></li>
-                        <li><a href="../tools/image/image-resizer.html">Image Tools</a></li>
-                        <li><a href="../tools/calculators/loan-calculator.html">Calculators</a></li>
-                        <li><a href="../tools/converters/unit-converter.html">Converters</a></li>
-                        <li><a href="../tools/developers/html-encoder.html">Developer Tools</a></li>
+                        <li><a href="../../text-tools.html">Text Tools</a></li>
+                        <li><a href="../../image-tools.html">Image Tools</a></li>
+                        <li><a href="../../calculators.html">Calculators</a></li>
+                        <li><a href="../../converters.html">Converters</a></li>
+                        <li><a href="../../developer-tools.html">Developer Tools</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -129,56 +234,377 @@
                 </div>
             </div>
             <div class="copyright">
-                &copy; <script>document.write(new Date().getFullYear())</script> Daily Smart Tool. All rights reserved. | Part of Safetyguide360 Network
+                &copy; <script>document.write(new Date().getFullYear())</script> Daily Smart Tools. All rights reserved. | Part of Safetyguide360 Network
             </div>
         </div>
     </footer>
 
-    <script src="../script.js"></script>
+    <script src="../../navigation.js"></script>
+    <script src="../../script.js"></script>
+    
     <script>
-        // Word Counter specific functionality
-        function countWords(text) {
-            // Remove extra whitespace and split into words
-            const words = text.trim().split(/\s+/).filter(word => word.length > 0);
-            const characters = text.length;
-            const charactersNoSpaces = text.replace(/\s/g, '').length;
-            const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
-            const paragraphs = text.split(/\n\s*\n/).filter(p => p.trim().length > 0).length;
-            
-            return `📊 WORD COUNT RESULTS:
-• Words: ${words.length}
-• Characters: ${characters} (with spaces)
-• Characters: ${charactersNoSpaces} (without spaces)
-• Sentences: ${sentences}
-• Paragraphs: ${paragraphs}
-
-📈 ANALYSIS:
-• Average word length: ${words.length > 0 ? (charactersNoSpaces / words.length).toFixed(1) : 0} characters
-• Reading time: ${(words.length / 200).toFixed(1)} minutes (at 200 WPM)`;
-        }
-
-        document.getElementById('process-btn').addEventListener('click', function() {
-            const input = document.getElementById('user-input').value;
-            const output = countWords(input);
-            document.getElementById('output-result').value = output;
-        });
-
-        document.getElementById('clear-btn').addEventListener('click', function() {
-            document.getElementById('user-input').value = '';
-            document.getElementById('output-result').value = 'Results will appear here after counting.';
-        });
-
-        document.getElementById('copy-btn').addEventListener('click', function() {
-            const resultText = document.getElementById('output-result');
-            navigator.clipboard.writeText(resultText.value).then(() => {
-                alert('Results copied to clipboard!');
-            });
-        });
-
-        // Count on page load
+        // Word Counter JavaScript
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('process-btn').click();
+            // Elements
+            const textInput = document.getElementById('text-input');
+            const countBtn = document.getElementById('count-btn');
+            const clearBtn = document.getElementById('clear-btn');
+            const copyBtn = document.getElementById('copy-btn');
+            const sampleBtn = document.getElementById('sample-btn');
+            
+            // Result elements
+            const wordCount = document.getElementById('word-count');
+            const charCount = document.getElementById('char-count');
+            const charNoSpaceCount = document.getElementById('char-nospace-count');
+            const sentenceCount = document.getElementById('sentence-count');
+            const paragraphCount = document.getElementById('paragraph-count');
+            const readingTime = document.getElementById('reading-time');
+            const wordCountDisplay = document.getElementById('word-count-display');
+            const charCountDisplay = document.getElementById('char-count-display');
+            const avgWordLength = document.getElementById('avg-word-length');
+            const avgSentenceLength = document.getElementById('avg-sentence-length');
+            const longestWord = document.getElementById('longest-word');
+            const longestWordLength = document.getElementById('longest-word-length');
+            
+            // Sample text
+            const sampleText = `The Daily Smart Tools Word Counter is an essential utility for writers, students, and professionals.
+
+Key Features:
+• Real-time word and character counting
+• Sentence and paragraph detection
+• Reading time estimation
+• Advanced statistics
+• No registration required
+• Works completely in your browser
+
+This tool helps with:
+1. Academic writing and essay formatting
+2. Blog post optimization for SEO
+3. Social media content creation
+4. Professional document preparation
+5. Translation and localization work
+
+Try it with your own text! The counter updates automatically as you type.`;
+
+            // Initialize
+            countWords();
+            
+            // Event Listeners
+            textInput.addEventListener('input', countWords);
+            countBtn.addEventListener('click', countWords);
+            
+            clearBtn.addEventListener('click', function() {
+                textInput.value = '';
+                countWords();
+                showToast('Text cleared!', 'success');
+            });
+            
+            copyBtn.addEventListener('click', function() {
+                const results = getFormattedResults();
+                navigator.clipboard.writeText(results).then(() => {
+                    showToast('Results copied to clipboard!', 'success');
+                });
+            });
+            
+            sampleBtn.addEventListener('click', function() {
+                textInput.value = sampleText;
+                countWords();
+                showToast('Sample text loaded!', 'success');
+            });
+            
+            // Functions
+            function countWords() {
+                const text = textInput.value.trim();
+                
+                // Count words (split by whitespace and filter empty strings)
+                const words = text === '' ? [] : text.split(/\s+/).filter(word => word.length > 0);
+                const wordCountValue = words.length;
+                
+                // Count characters
+                const charCountValue = text.length;
+                const charNoSpaceValue = text.replace(/\s/g, '').length;
+                
+                // Count sentences (split by ., !, ? followed by space or end)
+                const sentences = text === '' ? [] : text.split(/[.!?]+(?=\s|$)/).filter(s => s.trim().length > 0);
+                const sentenceCountValue = sentences.length;
+                
+                // Count paragraphs (split by double newlines)
+                const paragraphs = text === '' ? [] : text.split(/\n\s*\n/).filter(p => p.trim().length > 0);
+                const paragraphCountValue = paragraphs.length;
+                
+                // Calculate reading time (average 200 words per minute)
+                const readingTimeValue = wordCountValue > 0 ? Math.ceil(wordCountValue / 200) : 0;
+                
+                // Calculate average word length
+                const avgWordLengthValue = wordCountValue > 0 ? (charNoSpaceValue / wordCountValue).toFixed(1) : '0.0';
+                
+                // Calculate average sentence length
+                const avgSentenceLengthValue = sentenceCountValue > 0 ? (wordCountValue / sentenceCountValue).toFixed(1) : '0.0';
+                
+                // Find longest word
+                let longestWordValue = '-';
+                let longestWordLengthValue = 0;
+                if (wordCountValue > 0) {
+                    words.forEach(word => {
+                        const cleanWord = word.replace(/[^\w]/g, '');
+                        if (cleanWord.length > longestWordLengthValue) {
+                            longestWordValue = cleanWord;
+                            longestWordLengthValue = cleanWord.length;
+                        }
+                    });
+                }
+                
+                // Update display
+                wordCount.textContent = wordCountValue.toLocaleString();
+                charCount.textContent = charCountValue.toLocaleString();
+                charNoSpaceCount.textContent = charNoSpaceValue.toLocaleString();
+                sentenceCount.textContent = sentenceCountValue.toLocaleString();
+                paragraphCount.textContent = paragraphCountValue.toLocaleString();
+                readingTime.textContent = readingTimeValue + ' min';
+                
+                wordCountDisplay.textContent = wordCountValue.toLocaleString() + ' words';
+                charCountDisplay.textContent = charCountValue.toLocaleString() + ' characters';
+                
+                avgWordLength.textContent = avgWordLengthValue;
+                avgSentenceLength.textContent = avgSentenceLengthValue;
+                longestWord.textContent = longestWordValue;
+                longestWordLength.textContent = longestWordLengthValue + ' chars';
+            }
+            
+            function getFormattedResults() {
+                const text = textInput.value;
+                const words = text === '' ? [] : text.split(/\s+/).filter(word => word.length > 0);
+                const chars = text.length;
+                const charsNoSpace = text.replace(/\s/g, '').length;
+                const sentences = text === '' ? [] : text.split(/[.!?]+(?=\s|$)/).filter(s => s.trim().length > 0);
+                const paragraphs = text === '' ? [] : text.split(/\n\s*\n/).filter(p => p.trim().length > 0);
+                const readingTime = Math.ceil(words.length / 200);
+                
+                return `WORD COUNT RESULTS\n` +
+                       `===================\n` +
+                       `Words: ${words.length.toLocaleString()}\n` +
+                       `Characters: ${chars.toLocaleString()} (with spaces)\n` +
+                       `Characters: ${charsNoSpace.toLocaleString()} (without spaces)\n` +
+                       `Sentences: ${sentences.length.toLocaleString()}\n` +
+                       `Paragraphs: ${paragraphs.length.toLocaleString()}\n` +
+                       `Reading Time: ${readingTime} minutes (at 200 WPM)\n\n` +
+                       `Text Preview:\n` +
+                       `${text.substring(0, 500)}${text.length > 500 ? '...' : ''}`;
+            }
         });
     </script>
+    
+    <style>
+        /* Word Counter Specific Styles */
+        .text-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.9rem;
+            color: var(--secondary);
+            padding: 0 5px;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .result-item {
+            background: white;
+            padding: 20px;
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+        
+        .result-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+        
+        .result-label {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+        }
+        
+        .result-sub {
+            font-size: 0.8rem;
+            color: var(--secondary);
+            margin-top: 5px;
+        }
+        
+        .advanced-stats {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-top: 25px;
+        }
+        
+        .advanced-stats h4 {
+            color: var(--dark);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .stat-box {
+            background: white;
+            padding: 15px;
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        
+        .stat-title {
+            font-size: 0.9rem;
+            color: var(--secondary);
+            margin-bottom: 8px;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+        
+        .stat-desc {
+            font-size: 0.8rem;
+            color: var(--secondary);
+        }
+        
+        .word-count-standards {
+            background: #f0f9ff;
+            border-radius: var(--radius);
+            padding: 15px;
+            margin-top: 20px;
+            border-left: 4px solid #0ea5e9;
+        }
+        
+        .word-count-standards h4 {
+            color: #075985;
+            margin-bottom: 10px;
+        }
+        
+        .word-count-standards ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+        
+        .word-count-standards li {
+            margin-bottom: 8px;
+            color: #0369a1;
+        }
+        
+        .reading-times {
+            background: #f8fafc;
+            border-radius: var(--radius);
+            padding: 15px;
+            margin-top: 20px;
+        }
+        
+        .reading-times h3 {
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        
+        .time-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .time-item:last-child {
+            border-bottom: none;
+        }
+        
+        .time-label {
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+        
+        .time-value {
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        /* Dark Mode Styles */
+        body.dark-mode .result-item,
+        body.dark-mode .stat-box {
+            background: #2d3748;
+            border-color: #4a5568;
+        }
+        
+        body.dark-mode .advanced-stats {
+            background: #2d3748;
+        }
+        
+        body.dark-mode .word-count-standards {
+            background: #1e3a8a;
+            border-left-color: #3b82f6;
+        }
+        
+        body.dark-mode .word-count-standards h4 {
+            color: #93c5fd;
+        }
+        
+        body.dark-mode .word-count-standards li {
+            color: #bfdbfe;
+        }
+        
+        body.dark-mode .reading-times {
+            background: #2d3748;
+        }
+        
+        body.dark-mode .time-item {
+            border-bottom-color: #4a5568;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .results-grid,
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .results-grid,
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tool-buttons {
+                flex-direction: column;
+            }
+            
+            .tool-buttons .btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
 </body>
 </html>
